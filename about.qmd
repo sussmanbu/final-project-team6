@@ -22,13 +22,18 @@ This comes from the file `about.qmd`.
 This is a website for the final project for MA[46]15 Data Science with R by Team TEAMNAME.
 The members of this team are below.
 
-## Chang Liu
+## Saisriram Gunturu
 
-Luis is a Ph.D. student in Stats and is the Teaching Fellow for the course.
+Sai is a senior majoring in Computer Science and graduating in 2024
 
-## Dan Sussman
+## Yuqi Peng
+Yoki is a senior majoring in Mathematics & Economics
 
-Dan is a professor in the Math/Stat department and is the instructor for the course.
+## Shiyu Wang
+Shiyu is a junior majoring in Business and minoring in Statistics
+
+## Wanqing Zhao
+Wanqing is a senior majoring in Economics
 
 <!-- Please leave in the information below -->
 
