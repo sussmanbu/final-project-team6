@@ -35,6 +35,9 @@ Shiyu is a junior majoring in Business and minoring in Statistics
 ## Wanqing Zhao
 Wanqing is a senior majoring in Economics
 
+## Moshe Rosenstock
+Senior Majoring in Data Science (minor Business)
+
 <!-- Please leave in the information below -->
 
 ### About this Template.
