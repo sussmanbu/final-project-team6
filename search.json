@@ -116,14 +116,7 @@
     "href": "about.html#wanqing-zhao",
     "title": "About",
     "section": "Wanqing Zhao",
-    "text": "Wanqing Zhao\nWanqing is a senior majoring in Economics"
-  },
-  {
-    "objectID": "about.html#dan-sussman",
-    "href": "about.html#dan-sussman",
-    "title": "About",
-    "section": "Dan Sussman",
-    "text": "Dan Sussman\nDan is a professor in the Math/Stat department and is the instructor for the course.\n\n\nAbout this Template.\nThis is based off of the standard Quarto website template from RStudio (2023.09.0 Build 463)."
+    "text": "Wanqing Zhao\nWanqing is a senior majoring in Economics\n\n\nAbout this Template.\nThis is based off of the standard Quarto website template from RStudio (2023.09.0 Build 463)."
   },
   {
     "objectID": "big_picture.html",
