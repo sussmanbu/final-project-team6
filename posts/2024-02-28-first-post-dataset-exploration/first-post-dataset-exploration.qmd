@@ -1,0 +1,27 @@
+---
+title: "First Post (Dataset Exploration)"
+author: ""
+date: "2024-02-28"
+date-modified: "2024-02-28"
+draft: FALSE
+---
+
+[Prison Population](https://www.kaggle.com/datasets/konradb/prison-population-in-the-us)
+
+-   This dataset, hosted on Kaggle has the demographics of incarcerated individuals across all 50 states and the District of Columbia. It encompasses data curated from public sources, detailing the distribution of prison populations by race,
+
+-   This data can help us understand how COVID-19 impacted prison populations, especially regarding racial disparities. We can see if these effects differ by location and explore reasons behind any such differences.Challenges might include missing information about how the data was collected and potential inconsistencies from different sources.
+
+[Nutrition and Physical Activity](https://catalog.data.gov/dataset/nutrition-physical-activity-and-obesity-behavioral-risk-factor-surveillance-system)
+
+-   This dataset records the status of weight and physical activity of US adults from 2011 to 2022 on both the national level and state levels. It comes with demographic information including age, race, gender, and income. It is posted by the Centers for Disease Control and Prevention, and the data source is the Behavioral Risk Factor Surveillance System. It contains 93249 rows and 33 columns. The weight status and physical activity status are in percentages.
+
+-   We intend to use this data to study in which groups obesity is more prevalent. With the demographic information, this data helps us understand factors affecting the rate of obesity from different angles. Besides, with proper analysis, the data can possibly explain what people can do to prevent obesity.
+
+[NYPD Police Shootings](https://catalog.data.gov/dataset/nypd-shooting-incident-data-historic)
+
+-   This data records a list of every shooting that has occurred in New York City since 2006, including detailed information about each shooting. This data is manually extracted every quarter and reviewed by the Office of Management Analysis and Planning before being posted on the NYPD website, containing 21 columns and 27312 rows.
+
+-   Each record represents a shooting incident in New York City and includes information about the incident, where and when it occurred. Additionally, information related to suspect and victim demographics is included. This data can be used to explore the nature of shooting/criminal activity.
+
+-   Because this data includes the race, gender, and age group of shooting suspects and victims, we can use this data to explore the frequency of shootings by race and the distribution of suspects and victims across racial categories.
