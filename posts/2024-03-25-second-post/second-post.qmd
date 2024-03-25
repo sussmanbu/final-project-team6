@@ -1,11 +1,11 @@
 ---
-title: "Second Post"
+title: "Second Post (Data Background & Data for Equity)"
 author: "Team 6"
 date: "2024-03-25"
 date-modified: "2024-03-25"
 draft: FALSE
 ---
-Data Background
+### Data Background
 
 This dataset encompasses a detailed account of each shooting incident in NYC from 2006 up until the end of the last calendar year. Compiled and meticulously reviewed quarterly by the Office of Management Analysis and Planning, it is then made accessible on the NYPD website. Every entry in this dataset chronicles a specific shooting event, detailing the incident's circumstances, location, and timing. Additionally, it provides demographics regarding suspects and victims. We are able to download the dataset from the original source.
 
@@ -14,7 +14,8 @@ The data might be biased as it is based only on New York. It might not be able t
 The data has been used on another capstone project, “Phantom Shootings,” by Allan Ambris, The Graduate Center, City University of New York. This data is used to prove the author’s statement that the data NYPD reported is just a subset of the true dataset. The author asks whether a single victim may appear in many entries. (Ambris)
 Ambris, Allan. “Phantom Shootings.” CUNY Academic Works, academicworks.cuny.edu/gc_etds/5410/. Accessed 25 Mar. 2024. 
 
-Data for Equity
+### Data for Equity
+
 The Belmont Report's principles of beneficence, respect for persons, and justice offer a robust ethical framework for handling data in ways that can significantly impact individuals and communities. Integrating these principles into the management and analysis of NYPD Shooting Incident Data can advance more equitable data practices, ensuring that this information is used responsibly and ethically.
 
 The principle of respect for persons entails treating individuals as autonomous agents and protecting those with diminished autonomy. In the context of NYPD Shooting Incident Data, respect for persons means ensuring that the data does not unjustly stigmatize individuals or communities. Adhering to this principle, the dataset anonymized data, carefully handling data to remove or obfuscate any personally identifiable information to protect individuals' privacy and dignity.
