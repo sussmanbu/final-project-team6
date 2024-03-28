@@ -1,0 +1,72 @@
+Each team should create a .rds file that contains the cleaned data set that is small enough to work with quickly. You should create this data in the load_and_clean_data.R file and then when you need to load the data later you can load it simply with something like read_rds("dataset/cleaned_dataset.rds"). If you are working with a large data set, you would need to start with a subset of the data. How did you choose this? Are you starting by removing missing values or focusing on columns with less missing data?
+
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+
+# Read the dataset
+shooting_data <- read_csv("dataset/NYPD_Shooting_Incident_Data__Historic__20240322.csv",show_col_types = FALSE)
+
+
+head(shooting_data)
+
+dim(shooting_data)
+```
+
+```{r}
+library(tidyverse)
+library(tidyverse)
+
+# First, remove columns with more than 50% NA values as before
+threshold <- nrow(shooting_data_cleaned) * 0.5
+cols_to_remove_na <- colSums(is.na(shooting_data_cleaned)) > threshold
+shooting_data_cleaned <- shooting_data_cleaned %>%
+  select(-which(cols_to_remove_na))
+
+# Apply na_if only to character columns
+shooting_data_cleaned <- shooting_data_cleaned %>%
+  mutate(across(where(is.character), ~na_if(.x, "(null)")))
+
+# Repeat the process of removing columns with more than 50% NA, now including "(null)" treated as NA
+cols_to_remove_null <- colSums(is.na(shooting_data_cleaned)) > threshold
+shooting_data_cleaned <- shooting_data_cleaned %>%
+  select(-which(cols_to_remove_null))
+```
+
+
+```{r}
+# shooting_data_cleaned <- shooting_data %>% drop_na()
+
+head(shooting_data_cleaned)
+dim(shooting_data_cleaned)
+
+```
+
+
+```{r}
+
+
+
+# Inspect the dataset and decide on columns to keep
+# Let's assume we want to keep columns A, B, and C, and these columns should not have missing values
+
+# 1. Removing unnecessary columns and rows with missing values in the key columns
+# cleaned_data <- shooting_data %>%
+#   select(A, B, C) %>%  # Adjust column names accordingly
+#   drop_na()
+
+# 2. Optionally, create a subset of the data based on a specific condition
+# For example, if there's a year column and you're interested in the last 2 years
+# cleaned_data <- cleaned_data %>%
+#   filter(Year >= as.numeric(format(Sys.Date(), "%Y")) - 2)
+
+# Save the cleaned dataset as an .rds file
+# saveRDS(cleaned_data, "dataset/cleaned_dataset.rds")
+
+# To load this dataset in the future, you would use:
+# cleaned_data <- readRDS("dataset/cleaned_dataset.rds")
+
+```
+
+
