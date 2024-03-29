@@ -1,0 +1,55 @@
+# Exploratory Data Analysis
+
+```{r import data}
+# Load necessary libraries
+library(tidyverse) # for data manipulation and visualization
+library(ggplot2) # for plotting
+library(corrplot) # for correlation heatmap
+library(GGally) # for ggpairs plot, if needed
+
+# Read the dataset
+data <- readRDS("dataset/nypd_shooting_clean.rds")
+
+# Display the first few rows of the dataset
+head(data)
+
+
+```
+
+```{r correlation matrix}
+# Calculate the correlation matrix
+cor_matrix <- cor(data %>% select_if(is.numeric), use = "complete.obs")
+
+# Plot the correlation matrix using a heatmap
+corrplot(cor_matrix, method = "color", type = "upper", tl.col = "black", tl.srt = 45)
+
+```
+
+```{r plots}
+ggplot(data, aes(x = variable1, y = variable2)) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "Scatter Plot of variable1 vs. variable2",
+       x = "variable1",
+       y = "variable2")
+
+```
+
+```{r histogram}
+ggplot(data, aes(x = variable)) +
+  geom_histogram(bins = 30, fill = "blue", color = "black") +
+  theme_minimal() +
+  labs(title = "Histogram of variable",
+       x = "variable",
+       y = "Frequency")
+
+```
+
+```{r regression}
+# Linear regression model
+lm_model <- lm(variable1 ~ variable2, data = data)
+
+# Summarize the model
+summary(lm_model)
+
+```

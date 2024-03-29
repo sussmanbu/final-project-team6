@@ -12,8 +12,13 @@ str(NYPD_data)
 summary(NYPD_data)
 
 NYPD_clean_data <- NYPD_data %>%
+  # mutate(across(everything(), ~na_if(.x, "(null)"))) %>%
+  # mutate(across(where(is.character), ~na_if(.x, "(null)"))) %>%
+  
   select(-c(OCCUR_TIME, LOC_OF_OCCUR_DESC)) %>%
-  filter(!is.na(PERP_RACE) | !is.na(VIC_RACE))
+  filter(!is.na(PERP_RACE) & !is.na(VIC_RACE))
+
+NYPD_clean_data <- na.omit(NYPD_clean_data)
 
 str(NYPD_clean_data)
 
