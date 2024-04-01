@@ -4,12 +4,11 @@
 # Load necessary libraries
 library(tidyverse)
 library(ggplot2)
-library(corrplot) 
+library(ggcorrplot) 
 library(GGally) 
 library(readr)
 library(dplyr)
 library(lubridate)
-library(ggplot2)
 
 
 # Read the dataset
@@ -22,8 +21,6 @@ head(data)
 ```
 
 ```{r}
-
-
 # Display summary statistics
 summary(data)
 
@@ -35,18 +32,6 @@ summary(data)
 data <- data %>%
   mutate(OCCUR_DATE = ymd(OCCUR_DATE),
          OCCUR_YEAR = year(OCCUR_DATE))
-
-# Temporal Distribution: Number of shootings over time
-shootings_per_year <- data %>%
-  count(OCCUR_YEAR) %>%
-  arrange(OCCUR_YEAR)
-
-ggplot(shootings_per_year, aes(x = OCCUR_YEAR, y = n)) +
-  geom_bar(stat = "identity") +
-  theme_minimal() +
-  labs(title = 'Number of Shootings per Year', x = 'Year', y = 'Number of Shootings') +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
 
 ```
 
@@ -96,39 +81,50 @@ ggplot(vic_age_counts, aes(x = reorder(VIC_AGE_GROUP, n), y = n, fill = VIC_AGE_
 ```
 
 ```{r correlation matrix}
-# Calculate the correlation matrix
-cor_matrix <- cor(data %>% select_if(is.numeric), use = "complete.obs")
 
-# Plot the correlation matrix using a heatmap
-corrplot(cor_matrix, method = "color", type = "upper", tl.col = "black", tl.srt = 45)
+# Ensure we're working with the numeric part of the dataset
+numeric_data <- data %>% 
+  select_if(is.numeric)
+
+# Compute the correlation matrix, handling NA values by computing correlations for complete pairs
+cor_matrix <- cor(numeric_data, use = "pairwise.complete.obs")
+
+# Plot the correlation matrix using ggcorrplot
+ggcorrplot(cor_matrix, method = "circle", type = "lower", 
+           lab = TRUE, lab_size = 3, tl.cex = 10, tl.col = "black",
+           title = "Correlation Matrix of Numeric Variables")
+
 
 ```
 
 ```{r plots}
-ggplot(data, aes(x = variable1, y = variable2)) +
-  geom_point() +
-  theme_minimal() +
-  labs(title = "Scatter Plot of variable1 vs. variable2",
-       x = "variable1",
-       y = "variable2")
+# STILL WORKING ON IT
+# ggplot(data, aes(x = variable1, y = variable2)) +
+#   geom_point() +
+#   theme_minimal() +
+#   labs(title = "Scatter Plot of variable1 vs. variable2",
+#        x = "variable1",
+#        y = "variable2")
 
 ```
 
 ```{r histogram}
-ggplot(data, aes(x = variable)) +
-  geom_histogram(bins = 30, fill = "blue", color = "black") +
-  theme_minimal() +
-  labs(title = "Histogram of variable",
-       x = "variable",
-       y = "Frequency")
+# STILL WORKING ON IT
+# ggplot(data, aes(x = variable)) +
+#   geom_histogram(bins = 30, fill = "blue", color = "black") +
+#   theme_minimal() +
+#   labs(title = "Histogram of variable",
+#        x = "variable",
+#        y = "Frequency")
 
 ```
 
 ```{r regression}
-# Linear regression model
-lm_model <- lm(variable1 ~ variable2, data = data)
-
-# Summarize the model
-summary(lm_model)
+# STILL WORKING ON IT
+# # Linear regression model 
+# lm_model <- lm(variable1 ~ variable2, data = data)
+# 
+# # Summarize the model
+# summary(lm_model)
 
 ```
