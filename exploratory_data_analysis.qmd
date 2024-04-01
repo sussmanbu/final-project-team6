@@ -132,3 +132,18 @@ lm_model <- lm(variable1 ~ variable2, data = data)
 summary(lm_model)
 
 ```
+
+```{r}
+ggplot(data, aes(x = PERP_RACE, fill = PERP_RACE)) + 
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+
+```
+
+```{r}
+ggplot(data, aes(x = VIC_RACE, fill = VIC_RACE)) + 
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+
+```
+
