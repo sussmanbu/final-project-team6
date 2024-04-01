@@ -3,11 +3,26 @@
 
 library(tidyverse)
 
-loan_data <- read_csv(here::here("dataset", "loan_refusal.csv"))
+# Read the dataset
+NYPD_data <- read_csv("dataset/NYPD_Shooting_Incident_Data__Historic__20240322.csv")
 
-## CLEAN the data
-loan_data_clean <- loan_data
+str(NYPD_data)
 
-write_csv(loan_data_clean, file = here::here("dataset", "loan_refusal_clean.csv"))
+# Summary statistics
+summary(NYPD_data)
 
-save(loan_data_clean, file = here::here("dataset/loan_refusal.RData"))
+NYPD_clean_data <- NYPD_data %>%
+  # mutate(across(everything(), ~na_if(.x, "(null)"))) %>%
+  # mutate(across(where(is.character), ~na_if(.x, "(null)"))) %>%
+  
+  select(-c(OCCUR_TIME, LOC_OF_OCCUR_DESC)) %>%
+  filter(!is.na(PERP_RACE) & !is.na(VIC_RACE))
+
+NYPD_clean_data <- na.omit(NYPD_clean_data)
+
+str(NYPD_clean_data)
+
+write_csv(NYPD_clean_data, file = here::here("dataset", "nypd_shooting_clean.csv"))
+
+saveRDS(NYPD_clean_data, here::here("dataset", "nypd_shooting_clean.rds"))
+
