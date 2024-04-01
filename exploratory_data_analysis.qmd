@@ -2,10 +2,15 @@
 
 ```{r import data}
 # Load necessary libraries
-library(tidyverse) # for data manipulation and visualization
-library(ggplot2) # for plotting
-library(corrplot) # for correlation heatmap
-library(GGally) # for ggpairs plot, if needed
+library(tidyverse)
+library(ggplot2)
+library(corrplot) 
+library(GGally) 
+library(readr)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+
 
 # Read the dataset
 data <- readRDS("dataset/nypd_shooting_clean.rds")
@@ -13,6 +18,80 @@ data <- readRDS("dataset/nypd_shooting_clean.rds")
 # Display the first few rows of the dataset
 head(data)
 
+
+```
+
+```{r}
+
+
+# Display summary statistics
+summary(data)
+
+```
+
+```{r}
+
+# Convert 'OCCUR_DATE' to datetime format
+data <- data %>%
+  mutate(OCCUR_DATE = ymd(OCCUR_DATE),
+         OCCUR_YEAR = year(OCCUR_DATE))
+
+# Temporal Distribution: Number of shootings over time
+shootings_per_year <- data %>%
+  count(OCCUR_YEAR) %>%
+  arrange(OCCUR_YEAR)
+
+ggplot(shootings_per_year, aes(x = OCCUR_YEAR, y = n)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = 'Number of Shootings per Year', x = 'Year', y = 'Number of Shootings') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
+```{r}
+# Geographical Heatmap: Concentration of shootings in different boroughs
+borough_counts <- data %>%
+  count(BORO) %>%
+  arrange(desc(n))
+
+ggplot(borough_counts, aes(x = reorder(BORO, n), y = n, fill = BORO)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = 'Number of Shootings by Borough', x = 'Borough', y = 'Number of Shootings') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
+```{r}
+# Perpetrator and Victim Demographics: Age Group Distribution
+perp_age_counts <- data %>%
+  count(PERP_AGE_GROUP) %>%
+  arrange(desc(n))
+
+vic_age_counts <- data %>%
+  count(VIC_AGE_GROUP) %>%
+  arrange(desc(n))
+
+# Plotting Perpetrator Age Group Distribution
+ggplot(perp_age_counts, aes(x = reorder(PERP_AGE_GROUP, n), y = n, fill = PERP_AGE_GROUP)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = 'Perpetrator Age Group Distribution', x = 'Age Group', y = 'Count') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
+```{r}
+# Plotting Victim Age Group Distribution
+ggplot(vic_age_counts, aes(x = reorder(VIC_AGE_GROUP, n), y = n, fill = VIC_AGE_GROUP)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = 'Victim Age Group Distribution', x = 'Age Group', y = 'Count') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
 
