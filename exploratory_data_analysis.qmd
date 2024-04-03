@@ -130,16 +130,27 @@ ggcorrplot(cor_matrix, method = "circle", type = "lower",
 ```
 
 ```{r}
-ggplot(data, aes(x = PERP_RACE, fill = PERP_RACE)) + 
-  geom_bar() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+prep_race_counts <- data |>
+  count(PERP_RACE) |>
+  arrange(desc(n))
+
+ggplot(prep_race_counts, aes(x = reorder(PERP_RACE, n), y = n, fill = PERP_RACE)) + 
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Perpetrator Race Distribution", x = "Perpetrator Race", y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
 
 ```{r}
-ggplot(data, aes(x = VIC_RACE, fill = VIC_RACE)) + 
-  geom_bar() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+vic_race_counts <- data |>
+  count(VIC_RACE) |>
+  arrange(desc(n))
 
+ggplot(vic_race_counts, aes(x = reorder(VIC_RACE, n), y = n, fill = VIC_RACE)) + 
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Victim Race Distribution", x = "Victim Race", y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
