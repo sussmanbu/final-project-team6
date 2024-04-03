@@ -1,0 +1,16 @@
+{
+  "hash": "979987577b904de62b1b5a46434f8724",
+  "result": {
+    "markdown": "---\ntitle: \"Third Blog Post\"\nauthor: \"Team 6\"\ndate: \"2024-04-01\"\ndate-modified: \"2024-04-01\"\ndraft: FALSE\n---\n\n### Summary of the Dataset structure and some key statistics:\n\n- Total Entries: 1,706 incidents.\n- Date Range: The dataset includes an OCCUR_DATE column, suggesting the dates on which incidents occurred.\n- Location Data: There are multiple columns related to the location of the incidents, such as BORO, PRECINCT, X_COORD_CD, Y_COORD_CD, Latitude, and Longitude.\n- Incident Details: Includes details like JURISDICTION_CODE, LOC_CLASSFCTN_DESC (Location Classification Description), and LOCATION_DESC.\n- Perpetrator and Victim Information: Information on the perpetrator (PERP_AGE_GROUP, PERP_SEX, PERP_RACE) and victim (VIC_AGE_GROUP, VIC_SEX, VIC_RACE) is available.\n- Statistical Flags: Includes a flag for statistical murders (STATISTICAL_MURDER_FLAG).\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.4.4     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.0\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors\n```\n:::\n\n```{.r .cell-code}\nlibrary(GGally)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\nRegistered S3 method overwritten by 'GGally':\n  method from   \n  +.gg   ggplot2\n```\n:::\n\n```{.r .cell-code}\nlibrary(ggplot2)\nlibrary(corrplot)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\ncorrplot 0.92 loaded\n```\n:::\n\n```{.r .cell-code}\nlibrary(ggcorrplot)\ndata <- readRDS(\"dataset/nypd_shooting_clean.rds\")\nggplot(data, aes(x = PERP_RACE, fill = PERP_RACE)) + \n  geom_bar() +\n  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))\n```\n\n::: {.cell-output-display}\n![](third-blog-post_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "third-blog-post_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
