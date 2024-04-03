@@ -30,7 +30,7 @@ summary(data)
 
 # Convert 'OCCUR_DATE' to datetime format
 data <- data %>%
-  mutate(OCCUR_DATE = ymd(OCCUR_DATE),
+  mutate(OCCUR_DATE = dmy(OCCUR_DATE), 
          OCCUR_YEAR = year(OCCUR_DATE))
 
 ```
