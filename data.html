@@ -148,18 +148,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-makes-a-good-data-set" id="toc-what-makes-a-good-data-set" class="nav-link active" data-scroll-target="#what-makes-a-good-data-set">What makes a good data set?</a></li>
-  <li><a href="#where-to-keep-data" id="toc-where-to-keep-data" class="nav-link" data-scroll-target="#where-to-keep-data">Where to keep data?</a>
-  <ul class="collapse">
-  <li><a href="#sharing-your-data" id="toc-sharing-your-data" class="nav-link" data-scroll-target="#sharing-your-data">Sharing your data</a></li>
-  <li><a href="#load-and-clean-data-script" id="toc-load-and-clean-data-script" class="nav-link" data-scroll-target="#load-and-clean-data-script">Load and clean data script</a></li>
-  </ul></li>
-  <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
-  <li><a href="#nypd-shooting-data---team-6" id="toc-nypd-shooting-data---team-6" class="nav-link" data-scroll-target="#nypd-shooting-data---team-6">NYPD Shooting Data - Team 6</a>
+  <li><a href="#nypd-shooting-data---team-6" id="toc-nypd-shooting-data---team-6" class="nav-link active" data-scroll-target="#nypd-shooting-data---team-6">NYPD Shooting Data - Team 6</a>
   <ul class="collapse">
   <li><a href="#data-background" id="toc-data-background" class="nav-link" data-scroll-target="#data-background">Data Background</a></li>
   <li><a href="#summary-of-the-dataset-structure-and-some-key-statistics" id="toc-summary-of-the-dataset-structure-and-some-key-statistics" class="nav-link" data-scroll-target="#summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</a></li>
-  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a></li>
+  <li><a href="#data-cleaning-and-loading" id="toc-data-cleaning-and-loading" class="nav-link" data-scroll-target="#data-cleaning-and-loading">Data Cleaning and Loading</a></li>
   <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
@@ -191,68 +184,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p><img src="images/data-import-cheatsheet-thumbs.png" class="img-fluid"></p>
-<p>This comes from the file <code>data.qmd</code>.</p>
-<p>Your first steps in this project will be to find data to work on.</p>
-<p>I recommend trying to find data that interests you and that you are knowledgeable about. A bad example would be if you have no interest in video games but your data set is about video games. I also recommend finding data that is related to current events, social justice, and other areas that have an impact.</p>
-<p>Initially, you will study <em>one dataset</em> but later you will need to combine that data with another dataset. For this reason, I recommend finding data that has some date and/or location components. These types of data are conducive to interesting visualizations and analysis and you can also combine this data with other data that also has a date or location variable. Data from the census, weather data, economic data, are all relatively easy to combine with other data with time/location components.</p>
-<section id="what-makes-a-good-data-set" class="level2">
-<h2 class="anchored" data-anchor-id="what-makes-a-good-data-set">What makes a good data set?</h2>
-<ul>
-<li>Data you are interested in and care about.</li>
-<li>Data where there are a lot of potential questions that you can explore.</li>
-<li>A data set that isn’t completely cleaned already.</li>
-<li>Multiple sources for data that you can combine.</li>
-<li>Some type of time and/or location component.</li>
-</ul>
-</section>
-<section id="where-to-keep-data" class="level2">
-<h2 class="anchored" data-anchor-id="where-to-keep-data">Where to keep data?</h2>
-<p>Below 50mb: In <code>dataset</code> folder</p>
-<p>Above 50mb: In <code>dataset_ignore</code> folder. This folder will be ignored by <code>git</code> so you’ll have to manually sync these files across your team.</p>
-<section id="sharing-your-data" class="level3">
-<h3 class="anchored" data-anchor-id="sharing-your-data">Sharing your data</h3>
-<p>For small datasets (&lt;50mb), you can use the <code>dataset</code> folder that is tracked by github. Add the files just like you would any other file.</p>
-<p>If you create a folder named <code>data</code> this will cause problems.</p>
-<p>For larger datasets, you’ll need to create a new folder in the project root directory named <code>dataset-ignore</code>. This will be ignored by git (based off the <code>.gitignore</code> file in the project root directory) which will help you avoid issues with Github’s size limits. Your team will have to manually make sure the data files in <code>dataset-ignore</code> are synced across team members.</p>
-<p>Your <a href="./scripts/load_and_clean_data.R">load_and_clean_data.R</a> file is how you will load and clean your data. Here is a an example of a very simple one.</p>
-<p>You should never use absolute paths (eg. <code>/Users/danielsussman/path/to/project/</code> or <code>C:\MA415\\Final_Project\</code>).</p>
-<p>You might consider using the <code>here</code> function from the <a href="https://here.r-lib.org/articles/here.html"><code>here</code> package</a> to avoid path problems.</p>
-</section>
-<section id="load-and-clean-data-script" class="level3">
-<h3 class="anchored" data-anchor-id="load-and-clean-data-script">Load and clean data script</h3>
-<p>The idea behind this file is that someone coming to your website could largely replicate your analyses after running this script on the original data sets to clean them. This file might create a derivative data set that you then use for your subsequent analysis. Note that you don’t need to run this script from every post/page. Instead, you can load in the results of this script, which could be plain text files or <code>.RData</code> files. In your data page you’ll describe how these results were created. If you have a very large data set, you might save smaller data sets that you can use for exploration purposes. To link to this file, you can use <code>[cleaning script](/scripts/load_and_clean_data.R)</code> wich appears as <a href="./scripts/load_and_clean_data.R">cleaning script</a>.</p>
-<hr>
-</section>
-</section>
-<section id="rubric-on-this-page" class="level2">
-<h2 class="anchored" data-anchor-id="rubric-on-this-page">Rubric: On this page</h2>
-<p>You will</p>
-<ul>
-<li>Describe where/how to find data.
-<ul>
-<li>You must include a link to the original data source(s). Make sure to provide attribution to those who collected the data.</li>
-<li>Why was the data collected/curated? Who put it together? (This is important, if you don’t know why it was collected then that might not be a good dataset to look at.</li>
-</ul></li>
-<li>Describe the different data files used and what each variable means.
-<ul>
-<li>If you have many variables then only describe the most relevant ones and summarize the rest.</li>
-</ul></li>
-<li>Describe any cleaning you had to do for your data.
-<ul>
-<li>You <em>must</em> include a link to your <code>load_and_clean_data.R</code> file.</li>
-<li>Rrename variables and recode factors to make data more clear.</li>
-<li>Also, describe any additional R packages you used outside of those covered in class.</li>
-<li>Describe and show code for how you combined multiple data files and any cleaning that was necessary for that.</li>
-<li>Some repetition of what you do in your <code>load_and_clean_data.R</code> file is fine and encouraged if it helps explain what you did.</li>
-</ul></li>
-<li>Organization, clarity, cleanliness of the page
-<ul>
-<li>Make sure to remove excessive warnings, use clean easy-to-read code (without side scrolling), organize with sections, use bullets and other organization tools, etc.</li>
-<li>This page should be self-contained.</li>
-</ul></li>
-</ul>
-</section>
 <section id="nypd-shooting-data---team-6" class="level2">
 <h2 class="anchored" data-anchor-id="nypd-shooting-data---team-6">NYPD Shooting Data - Team 6</h2>
 <section id="data-background" class="level3">
@@ -260,8 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This dataset encompasses a detailed account of each shooting incident in NYC from 2006 up until the end of the last calendar year. Compiled and meticulously reviewed quarterly by the Office of Management Analysis and Planning, it is then made accessible on the NYPD website. Every entry in this dataset chronicles a specific shooting event, detailing the incident’s circumstances, location, and timing. Additionally, it provides demographics regarding suspects and victims.</p>
 <p>The data might be biased as it is based only on New York. It might not be able to reflect the circumstances of shootings and the characteristics of shooters in a broader setting. Besides, the age is categorized by ranges, such as 18-24, 25-44, and 45-64, which might not be clear and specific enough. Without a more detailed record of the shooting incidents, we do not know the number of perpetrators and victims. The lack of a detailed understanding of the level of severity of the incidents may cause bias in our analysis.</p>
 <p>The data has been used on another capstone project, “Phantom Shootings,” by Allan Ambris, The Graduate Center, City University of New York. This data is used to prove the author’s statement that the data NYPD reported is just a subset of the true dataset. The author asks whether a single victim may appear in many entries. (Ambris)</p>
-<p>We are able to download the dataset from the original source. Link to the data:</p>
-<p><a href="https://catalog.data.gov/dataset/nypd-shooting-incident-data-historic">NYPD Police Shootings</a></p>
+<p>We are able to download the dataset from the original source. Link to the data: <a href="https://catalog.data.gov/dataset/nypd-shooting-incident-data-historic">NYPD Police Shootings</a></p>
 </section>
 <section id="summary-of-the-dataset-structure-and-some-key-statistics" class="level3">
 <h3 class="anchored" data-anchor-id="summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</h3>
@@ -270,21 +200,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Date Range</strong>: The dataset includes an OCCUR_DATE column, suggesting the dates on which incidents occurred.</p></li>
 <li><p><strong>Location Data</strong>: There are multiple columns related to the location of the incidents, such as BORO, PRECINCT, X_COORD_CD, Y_COORD_CD, Latitude, and Longitude.</p></li>
 <li><p><strong>Incident Details</strong>: Includes details like JURISDICTION_CODE, LOC_CLASSFCTN_DESC (Location Classification Description), and LOCATION_DESC.</p></li>
-<li><p><strong>Perpetrator and Victim Information</strong>: Information on the perpetrator (PERP_AGE_GROUP, PERP_SEX, PERP_RACE) and victim (VIC_AGE_GROUP, VIC_SEX, VIC_RACE) is available.</p></li>
+<li><p><strong>Perpetrator and Victim Information</strong>: Information on the perpetrator (PERP_AGE_GROUP, PERP_SEX, PERP_RACE) and victim (VIC_AGE_GROUP, VIC_SEX, VIC_RACE) is available. We will concentrate our analysis on examining potential differences among racial groups in shooting incidents, focusing specifically on the interplay between the perpetrator’s race (PERP_RACE) and the victim’s race (VIC_RACE), in conjunction with their gender and age.</p></li>
 <li><p><strong>Statistical Flags</strong>: Includes a flag for statistical murders (STATISTICAL_MURDER_FLAG)</p></li>
 </ul>
 </section>
-<section id="data-cleaning" class="level3">
-<h3 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h3>
+<section id="data-cleaning-and-loading" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning-and-loading">Data Cleaning and Loading</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"scripts/load_and_clean_data.R"</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo =</span> <span class="cn">TRUE</span> <span class="co"># Use echo=FALSE or omit it to avoid code output  </span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-&gt; library(tidyverse)</code></pre>
-</div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo =</span> <span class="cn">FALSE</span> <span class="co"># Use echo=FALSE or omit it to avoid code output</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
@@ -295,14 +221,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-&gt; NYPD_data &lt;- read_csv("dataset/NYPD_Shooting_Incident_Data__Historic__20240322.csv")</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 27312 Columns: 21
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+Rows: 27312 Columns: 21
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
 chr  (12): OCCUR_DATE, BORO, LOC_OF_OCCUR_DESC, LOC_CLASSFCTN_DESC, LOCATION...
@@ -314,9 +234,7 @@ time  (1): OCCUR_TIME
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-&gt; str(NYPD_data)
-spc_tbl_ [27,312 × 21] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+<pre><code>spc_tbl_ [27,312 × 21] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
  $ INCIDENT_KEY           : num [1:27312] 2.29e+08 1.37e+08 1.48e+08 1.47e+08 5.89e+07 ...
  $ OCCUR_DATE             : chr [1:27312] "05/27/2021" "06/27/2014" "11/21/2015" "10/09/2015" ...
  $ OCCUR_TIME             : 'hms' num [1:27312] 21:30:00 17:40:00 03:56:00 18:30:00 ...
@@ -364,63 +282,6 @@ spc_tbl_ [27,312 × 21] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
   ..   Lon_Lat = col_character()
   .. )
  - attr(*, "problems")=&lt;externalptr&gt; 
-
-&gt; summary(NYPD_data)
-  INCIDENT_KEY        OCCUR_DATE         OCCUR_TIME           BORO          
- Min.   :  9953245   Length:27312       Length:27312      Length:27312      
- 1st Qu.: 63860880   Class :character   Class1:hms        Class :character  
- Median : 90372218   Mode  :character   Class2:difftime   Mode  :character  
- Mean   :120860536                      Mode  :numeric                      
- 3rd Qu.:188810230                                                          
- Max.   :261190187                                                          
-                                                                            
- LOC_OF_OCCUR_DESC     PRECINCT      JURISDICTION_CODE LOC_CLASSFCTN_DESC
- Length:27312       Min.   :  1.00   Min.   :0.0000    Length:27312      
- Class :character   1st Qu.: 44.00   1st Qu.:0.0000    Class :character  
- Mode  :character   Median : 68.00   Median :0.0000    Mode  :character  
-                    Mean   : 65.64   Mean   :0.3269                      
-                    3rd Qu.: 81.00   3rd Qu.:0.0000                      
-                    Max.   :123.00   Max.   :2.0000                      
-                                     NA's   :2                           
- LOCATION_DESC      STATISTICAL_MURDER_FLAG PERP_AGE_GROUP    
- Length:27312       Mode :logical           Length:27312      
- Class :character   FALSE:22046             Class :character  
- Mode  :character   TRUE :5266              Mode  :character  
-                                                              
-                                                              
-                                                              
-                                                              
-   PERP_SEX          PERP_RACE         VIC_AGE_GROUP        VIC_SEX         
- Length:27312       Length:27312       Length:27312       Length:27312      
- Class :character   Class :character   Class :character   Class :character  
- Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-                                                                            
-                                                                            
-                                                                            
-                                                                            
-   VIC_RACE           X_COORD_CD        Y_COORD_CD        Latitude    
- Length:27312       Min.   : 914928   Min.   :125757   Min.   :40.51  
- Class :character   1st Qu.:1000028   1st Qu.:182834   1st Qu.:40.67  
- Mode  :character   Median :1007731   Median :194487   Median :40.70  
-                    Mean   :1009449   Mean   :208127   Mean   :40.74  
-                    3rd Qu.:1016838   3rd Qu.:239518   3rd Qu.:40.82  
-                    Max.   :1066815   Max.   :271128   Max.   :40.91  
-                                                       NA's   :10     
-   Longitude        Lon_Lat         
- Min.   :-74.25   Length:27312      
- 1st Qu.:-73.94   Class :character  
- Median :-73.92   Mode  :character  
- Mean   :-73.91                     
- 3rd Qu.:-73.88                     
- Max.   :-73.70                     
- NA's   :10                         
-
-&gt; NYPD_clean_data &lt;- NYPD_data %&gt;% select(-c(OCCUR_TIME, 
-+     LOC_OF_OCCUR_DESC)) %&gt;% filter(!is.na(PERP_RACE) &amp; !is.na(VIC_RACE))
-
-&gt; NYPD_clean_data &lt;- na.omit(NYPD_clean_data)
-
-&gt; str(NYPD_clean_data)
 tibble [1,706 × 19] (S3: tbl_df/tbl/data.frame)
  $ INCIDENT_KEY           : num [1:1706] 2.44e+08 2.56e+08 2.50e+08 2.39e+08 2.48e+08 ...
  $ OCCUR_DATE             : chr [1:1706] "04/12/2022" "12/17/2022" "08/27/2022" "01/15/2022" ...
@@ -442,15 +303,46 @@ tibble [1,706 × 19] (S3: tbl_df/tbl/data.frame)
  $ Longitude              : num [1:1706] -73.9 -73.9 -73.9 -73.8 -73.9 ...
  $ Lon_Lat                : chr [1:1706] "POINT (-73.86832754 40.86658962)" "POINT (-73.91273918 40.86186421)" "POINT (-73.910994 40.837683)" "POINT (-73.781699 40.684689)" ...
  - attr(*, "na.action")= 'omit' Named int [1:16296] 1 2 3 4 5 6 7 8 9 10 ...
-  ..- attr(*, "names")= chr [1:16296] "1" "2" "3" "4" ...
-
-&gt; write_csv(NYPD_clean_data, file = here::here("dataset", 
-+     "nypd_shooting_clean.csv"))
-
-&gt; saveRDS(NYPD_clean_data, here::here("dataset", "nypd_shooting_clean.rds"))</code></pre>
+  ..- attr(*, "names")= chr [1:16296] "1" "2" "3" "4" ...</code></pre>
 </div>
 </div>
-<p>We changed ‘OCCUR_DATE’ to DateTime format. We removed the OCCUR_TIME and LOC_OF_OCCUR_DESC as we did not find them useful for our analysis. We also removed columns where we did not have the perpetrator’s race or the victim’s race.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the dataset</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>NYPD_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dataset/NYPD_Shooting_Incident_Data__Historic__20240322.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 27312 Columns: 21
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (12): OCCUR_DATE, BORO, LOC_OF_OCCUR_DESC, LOC_CLASSFCTN_DESC, LOCATION...
+dbl   (7): INCIDENT_KEY, PRECINCT, JURISDICTION_CODE, X_COORD_CD, Y_COORD_CD...
+lgl   (1): STATISTICAL_MURDER_FLAG
+time  (1): OCCUR_TIME
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>NYPD_clean_data <span class="ot">&lt;-</span> NYPD_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(OCCUR_TIME, LOC_OF_OCCUR_DESC)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(PERP_RACE) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(VIC_RACE)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">OCCUR_DATE =</span> <span class="fu">dmy</span>(OCCUR_DATE), </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">OCCUR_YEAR =</span> <span class="fu">year</span>(OCCUR_DATE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `OCCUR_DATE = dmy(OCCUR_DATE)`.
+Caused by warning:
+!  11001 failed to parse.</code></pre>
+</div>
+</div>
+<section id="cleaning-process" class="level4">
+<h4 class="anchored" data-anchor-id="cleaning-process">Cleaning Process</h4>
+<ul>
+<li>We removed the OCCUR_TIME and LOC_OF_OCCUR_DESC as we did not find them useful for our analysis.</li>
+<li>We changed ‘OCCUR_DATE’ to DateTime format.</li>
+<li>We also removed columns where we did not have the perpetrator’s race or the victim’s race.</li>
+</ul>
+</section>
 <section id="extra-packages" class="level4">
 <h4 class="anchored" data-anchor-id="extra-packages">Extra packages</h4>
 <ul>
@@ -462,15 +354,15 @@ tibble [1,706 × 19] (S3: tbl_df/tbl/data.frame)
 <section id="exploratory-data-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the dataset</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_shooting_clean.rds"</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows of the dataset</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the dataset</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_shooting_clean.rds"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows of the dataset</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 19
   INCIDENT_KEY OCCUR_DATE BORO     PRECINCT JURISDICTION_CODE LOC_CLASSFCTN_DESC
@@ -486,17 +378,17 @@ tibble [1,706 × 19] (S3: tbl_df/tbl/data.frame)
 #   VIC_SEX &lt;chr&gt;, VIC_RACE &lt;chr&gt;, X_COORD_CD &lt;dbl&gt;, Y_COORD_CD &lt;dbl&gt;,
 #   Latitude &lt;dbl&gt;, Longitude &lt;dbl&gt;, Lon_Lat &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>prep_race_counts <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(PERP_RACE) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(prep_race_counts, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PERP_RACE, n), <span class="at">y =</span> n, <span class="at">fill =</span> PERP_RACE)) <span class="sc">+</span> </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Perpetrator Race Distribution"</span>, <span class="at">x =</span> <span class="st">"Perpetrator Race"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>prep_race_counts <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(PERP_RACE) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(prep_race_counts, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PERP_RACE, n), <span class="at">y =</span> n, <span class="at">fill =</span> PERP_RACE)) <span class="sc">+</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Perpetrator Race Distribution"</span>, <span class="at">x =</span> <span class="st">"Perpetrator Race"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="data_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We created a bar chart to analyze the perpetrator’s race, a key variable of interest for later investigation in our project. The chart revealed approximately 600 missing (null) values for this variable, indicating a potential challenge that requires our attention.</p>
