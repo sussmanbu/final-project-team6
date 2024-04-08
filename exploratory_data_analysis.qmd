@@ -154,3 +154,136 @@ ggplot(vic_race_counts, aes(x = reorder(VIC_RACE, n), y = n, fill = VIC_RACE)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
+```{r}
+# Calculate proportions Blog Post 4
+proportions <- data %>%
+  group_by(PERP_RACE) %>%
+  summarise(Proportion = mean(STATISTICAL_MURDER_FLAG == "TRUE", na.rm = TRUE))
+
+# Create the plot
+ggplot(proportions, aes(x = PERP_RACE, y = Proportion, fill = PERP_RACE)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Proportion of Incidents Classified as Statistical Murders by Perpetrator Race",
+       x = "Perpetrator Race",
+       y = "Proportion") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+mod1 <- glm(
+  STATISTICAL_MURDER_FLAG ~ PERP_RACE + PERP_AGE_GROUP + PERP_SEX,
+  data = data, 
+  family = "binomial"
+)
+
+summary(mod1)
+plot(mod1)
+```
+
+```{r}
+library(caret)
+library(nnet)
+str(data)
+```
+
+```{r}
+data$PERP_RACE <- as.factor(data$PERP_RACE)
+data$PERP_AGE_GROUP <- as.factor(data$PERP_AGE_GROUP)
+data$PERP_SEX <- as.factor(data$PERP_SEX)
+data$STATISTICAL_MURDER_FLAG <- as.factor(data$STATISTICAL_MURDER_FLAG)
+```
+
+```{r}
+# Fit the logistic regression model
+model <- glm(STATISTICAL_MURDER_FLAG ~ PERP_RACE + PERP_AGE_GROUP + PERP_SEX, data = data, family = "binomial")
+
+# Summarize the model
+summary(model)
+```
+
+```{r}
+library(pROC)
+
+# Predict probabilities
+predictions <- predict(model, type = "response")
+
+# ROC curve
+roc_curve <- roc(data$STATISTICAL_MURDER_FLAG, predictions)
+plot(roc_curve)
+auc(roc_curve)
+```
+
+```{r}
+# Calculate the proportions of each race per precinct
+race_proportions <- data %>%
+  group_by(BORO, PERP_RACE) %>%
+  summarise(IncidentCount = n(), .groups = 'drop') %>%
+  mutate(TotalIncidents = sum(IncidentCount), 
+         Proportion = IncidentCount / TotalIncidents) %>%
+  select(BORO, PERP_RACE, Proportion) %>%
+  spread(key = PERP_RACE, value = Proportion, fill = 0) # Converts races to columns
+
+# View the prepared dataset
+head(race_proportions)
+```
+```{r}
+dim(race_proportions)
+
+# Ensure that the dataset has more rows than the number of clusters you wish to create
+nrow(race_proportions)
+```
+
+```{r}
+# We'll use a safe approach to determine a suitable number of clusters
+num_rows <- nrow(race_proportions)
+num_clusters <- ifelse(num_rows > 10, 3, 1) # Just a basic check to avoid the error
+
+# Perform k-means clustering with the adjusted number of clusters
+set.seed(123) # Ensure reproducibility
+optimal_clusters <- kmeans(race_proportions[, -1], centers = num_clusters, nstart = 10)
+
+# Add the cluster assignment back to your dataset
+race_proportions$Cluster <- optimal_clusters$cluster
+```
+
+```{r}
+# Adjust the plot code if necessary, especially if the number of precincts (or observations) is small
+ggplot(race_proportions, aes(x = factor(BORO), y = Cluster, color = factor(Cluster))) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "Cluster of BOROs by Racial Composition of Incidents",
+       x = "BORO", y = "Cluster", color = "Cluster Group") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+```{r}
+# Aggregate data
+incident_counts <- data %>%
+  group_by(BORO, PERP_RACE) %>%
+  summarise(Incidents = n(), .groups = 'drop')
+
+# View the aggregated data
+head(incident_counts)
+```
+
+```{r}
+# Pivot data correctly to maintain PERP_RACE for plotting
+# We will create a new column for races to ensure it remains in the dataset
+incident_counts$Race <- incident_counts$PERP_RACE
+
+incident_matrix <- incident_counts %>%
+  pivot_wider(names_from = PERP_RACE, values_from = Incidents, values_fill = list(Incidents = 0)) %>%
+  mutate(BORO = as.factor(BORO)) %>%
+  gather(key = "PERP_RACE", value = "Incidents", -BORO, -Race)
+
+# Now, create the heatmap with corrected data
+ggplot(incident_matrix, aes(x = BORO, y = Race, fill = Incidents)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "gray", high = "blue") + # Adjust limits as needed
+  theme_minimal() +
+  labs(title = "Heatmap of Incidents by Precinct and Perpetrator Race",
+       x = "LOC_CLASSFCTN_DESC",
+       y = "Perpetrator Race",
+       fill = "Incident Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
