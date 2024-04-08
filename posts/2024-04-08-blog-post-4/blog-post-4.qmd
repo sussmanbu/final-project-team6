@@ -1,0 +1,72 @@
+---
+title: "Blog Post 4"
+author: "Team"
+date: "2024-04-08"
+date-modified: "2024-04-08"
+draft: FALSE
+---
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(ggplot2)
+library(ggcorrplot) 
+library(GGally)
+library(readr)
+library(dplyr)
+library(lubridate)
+
+
+# Read the dataset
+data <- readRDS("dataset/nypd_shooting_clean.rds")
+
+# Display the first few rows of the dataset
+head(data)
+```
+
+```{r}
+# Convert 'OCCUR_DATE' to datetime format
+data <- data %>%
+  mutate(OCCUR_DATE = dmy(OCCUR_DATE), 
+         OCCUR_YEAR = year(OCCUR_DATE))
+```
+
+```{r}
+prep_race_counts <- data |>
+  count(PERP_RACE) |>
+  arrange(desc(n))
+
+ggplot(prep_race_counts, aes(x = reorder(PERP_RACE, n), y = n, fill = PERP_RACE)) + 
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Perpetrator Race Distribution", x = "Perpetrator Race", y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+We created a bar chart to analyze the perpetrator’s race, a key variable of interest for later investigation in our project. The chart revealed approximately 600 missing (null) values for this variable, indicating a potential challenge that requires our attention.
+
+```{r}
+# Calculate proportions Blog Post 4
+proportions <- data %>%
+  group_by(PERP_RACE) %>%
+  summarise(Proportion = mean(STATISTICAL_MURDER_FLAG == "TRUE", na.rm = TRUE))
+
+# Create the plot
+ggplot(proportions, aes(x = PERP_RACE, y = Proportion, fill = PERP_RACE)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Proportion of Incidents Classified as Statistical Murders by Perpetrator Race",
+       x = "Perpetrator Race",
+       y = "Proportion") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+mod1 <- glm(
+  STATISTICAL_MURDER_FLAG ~ PERP_RACE + PERP_AGE_GROUP + PERP_SEX,
+  data = data, 
+  family = "binomial"
+)
+mod1
+```
+
+We made a logistic model using murder statistics as y variable and PERP_RACE, PERP_AGE_GROUP, and PERP_SEX as predictors. And based on the bar plot above, Asian/pacific islander has the largest proportion of Incidents Classified as Statistical Murders by Perpetrator Race.
