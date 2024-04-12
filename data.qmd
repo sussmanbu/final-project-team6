@@ -89,6 +89,15 @@ ggplot(prep_race_counts, aes(x = reorder(PERP_RACE, n), y = n, fill = PERP_RACE)
 ```
 We created a bar chart to analyze the perpetrator's race, a key variable of interest for later investigation in our project. The chart revealed approximately 600 missing (null) values for this variable, indicating a potential challenge that requires our attention.
 
+### Combining Datasets
+
+```{r}
+NYPD_arrest_data <- readRDS("dataset/nypd_arrest.rds")
+combined_df <- merge(data, NYPD_arrest_data, by = c("X_COORD_CD", "Y_COORD_CD","Latitude","Longitude","PERP_SEX","JURISDICTION_CODE","PERP_RACE"))
+combined_df
+```
+
+
 ### References
 
 Ambris, Allan. “Phantom Shootings.” CUNY Academic Works, academicworks.cuny.edu/gc_etds/5410/. Accessed 25 Mar. 2024.
