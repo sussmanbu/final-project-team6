@@ -94,7 +94,6 @@ We created a bar chart to analyze the perpetrator's race, a key variable of inte
 ```{r}
 NYPD_arrest_data <- readRDS("dataset/nypd_arrest.rds")
 combined_df <- merge(data, NYPD_arrest_data, by = c("X_COORD_CD", "Y_COORD_CD","Latitude","Longitude","PERP_SEX","JURISDICTION_CODE","PERP_RACE"))
-combined_df
 ```
 
 
