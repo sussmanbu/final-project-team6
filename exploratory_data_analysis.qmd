@@ -205,12 +205,12 @@ summary(model)
 library(pROC)
 
 # Predict probabilities
-predictions <- predict(model, type = "response")
+# predictions <- predict(model, type = "response")
 
 # ROC curve
-roc_curve <- roc(data$STATISTICAL_MURDER_FLAG, predictions)
-plot(roc_curve)
-auc(roc_curve)
+# roc_curve <- roc(data$STATISTICAL_MURDER_FLAG, predictions)
+#plot(roc_curve)
+# auc(roc_curve)
 ```
 
 ```{r}
@@ -287,3 +287,5 @@ ggplot(incident_matrix, aes(x = BORO, y = Race, fill = Incidents)) +
        fill = "Incident Count") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
+
