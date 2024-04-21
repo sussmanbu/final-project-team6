@@ -9,7 +9,7 @@ library(GGally)
 library(readr)
 library(dplyr)
 library(lubridate)
-
+library(sf)
 
 # Read the dataset
 data <- readRDS("dataset/nypd_shooting_clean.rds")
@@ -33,6 +33,10 @@ data <- data %>%
   mutate(OCCUR_DATE = dmy(OCCUR_DATE), 
          OCCUR_YEAR = year(OCCUR_DATE))
 
+```
+```{r}
+NYPD_arrest_data <- readRDS("dataset/nypd_arrest.rds")
+combined_df <- merge(data, NYPD_arrest_data, by = c("X_COORD_CD", "Y_COORD_CD","Latitude","Longitude","PERP_SEX","JURISDICTION_CODE","PERP_RACE"))
 ```
 
 ```{r}
@@ -205,87 +209,78 @@ summary(model)
 library(pROC)
 
 # Predict probabilities
-# predictions <- predict(model, type = "response")
+predictions <- predict(model, type = "response")
 
 # ROC curve
-# roc_curve <- roc(data$STATISTICAL_MURDER_FLAG, predictions)
-#plot(roc_curve)
-# auc(roc_curve)
+roc_curve <- roc(data$STATISTICAL_MURDER_FLAG, predictions)
+plot(roc_curve)
+auc(roc_curve)
 ```
 
-```{r}
-# Calculate the proportions of each race per precinct
-race_proportions <- data %>%
-  group_by(BORO, PERP_RACE) %>%
-  summarise(IncidentCount = n(), .groups = 'drop') %>%
-  mutate(TotalIncidents = sum(IncidentCount), 
-         Proportion = IncidentCount / TotalIncidents) %>%
-  select(BORO, PERP_RACE, Proportion) %>%
-  spread(key = PERP_RACE, value = Proportion, fill = 0) # Converts races to columns
-
-# View the prepared dataset
-head(race_proportions)
-```
-```{r}
-dim(race_proportions)
-
-# Ensure that the dataset has more rows than the number of clusters you wish to create
-nrow(race_proportions)
-```
 
 ```{r}
-# We'll use a safe approach to determine a suitable number of clusters
-num_rows <- nrow(race_proportions)
-num_clusters <- ifelse(num_rows > 10, 3, 1) # Just a basic check to avoid the error
+shapefile_path <- "tl_2022_36_tract/tl_2022_36_tract.shp"
+complete_data <- st_read(shapefile_path)
 
-# Perform k-means clustering with the adjusted number of clusters
-set.seed(123) # Ensure reproducibility
-optimal_clusters <- kmeans(race_proportions[, -1], centers = num_clusters, nstart = 10)
+map_df <- st_as_sf(combined_df, coords = c("Longitude", "Latitude"), crs = 4326, agr = "constant")
 
-# Add the cluster assignment back to your dataset
-race_proportions$Cluster <- optimal_clusters$cluster
-```
+# Filter tracts for only New York City boroughs by their county FIPS codes
+nyc_tracts <- complete_data %>% 
+  filter(COUNTYFP %in% c("005", "047", "061", "081", "085"))
 
-```{r}
-# Adjust the plot code if necessary, especially if the number of precincts (or observations) is small
-ggplot(race_proportions, aes(x = factor(BORO), y = Cluster, color = factor(Cluster))) +
-  geom_point() +
+# Plotting the shapefile for NYC tracts and overlaying points
+final_plot <- ggplot() +
+  geom_sf(data = nyc_tracts, fill = "white", color = "gray") +
+  geom_sf(data = map_df, color = "red", size = 1, alpha = 0.5) +  # Adds the points
   theme_minimal() +
-  labs(title = "Cluster of BOROs by Racial Composition of Incidents",
-       x = "BORO", y = "Cluster", color = "Cluster Group") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  labs(title = "Map of New York City with Offense Data Points", x = "Longitude", y = "Latitude")
+
+# Print the final plot
+print(final_plot)
 ```
 
-```{r}
-# Aggregate data
-incident_counts <- data %>%
-  group_by(BORO, PERP_RACE) %>%
-  summarise(Incidents = n(), .groups = 'drop')
-
-# View the aggregated data
-head(incident_counts)
-```
 
 ```{r}
-# Pivot data correctly to maintain PERP_RACE for plotting
-# We will create a new column for races to ensure it remains in the dataset
-incident_counts$Race <- incident_counts$PERP_RACE
-
-incident_matrix <- incident_counts %>%
-  pivot_wider(names_from = PERP_RACE, values_from = Incidents, values_fill = list(Incidents = 0)) %>%
-  mutate(BORO = as.factor(BORO)) %>%
-  gather(key = "PERP_RACE", value = "Incidents", -BORO, -Race)
-
-# Now, create the heatmap with corrected data
-ggplot(incident_matrix, aes(x = BORO, y = Race, fill = Incidents)) +
-  geom_tile(color = "white") +
-  scale_fill_gradient(low = "gray", high = "blue") + # Adjust limits as needed
+# explores relationships between perpetrator and victim demographics
+# Compare perpetrator and victim age groups
+ggplot(combined_df, aes(x = PERP_AGE_GROUP, fill = VIC_AGE_GROUP)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Perpetrator Age Group", y = "Count", fill = "Victim Age Group") +
   theme_minimal() +
-  labs(title = "Heatmap of Incidents by Precinct and Perpetrator Race",
-       x = "LOC_CLASSFCTN_DESC",
-       y = "Perpetrator Race",
-       fill = "Incident Count") +
+  ggtitle("Comparison of Perpetrator and Victim Age Groups")
+
+# Analyzing race and gender impact
+ggplot(combined_df, aes(x = PERP_RACE, fill = VIC_SEX)) +
+  geom_bar(position = "stack") +
+  labs(x = "Perpetrator Race", y = "Count", fill = "Victim Sex") +
+  theme_minimal() +
+  ggtitle("Impact of Perpetrator Race on Victim Sex") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+# offense and Perpetrator race correlation
+combined_df |>
+  group_by(OFNS_DESC) |>
+  summarise(Count = n(), .groups = 'drop') |>
+  filter(Count >= 50) |>
+  ggplot(aes(x = OFNS_DESC, y = Count, fill = OFNS_DESC)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +
+  theme_minimal() +
+  labs(x = "Offense Description", y = "Count") +
+  guides(fill = FALSE)
+
+combined_df |>
+  group_by(OFNS_DESC, PERP_RACE) |>
+  summarise(Count = n(), .groups = 'drop') |>
+  filter(Count >= 10) |>
+  ggplot(aes(x = OFNS_DESC, y = Count, fill = PERP_RACE)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 0, hjust = 1)) +
+  theme_minimal() +
+  labs(x = "Offense Description", y = "Count", fill = "Perpetrator Race")
 ```
 
 
