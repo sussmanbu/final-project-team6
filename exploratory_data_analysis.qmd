@@ -32,7 +32,6 @@ summary(data)
 data <- data %>%
   mutate(OCCUR_DATE = dmy(OCCUR_DATE), 
          OCCUR_YEAR = year(OCCUR_DATE))
-
 ```
 ```{r}
 NYPD_arrest_data <- readRDS("dataset/nypd_arrest.rds")
@@ -87,16 +86,16 @@ ggplot(vic_age_counts, aes(x = reorder(VIC_AGE_GROUP, n), y = n, fill = VIC_AGE_
 ```{r correlation matrix}
 
 # Ensure we're working with the numeric part of the dataset
-numeric_data <- data %>% 
-  select_if(is.numeric)
+#numeric_data <- data %>% 
+  #select_if(is.numeric)
 
 # Compute the correlation matrix, handling NA values by computing correlations for complete pairs
-cor_matrix <- cor(numeric_data, use = "pairwise.complete.obs")
+#cor_matrix <- cor(numeric_data, use = "pairwise.complete.obs")
 
 # Plot the correlation matrix using ggcorrplot
-ggcorrplot(cor_matrix, method = "circle", type = "lower", 
-           lab = TRUE, lab_size = 3, tl.cex = 10, tl.col = "black",
-           title = "Correlation Matrix of Numeric Variables")
+#ggcorrplot(cor_matrix, method = "circle", type = "lower", 
+           #lab = TRUE, lab_size = 3, tl.cex = 10, tl.col = "black",
+           #title = "Correlation Matrix of Numeric Variables")
 
 
 ```
@@ -143,7 +142,6 @@ ggplot(prep_race_counts, aes(x = reorder(PERP_RACE, n), y = n, fill = PERP_RACE)
   theme_minimal() +
   labs(title = "Perpetrator Race Distribution", x = "Perpetrator Race", y = "Count") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
 ```
 
 ```{r}
@@ -221,17 +219,14 @@ auc(roc_curve)
 ```{r}
 shapefile_path <- "tl_2022_36_tract/tl_2022_36_tract.shp"
 complete_data <- st_read(shapefile_path)
-
-map_df <- st_as_sf(combined_df, coords = c("Longitude", "Latitude"), crs = 4326, agr = "constant")
-
-# Filter tracts for only New York City boroughs by their county FIPS codes
-nyc_tracts <- complete_data %>% 
+nyc_tracts <- complete_data |> 
   filter(COUNTYFP %in% c("005", "047", "061", "081", "085"))
 
+map_df <- st_as_sf(combined_df, coords = c("Longitude", "Latitude"), crs = 4326, agr = "constant")
 # Plotting the shapefile for NYC tracts and overlaying points
 final_plot <- ggplot() +
   geom_sf(data = nyc_tracts, fill = "white", color = "gray") +
-  geom_sf(data = map_df, color = "red", size = 1, alpha = 0.5) +  # Adds the points
+  geom_sf(data = map_df, color = "brown3", size = 1, alpha = 0.5) +  # Adds the points
   theme_minimal() +
   labs(title = "Map of New York City with Offense Data Points", x = "Longitude", y = "Latitude")
 
@@ -283,4 +278,88 @@ combined_df |>
   labs(x = "Offense Description", y = "Count", fill = "Perpetrator Race")
 ```
 
+```{r}
+nypd_payroll <- readRDS("dataset/nypd_payroll.rds")
+nypd_payroll <- nypd_payroll %>%
+  rename(
+    work_boro = `Work Location Borough`,
+    base_salary = `Base Salary`)
+```
 
+```{r}
+average_salary_by_borough <- nypd_payroll %>%
+  group_by(work_boro) %>%
+  summarise(AverageSalary = mean(base_salary, na.rm = TRUE)) %>%
+  ungroup()  # Ensure that we remove the grouping structure
+
+# Now plot the average salary by borough using ggplot2
+ggplot(average_salary_by_borough, aes(x = work_boro, y = AverageSalary, fill = work_boro)) +
+  geom_col(position = "dodge") +
+  theme_minimal() +
+  labs(title = "Average Salary by Work Location Borough", x = "Work Location Borough", y = "Average Salary") +
+  guides(fill = FALSE)
+```
+
+```{r}
+# Calculate average salary by borough
+average_salary_by_borough <- nypd_payroll %>%
+  group_by(work_boro) %>%
+  summarise(AverageSalary = mean(base_salary, na.rm = TRUE)) %>%
+  ungroup()
+
+borough_to_fips <- data.frame(
+  work_boro = c("BRONX", "BROOKLYN", "MANHATTAN", "QUEENS", "OTHER"),  # Note: Ensure the names match the data
+  COUNTYFP = c("005", "047", "061", "081", "085"))
+
+average_salary_by_fips <- average_salary_by_borough %>%
+  left_join(borough_to_fips, by = "work_boro")
+average_salary_by_fips <- average_salary_by_fips %>%
+  select(COUNTYFP, AverageSalary)
+
+head(average_salary_by_fips)
+```
+
+```{r}
+# map Average Salary by NYC Borough
+nyc_tracts_salary <- nyc_tracts %>%
+  left_join(average_salary_by_fips, by = "COUNTYFP")
+# Plot the map with average salaries indicated by color
+ggplot(nyc_tracts_salary) +
+  geom_sf(aes(fill = AverageSalary), color = "gray", size = 0.5) +
+  scale_fill_gradient(low = "white", high = "deepskyblue4", name = "Avg Salary",
+                      na.value = "grey50", labels = scales::dollar_format()) +
+  labs(title = "Average Salary by NYC Borough",
+       subtitle = "Color intensity indicates average salary levels",
+       fill = "Average Salary") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+```{r}
+# Average Salary and Crime Data Points by NYC Borough
+map_df <- st_transform(map_df, st_crs(nyc_tracts_salary)$epsg)
+final_combined_plot <- ggplot() +
+  geom_sf(data = nyc_tracts_salary, aes(fill = AverageSalary), color = "gray", size = 0.5) +
+  geom_sf(data = map_df, aes(color = VIC_RACE), size = 1, alpha = 0.7) +
+  scale_fill_gradient(low = "white", high = "deepskyblue4", name = "Avg Salary",
+                      na.value = "grey50", labels = scales::dollar_format()) +
+  scale_color_manual(values = c("ASIAN / PACIFIC ISLANDER" = "green", "BLACK" = "brown3", "WHITE HISPANIC" = "yellow", "WHITE" = "deeppink", "UNKNOWN" = "darkgray", "BLACK HISPANIC" = "darkblue"), name = "Victim's Race") +
+  labs(title = "Average Salary and Crime Data Points by NYC Borough",
+       subtitle = "Boroughs colored by average salary; Points indicate crime locations",
+       fill = "Average Salary", x = "Longitude", y = "Latitude", color = "Perpetrator's Race") +
+  theme_minimal() +
+  theme(legend.position = "right")
+print(final_combined_plot)
+```
+
+```{r}
+vic_race <- combined_df |>
+  count(VIC_RACE) |>
+  arrange(desc(n))
+
+ggplot(vic_race, aes(x = reorder(VIC_RACE, n), y = n, fill = VIC_RACE)) + 
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Victim Race Distribution", x = "Victim Race", y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+```
