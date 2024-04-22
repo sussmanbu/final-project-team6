@@ -1,11 +1,147 @@
 ---
-title: "Big Picture"
+title: "Behind the Numbers: Unveiling the Intersection of Poverty, Race, and Policing in NYC"
 description: "A 538/Upshot style article about the data."
 toc: true
 draft: FALSE
 ---
 
-![](images/The_Big_Picture_2.jpeg)
+![](images/nyc.jpeg)
+```{r imports}
+# Load necessary libraries
+library(tidyverse)
+library(ggplot2)
+library(ggcorrplot) 
+library(GGally) 
+library(readr)
+library(dplyr)
+library(lubridate)
+library(sf)
+
+# Read the dataset
+data <- readRDS("dataset/nypd_shooting_clean.rds")
+NYPD_arrest_data <- readRDS("dataset/nypd_arrest.rds")
+combined_df <- merge(data, NYPD_arrest_data, by = c("X_COORD_CD", "Y_COORD_CD","Latitude","Longitude","PERP_SEX","JURISDICTION_CODE","PERP_RACE"))
+nypd_payroll <- readRDS("dataset/nypd_payroll.rds")
+nypd_payroll <- nypd_payroll %>%
+  rename(
+    work_boro = `Work Location Borough`,
+    base_salary = `Base Salary`)
+average_salary_by_borough <- nypd_payroll %>%
+  group_by(work_boro) %>%
+  summarise(AverageSalary = mean(base_salary, na.rm = TRUE)) %>%
+  ungroup()  # Ensure that we remove the grouping structure
+
+```
+
+
+In New York City, there exists a significant correlation between low-income areas, predominantly black populations, and elevated rates of both arrests and police-involved shootings. Through an exploration of key datasets encompassing NYPD shooting incidents, payroll information, and arrest records, this analysis sheds light on the complex dynamics at play within the city's socio-economic and racial landscape.
+
+##Policing Poverty: The Hidden Truths of NYC's Streets
+
+In the bustling streets of New York City, amongst the skyscrapers and vibrant neighborhoods, lies a city divided. In some communities, the sound of police sirens is an ever-present echo, a stark reminder of the realities faced by those living in inequality. But why do certain neighborhoods experience higher rates of arrests and police-involved shootings than others?
+
+
+##Patterns of Pain
+
+Mapping offense data points across NYC, we witness the clustering of crime in certain neighborhoods, painting a vivid picture of communities besieged by violence. Overlaying this map with the racial demographics of perpetrators and victims further illuminates the disproportionate impact on black individuals, particularly young men.
+
+```{r offense map}
+shapefile_path <- "tl_2022_36_tract/tl_2022_36_tract.shp"
+complete_data <- st_read(shapefile_path)
+nyc_tracts <- complete_data |> 
+  filter(COUNTYFP %in% c("005", "047", "061", "081", "085"))
+
+map_df <- st_as_sf(combined_df, coords = c("Longitude", "Latitude"), crs = 4326, agr = "constant")
+# Plotting the shapefile for NYC tracts and overlaying points
+final_plot <- ggplot() +
+  geom_sf(data = nyc_tracts, fill = "white", color = "gray") +
+  geom_sf(data = map_df, color = "brown3", size = 1, alpha = 0.5) +  # Adds the points
+  theme_minimal() +
+  labs(title = "Map of New York City with Offense Data Points", x = "Longitude", y = "Latitude")
+
+# Print the final plot
+print(final_plot)
+```
+
+
+
+##The Faces of Tragedy
+
+Zooming in on the age demographics of victims, we discover a chilling trend: the prime years of adulthood, ages 25-44, are when individuals are most vulnerable to becoming victims of violence. Among these victims, a disproportionate number are black—a reflection of the systemic biases ingrained within our society.
+
+```{r}
+# Plotting Victim Age Group Distribution
+
+
+vic_age_counts <- data %>%
+  count(VIC_AGE_GROUP) %>%
+  arrange(desc(n))
+
+ggplot(vic_age_counts, aes(x = reorder(VIC_AGE_GROUP, n), y = n, fill = VIC_AGE_GROUP)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = 'Victim Age Group Distribution', x = 'Age Group', y = 'Count') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+##Crimes of Desperation
+
+Examining the most common crime descriptions, a troubling pattern emerges. Sex crimes, assault, and drug-related offenses dominate the landscape, pointing to the pervasive influence of poverty, addiction, and desperation within marginalized communities.
+
+```{r}
+combined_df |>
+  group_by(OFNS_DESC) |>
+  summarise(Count = n(), .groups = 'drop') |>
+  filter(Count >= 50) |>
+  ggplot(aes(x = OFNS_DESC, y = Count, fill = OFNS_DESC)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +
+  theme_minimal() +
+  labs(x = "Offense Description", y = "Count") +
+  guides(fill = FALSE)
+```
+
+
+##Dollars and Desperation
+
+Overlaying maps of average salaries by borough with crime data points, we confront the harsh reality of economic disparities. In neighborhoods where salaries are lowest, crime rates soar—a testament to the profound impact of poverty on the social fabric of our city.
+
+```{r}
+average_salary_by_borough <- nypd_payroll %>%
+  group_by(work_boro) %>%
+  summarise(AverageSalary = mean(base_salary, na.rm = TRUE)) %>%
+  ungroup()
+
+borough_to_fips <- data.frame(
+  work_boro = c("BRONX", "BROOKLYN", "MANHATTAN", "QUEENS", "OTHER"),  # Note: Ensure the names match the data
+  COUNTYFP = c("005", "047", "061", "081", "085"))
+
+average_salary_by_fips <- average_salary_by_borough %>%
+  left_join(borough_to_fips, by = "work_boro")
+average_salary_by_fips <- average_salary_by_fips %>%
+  select(COUNTYFP, AverageSalary)
+
+nyc_tracts_salary <- nyc_tracts %>%
+  left_join(average_salary_by_fips, by = "COUNTYFP")
+
+map_df <- st_transform(map_df, st_crs(nyc_tracts_salary)$epsg)
+final_combined_plot2 <- ggplot() +
+  geom_sf(data = nyc_tracts_salary, aes(fill = AverageSalary), color = "gray", size = 0.5) +
+  geom_sf(data = map_df, aes(color = PERP_RACE), size = 1, alpha = 0.7) +
+  scale_fill_gradient(low = "white", high = "deepskyblue4", name = "Avg Salary",
+                      na.value = "grey50", labels = scales::dollar_format()) +
+  scale_color_manual(values = c("ASIAN / PACIFIC ISLANDER" = "green", "BLACK" = "brown3", "WHITE HISPANIC" = "yellow", "WHITE" = "deeppink", "UNKNOWN" = "darkgray", "BLACK HISPANIC" = "darkblue"), name = "Perpetrator's Race") +
+  labs(title = "Average Salary and Crime Data Points by NYC Borough",
+       subtitle = "Boroughs colored by average salary; Points indicate crime locations",
+       fill = "Average Salary", x = "Longitude", y = "Latitude", color = "Perpetrator's Race") +
+  theme_minimal() +
+  theme(legend.position = "right")
+print(final_combined_plot2)
+```
+
+
+
 
 This comes from the file `big_picture.Rmd`.
 
