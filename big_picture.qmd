@@ -1,12 +1,14 @@
 ---
-title: "Behind the Numbers: Unveiling the Intersection of Poverty, Race, and Policing in NYC"
+title: "Big Picture"
 description: "A 538/Upshot style article about the data."
 toc: true
 draft: FALSE
 ---
 
 ![](images/nyc.jpeg)
-```{r imports}
+
+
+```{r imports, echo=FALSE, message=FALSE, warning=FALSE}
 # Load necessary libraries
 library(tidyverse)
 library(ggplot2)
@@ -33,19 +35,20 @@ average_salary_by_borough <- nypd_payroll %>%
 
 ```
 
+# Behind the Numbers: Unveiling the Intersection of Poverty, Race, and Policing in NYC
 
 In New York City, there exists a significant correlation between low-income areas, predominantly black populations, and elevated rates of both arrests and police-involved shootings. Through an exploration of key datasets encompassing NYPD shooting incidents, payroll information, and arrest records, this analysis sheds light on the complex dynamics at play within the city's socio-economic and racial landscape.
 
-##Policing Poverty: The Hidden Truths of NYC's Streets
+## Policing Poverty: The Hidden Truths of NYC's Streets
 
 In the bustling streets of New York City, amongst the skyscrapers and vibrant neighborhoods, lies a city divided. In some communities, the sound of police sirens is an ever-present echo, a stark reminder of the realities faced by those living in inequality. But why do certain neighborhoods experience higher rates of arrests and police-involved shootings than others?
 
 
-##Patterns of Pain
+## Patterns of Pain
 
 Mapping offense data points across NYC, we witness the clustering of crime in certain neighborhoods, painting a vivid picture of communities besieged by violence. Overlaying this map with the racial demographics of perpetrators and victims further illuminates the disproportionate impact on black individuals, particularly young men.
 
-```{r offense map}
+```{r offense map, echo=FALSE, message=FALSE, warning=FALSE}
 shapefile_path <- "tl_2022_36_tract/tl_2022_36_tract.shp"
 complete_data <- st_read(shapefile_path)
 nyc_tracts <- complete_data |> 
@@ -65,11 +68,11 @@ print(final_plot)
 
 
 
-##The Faces of Tragedy
+## The Faces of Tragedy
 
 Zooming in on the age demographics of victims, we discover a chilling trend: the prime years of adulthood, ages 25-44, are when individuals are most vulnerable to becoming victims of violence. Among these victims, a disproportionate number are black—a reflection of the systemic biases ingrained within our society.
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Plotting Victim Age Group Distribution
 
 
@@ -85,11 +88,11 @@ ggplot(vic_age_counts, aes(x = reorder(VIC_AGE_GROUP, n), y = n, fill = VIC_AGE_
 ```
 
 
-##Crimes of Desperation
+## Crimes of Desperation
 
 Examining the most common crime descriptions, a troubling pattern emerges. Sex crimes, assault, and drug-related offenses dominate the landscape, pointing to the pervasive influence of poverty, addiction, and desperation within marginalized communities.
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 combined_df |>
   group_by(OFNS_DESC) |>
   summarise(Count = n(), .groups = 'drop') |>
@@ -103,11 +106,11 @@ combined_df |>
 ```
 
 
-##Dollars and Desperation
+## Dollars and Desperation
 
 Overlaying maps of average salaries by borough with crime data points, we confront the harsh reality of economic disparities. In neighborhoods where salaries are lowest, crime rates soar—a testament to the profound impact of poverty on the social fabric of our city.
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 average_salary_by_borough <- nypd_payroll %>%
   group_by(work_boro) %>%
   summarise(AverageSalary = mean(base_salary, na.rm = TRUE)) %>%
