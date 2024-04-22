@@ -346,10 +346,26 @@ final_combined_plot <- ggplot() +
   scale_color_manual(values = c("ASIAN / PACIFIC ISLANDER" = "green", "BLACK" = "brown3", "WHITE HISPANIC" = "yellow", "WHITE" = "deeppink", "UNKNOWN" = "darkgray", "BLACK HISPANIC" = "darkblue"), name = "Victim's Race") +
   labs(title = "Average Salary and Crime Data Points by NYC Borough",
        subtitle = "Boroughs colored by average salary; Points indicate crime locations",
-       fill = "Average Salary", x = "Longitude", y = "Latitude", color = "Perpetrator's Race") +
+       fill = "Average Salary", x = "Longitude", y = "Latitude", color = "Victim's Race") +
   theme_minimal() +
   theme(legend.position = "right")
 print(final_combined_plot)
+```
+
+```{r}
+map_df <- st_transform(map_df, st_crs(nyc_tracts_salary)$epsg)
+final_combined_plot2 <- ggplot() +
+  geom_sf(data = nyc_tracts_salary, aes(fill = AverageSalary), color = "gray", size = 0.5) +
+  geom_sf(data = map_df, aes(color = PERP_RACE), size = 1, alpha = 0.7) +
+  scale_fill_gradient(low = "white", high = "deepskyblue4", name = "Avg Salary",
+                      na.value = "grey50", labels = scales::dollar_format()) +
+  scale_color_manual(values = c("ASIAN / PACIFIC ISLANDER" = "green", "BLACK" = "brown3", "WHITE HISPANIC" = "yellow", "WHITE" = "deeppink", "UNKNOWN" = "darkgray", "BLACK HISPANIC" = "darkblue"), name = "Perpetrator's Race") +
+  labs(title = "Average Salary and Crime Data Points by NYC Borough",
+       subtitle = "Boroughs colored by average salary; Points indicate crime locations",
+       fill = "Average Salary", x = "Longitude", y = "Latitude", color = "Perpetrator's Race") +
+  theme_minimal() +
+  theme(legend.position = "right")
+print(final_combined_plot2)
 ```
 
 ```{r}
