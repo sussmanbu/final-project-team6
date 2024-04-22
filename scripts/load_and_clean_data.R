@@ -6,9 +6,11 @@ library(tidyverse)
 # Read the dataset
 NYPD_data <- read_csv("dataset/NYPD_Shooting_Incident_Data__Historic__20240322.csv")
 NYPD_arrest_data <- read_csv("dataset/NYPD_Arrest_Data__Year_to_Date__20240410.csv")
+NYPD_payroll_data <- read_csv("dataset/Payroll_data_2022.csv")
 
 str(NYPD_data)
 str(NYPD_arrest_data)
+str(NYPD_payroll_data)
 
 # Summary statistics
 summary(NYPD_data)
@@ -30,3 +32,6 @@ write_csv(NYPD_clean_data, file = here::here("dataset", "nypd_shooting_clean.csv
 saveRDS(NYPD_clean_data, here::here("dataset", "nypd_shooting_clean.rds"))
 
 saveRDS(NYPD_arrest_data, here::here("dataset", "nypd_arrest.rds"))
+
+saveRDS(NYPD_payroll_data, here::here("dataset", "nypd_payroll.rds"))
+
