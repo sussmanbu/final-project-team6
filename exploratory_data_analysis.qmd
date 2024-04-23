@@ -374,5 +374,36 @@ ggplot(vic_race, aes(x = reorder(VIC_RACE, n), y = n, fill = VIC_RACE)) +
 
 
 
+```{r}
+library(randomForest)
+
+modeldata <- combined_df %>%
+  mutate(across(where(is.character), as.factor))
+
+freq <- table(modeldata$OFNS_DESC)
+modeldata <- modeldata[modeldata$OFNS_DESC %in% names(freq[freq >= 200]), ]
+
+set.seed(123)
+train_indices <- sample(1:nrow(modeldata), 0.8 * nrow(modeldata))  # 80% for training
+train_data <- modeldata[train_indices, ]
+test_data <- modeldata[-train_indices, ]
+
+rf_model <- randomForest(BORO ~ PERP_SEX + PERP_RACE + LOC_CLASSFCTN_DESC + PERP_AGE_GROUP + VIC_SEX + VIC_AGE_GROUP + VIC_RACE + OFNS_DESC + STATISTICAL_MURDER_FLAG, 
+                         data = train_data, 
+                         ntree = 500,
+                         importance = TRUE,
+                         na.action = na.omit)
+plot(rf_model)
+```
+
+```{r}
+test_pred <- predict(rf_model, test_data)
+conf_mat <- table(test_data$BORO, test_pred)
+accuracy <- sum(diag(conf_mat)) / sum(conf_mat)
+print(paste("Accuracy:", accuracy))
+importance(rf_model)
+varImpPlot(rf_model)
+```
+
 
 
