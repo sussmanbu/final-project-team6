@@ -172,9 +172,8 @@ ggplot(proportions, aes(x = PERP_RACE, y = Proportion, fill = PERP_RACE)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 ```{r}
-mod1 <- glm(
-  STATISTICAL_MURDER_FLAG ~ PERP_RACE + PERP_AGE_GROUP + PERP_SEX,
-  data = data, 
+mod1 <- glm(STATISTICAL_MURDER_FLAG ~ BORO + PERP_SEX + PERP_RACE + LOC_CLASSFCTN_DESC + PERP_AGE_GROUP + VIC_SEX + VIC_AGE_GROUP + VIC_RACE + OFNS_DESC,
+  data = combined_df, 
   family = "binomial"
 )
 
@@ -185,19 +184,12 @@ plot(mod1)
 ```{r}
 library(caret)
 library(nnet)
-str(data)
-```
-
-```{r}
-data$PERP_RACE <- as.factor(data$PERP_RACE)
-data$PERP_AGE_GROUP <- as.factor(data$PERP_AGE_GROUP)
-data$PERP_SEX <- as.factor(data$PERP_SEX)
-data$STATISTICAL_MURDER_FLAG <- as.factor(data$STATISTICAL_MURDER_FLAG)
 ```
 
 ```{r}
 # Fit the logistic regression model
-model <- glm(STATISTICAL_MURDER_FLAG ~ PERP_RACE + PERP_AGE_GROUP + PERP_SEX, data = data, family = "binomial")
+model <- glm(STATISTICAL_MURDER_FLAG ~ BORO + PERP_SEX + PERP_RACE + LOC_CLASSFCTN_DESC + PERP_AGE_GROUP + VIC_SEX + VIC_AGE_GROUP + VIC_RACE + OFNS_DESC, 
+             data = combined_df, family = "binomial")
 
 # Summarize the model
 summary(model)
@@ -210,7 +202,7 @@ library(pROC)
 predictions <- predict(model, type = "response")
 
 # ROC curve
-roc_curve <- roc(data$STATISTICAL_MURDER_FLAG, predictions)
+roc_curve <- roc(combined_df$STATISTICAL_MURDER_FLAG, predictions)
 plot(roc_curve)
 auc(roc_curve)
 ```
@@ -379,3 +371,8 @@ ggplot(vic_race, aes(x = reorder(VIC_RACE, n), y = n, fill = VIC_RACE)) +
   labs(title = "Victim Race Distribution", x = "Victim Race", y = "Count") +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
+
+
+
+
+
