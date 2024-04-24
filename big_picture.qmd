@@ -48,12 +48,14 @@ In the bustling streets of New York City, amongst the skyscrapers and vibrant ne
 
 Mapping offense data points across NYC, we witness the clustering of crime in certain neighborhoods, painting a vivid picture of communities besieged by violence. Overlaying this map with the racial demographics of perpetrators and victims further illuminates the disproportionate impact on black individuals, particularly young men.
 
-```{r offense map, echo=FALSE, message=FALSE, warning=FALSE}
+```{r nyc_tract map, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 shapefile_path <- "tl_2022_36_tract/tl_2022_36_tract.shp"
 complete_data <- st_read(shapefile_path)
 nyc_tracts <- complete_data |> 
   filter(COUNTYFP %in% c("005", "047", "061", "081", "085"))
+```
 
+```{r offense map, echo=FALSE, message=FALSE, warning=FALSE}
 map_df <- st_as_sf(combined_df, coords = c("Longitude", "Latitude"), crs = 4326, agr = "constant")
 # Plotting the shapefile for NYC tracts and overlaying points
 final_plot <- ggplot() +
@@ -74,9 +76,8 @@ Zooming in on the age demographics of victims, we discover a chilling trend: the
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Plotting Victim Age Group Distribution
-
-
 vic_age_counts <- data %>%
+  filter(VIC_AGE_GROUP != "1022") %>%
   count(VIC_AGE_GROUP) %>%
   arrange(desc(n))
 
@@ -86,7 +87,6 @@ ggplot(vic_age_counts, aes(x = reorder(VIC_AGE_GROUP, n), y = n, fill = VIC_AGE_
   labs(title = 'Victim Age Group Distribution', x = 'Age Group', y = 'Count') +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
-
 
 ## Crimes of Desperation
 

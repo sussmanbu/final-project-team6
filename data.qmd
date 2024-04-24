@@ -64,36 +64,11 @@ NYPD_clean_data <- NYPD_data %>%
 - **GGally**: used in addition to ggplot again to visualize relationships between variables.
 lubricate: used for datetime manipulation 
 
-
-### Exploratory Data Analysis
-```{r}
-library(tidyverse)
-library(ggplot2)
-library(dplyr)
-
-# Read the dataset
-data <- readRDS("dataset/nypd_shooting_clean.rds")
-
-# Display the first few rows of the dataset
-head(data)
-
-prep_race_counts <- data |>
-  count(PERP_RACE) |>
-  arrange(desc(n))
-
-ggplot(prep_race_counts, aes(x = reorder(PERP_RACE, n), y = n, fill = PERP_RACE)) + 
-  geom_bar(stat = "identity") +
-  theme_minimal() +
-  labs(title = "Perpetrator Race Distribution", x = "Perpetrator Race", y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-We created a bar chart to analyze the perpetrator's race, a key variable of interest for later investigation in our project. The chart revealed approximately 600 missing (null) values for this variable, indicating a potential challenge that requires our attention.
-
 ### Combining Datasets
 
 ```{r}
 NYPD_arrest_data <- readRDS("dataset/nypd_arrest.rds")
-combined_df <- merge(data, NYPD_arrest_data, by = c("X_COORD_CD", "Y_COORD_CD","Latitude","Longitude","PERP_SEX","JURISDICTION_CODE","PERP_RACE"))
+combined_df <- merge(NYPD_clean_data, NYPD_arrest_data, by = c("X_COORD_CD", "Y_COORD_CD","Latitude","Longitude","PERP_SEX","JURISDICTION_CODE","PERP_RACE"))
 ```
 
 
