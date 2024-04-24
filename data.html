@@ -153,7 +153,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data-background" id="toc-data-background" class="nav-link" data-scroll-target="#data-background">Data Background</a></li>
   <li><a href="#summary-of-the-dataset-structure-and-some-key-statistics" id="toc-summary-of-the-dataset-structure-and-some-key-statistics" class="nav-link" data-scroll-target="#summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</a></li>
   <li><a href="#data-cleaning-and-loading" id="toc-data-cleaning-and-loading" class="nav-link" data-scroll-target="#data-cleaning-and-loading">Data Cleaning and Loading</a></li>
-  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a></li>
   <li><a href="#combining-datasets" id="toc-combining-datasets" class="nav-link" data-scroll-target="#combining-datasets">Combining Datasets</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
@@ -450,53 +449,11 @@ Caused by warning:
 </ul>
 </section>
 </section>
-<section id="exploratory-data-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the dataset</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_shooting_clean.rds"</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows of the dataset</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 19
-  INCIDENT_KEY OCCUR_DATE BORO     PRECINCT JURISDICTION_CODE LOC_CLASSFCTN_DESC
-         &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;dbl&gt;             &lt;dbl&gt; &lt;chr&gt;             
-1    243566884 04/12/2022 BRONX          49                 0 STREET            
-2    256484816 12/17/2022 BRONX          52                 0 STREET            
-3    250216145 08/27/2022 BRONX          44                 0 VEHICLE           
-4    239207164 01/15/2022 QUEENS        113                 2 HOUSING           
-5    248013313 07/14/2022 BROOKLYN       77                 0 DWELLING          
-6    247542571 07/04/2022 BRONX          48                 0 STREET            
-# ℹ 13 more variables: LOCATION_DESC &lt;chr&gt;, STATISTICAL_MURDER_FLAG &lt;lgl&gt;,
-#   PERP_AGE_GROUP &lt;chr&gt;, PERP_SEX &lt;chr&gt;, PERP_RACE &lt;chr&gt;, VIC_AGE_GROUP &lt;chr&gt;,
-#   VIC_SEX &lt;chr&gt;, VIC_RACE &lt;chr&gt;, X_COORD_CD &lt;dbl&gt;, Y_COORD_CD &lt;dbl&gt;,
-#   Latitude &lt;dbl&gt;, Longitude &lt;dbl&gt;, Lon_Lat &lt;chr&gt;</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>prep_race_counts <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(PERP_RACE) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(prep_race_counts, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PERP_RACE, n), <span class="at">y =</span> n, <span class="at">fill =</span> PERP_RACE)) <span class="sc">+</span> </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Perpetrator Race Distribution"</span>, <span class="at">x =</span> <span class="st">"Perpetrator Race"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="data_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>We created a bar chart to analyze the perpetrator’s race, a key variable of interest for later investigation in our project. The chart revealed approximately 600 missing (null) values for this variable, indicating a potential challenge that requires our attention.</p>
-</section>
 <section id="combining-datasets" class="level3">
 <h3 class="anchored" data-anchor-id="combining-datasets">Combining Datasets</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>NYPD_arrest_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_arrest.rds"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(data, NYPD_arrest_data, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"X_COORD_CD"</span>, <span class="st">"Y_COORD_CD"</span>,<span class="st">"Latitude"</span>,<span class="st">"Longitude"</span>,<span class="st">"PERP_SEX"</span>,<span class="st">"JURISDICTION_CODE"</span>,<span class="st">"PERP_RACE"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>NYPD_arrest_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_arrest.rds"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(NYPD_clean_data, NYPD_arrest_data, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"X_COORD_CD"</span>, <span class="st">"Y_COORD_CD"</span>,<span class="st">"Latitude"</span>,<span class="st">"Longitude"</span>,<span class="st">"PERP_SEX"</span>,<span class="st">"JURISDICTION_CODE"</span>,<span class="st">"PERP_RACE"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="references" class="level3">

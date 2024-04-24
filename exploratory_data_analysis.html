@@ -397,46 +397,186 @@ Caused by warning:
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  STATISTICAL_MURDER_FLAG <span class="sc">~</span> PERP_RACE <span class="sc">+</span> PERP_AGE_GROUP <span class="sc">+</span> PERP_SEX,</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data, </span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"binomial"</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(STATISTICAL_MURDER_FLAG <span class="sc">~</span> BORO <span class="sc">+</span> PERP_SEX <span class="sc">+</span> PERP_RACE <span class="sc">+</span> LOC_CLASSFCTN_DESC <span class="sc">+</span> PERP_AGE_GROUP <span class="sc">+</span> VIC_SEX <span class="sc">+</span> VIC_AGE_GROUP <span class="sc">+</span> VIC_RACE <span class="sc">+</span> OFNS_DESC,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> combined_df, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"binomial"</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-glm(formula = STATISTICAL_MURDER_FLAG ~ PERP_RACE + PERP_AGE_GROUP + 
-    PERP_SEX, family = "binomial", data = data)
+glm(formula = STATISTICAL_MURDER_FLAG ~ BORO + PERP_SEX + PERP_RACE + 
+    LOC_CLASSFCTN_DESC + PERP_AGE_GROUP + VIC_SEX + VIC_AGE_GROUP + 
+    VIC_RACE + OFNS_DESC, family = "binomial", data = combined_df)
 
-Coefficients: (2 not defined because of singularities)
-                                   Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)                       -1.737692   0.111257 -15.619   &lt;2e-16 ***
-PERP_RACEASIAN / PACIFIC ISLANDER  1.446710   1.373197   1.054    0.292    
-PERP_RACEBLACK                     1.017721   1.231847   0.826    0.409    
-PERP_RACEBLACK HISPANIC            1.337634   1.251603   1.069    0.285    
-PERP_RACEWHITE                     0.777739   1.462919   0.532    0.595    
-PERP_RACEWHITE HISPANIC            1.097492   1.237051   0.887    0.375    
-PERP_AGE_GROUP&lt;18                 -0.931793   1.249104  -0.746    0.456    
-PERP_AGE_GROUP18-24               -0.630785   1.232349  -0.512    0.609    
-PERP_AGE_GROUP25-44               -0.555683   1.230632  -0.452    0.652    
-PERP_AGE_GROUP45-64                0.132840   1.246566   0.107    0.915    
-PERP_AGE_GROUP65+                        NA         NA      NA       NA    
-PERP_SEXF                         -0.007563   0.340429  -0.022    0.982    
-PERP_SEXM                                NA         NA      NA       NA    
+Coefficients: (1 not defined because of singularities)
+                                          Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)                              -13.46172 3956.17989  -0.003 0.997285
+BOROBROOKLYN                              -0.80477    0.13545  -5.941 2.83e-09
+BOROMANHATTAN                             -0.65836    0.14170  -4.646 3.38e-06
+BOROQUEENS                                -1.17328    0.20758  -5.652 1.58e-08
+BOROSTATEN ISLAND                         -0.01359    0.27812  -0.049 0.961024
+PERP_SEXM                                  0.78206    0.49461   1.581 0.113837
+PERP_RACEBLACK                            -6.63825    1.47659  -4.496 6.94e-06
+PERP_RACEBLACK HISPANIC                   -6.85784    1.50201  -4.566 4.98e-06
+PERP_RACEWHITE                           -23.30150 1306.79230  -0.018 0.985774
+PERP_RACEWHITE HISPANIC                   -6.87887    1.48095  -4.645 3.40e-06
+LOC_CLASSFCTN_DESCDWELLING                -1.68901    0.24849  -6.797 1.07e-11
+LOC_CLASSFCTN_DESCHOUSING                 -1.85224    0.22609  -8.192 2.56e-16
+LOC_CLASSFCTN_DESCOTHER                  -18.10176  501.30824  -0.036 0.971195
+LOC_CLASSFCTN_DESCPARKING LOT             -2.99401    1.13072  -2.648 0.008100
+LOC_CLASSFCTN_DESCPLAYGROUND              -0.10074    0.57802  -0.174 0.861643
+LOC_CLASSFCTN_DESCSTREET                  -1.75346    0.16836 -10.415  &lt; 2e-16
+LOC_CLASSFCTN_DESCTRANSIT                  0.01694    0.56825   0.030 0.976223
+LOC_CLASSFCTN_DESCVEHICLE                  3.12812    1.19854   2.610 0.009056
+PERP_AGE_GROUP18-24                        1.01082    0.21083   4.794 1.63e-06
+PERP_AGE_GROUP25-44                        0.90139    0.21982   4.101 4.12e-05
+PERP_AGE_GROUP45-64                        1.71600    0.28214   6.082 1.19e-09
+PERP_AGE_GROUP65+                        -15.59241 1480.31146  -0.011 0.991596
+VIC_SEXM                                   0.11046    0.13691   0.807 0.419797
+VIC_AGE_GROUP18-24                        -0.11672    0.16516  -0.707 0.479753
+VIC_AGE_GROUP25-44                         0.10839    0.16574   0.654 0.513133
+VIC_AGE_GROUP45-64                        -0.72013    0.23827  -3.022 0.002508
+VIC_AGE_GROUP65+                         -16.12617  772.45779  -0.021 0.983344
+VIC_AGE_GROUPUNKNOWN                     -12.40332 1895.20904  -0.007 0.994778
+VIC_RACEBLACK                              4.03840    1.06956   3.776 0.000160
+VIC_RACEBLACK HISPANIC                     3.70554    1.08523   3.415 0.000639
+VIC_RACEUNKNOWN                                 NA         NA      NA       NA
+VIC_RACEWHITE                              1.99505    1.14311   1.745 0.080936
+VIC_RACEWHITE HISPANIC                     3.65555    1.07554   3.399 0.000677
+OFNS_DESCALCOHOLIC BEVERAGE CONTROL LAW   -1.08311 4822.63674   0.000 0.999821
+OFNS_DESCASSAULT 3 &amp; RELATED OFFENSES     15.38200 3956.17971   0.004 0.996898
+OFNS_DESCBURGLAR'S TOOLS                  16.70648 3956.18000   0.004 0.996631
+OFNS_DESCBURGLARY                         15.11783 3956.17973   0.004 0.996951
+OFNS_DESCCANNABIS RELATED OFFENSES        -1.33631 4687.49612   0.000 0.999773
+OFNS_DESCCHILD ABANDONMENT/NON SUPPORT    -1.76276 5594.88344   0.000 0.999749
+OFNS_DESCCRIMINAL MISCHIEF &amp; RELATED OF   15.33409 3956.17972   0.004 0.996907
+OFNS_DESCCRIMINAL TRESPASS                14.68517 3956.17976   0.004 0.997038
+OFNS_DESCDANGEROUS DRUGS                  15.37328 3956.17971   0.004 0.996900
+OFNS_DESCDANGEROUS WEAPONS                15.26705 3956.17972   0.004 0.996921
+OFNS_DESCFELONY ASSAULT                   14.82937 3956.17972   0.004 0.997009
+OFNS_DESCFOR OTHER AUTHORITIES            14.73316 3956.17976   0.004 0.997029
+OFNS_DESCFORGERY                          12.13051 3956.17996   0.003 0.997554
+OFNS_DESCFRAUDS                           -1.04425 4084.60349   0.000 0.999796
+OFNS_DESCGAMBLING                         15.66656 3956.17977   0.004 0.996840
+OFNS_DESCGRAND LARCENY                    14.92729 3956.17973   0.004 0.996989
+OFNS_DESCGRAND LARCENY OF MOTOR VEHICLE   16.53692 3956.17975   0.004 0.996665
+OFNS_DESCHARRASSMENT 2                     3.19031 4845.31117   0.001 0.999475
+OFNS_DESCHOMICIDE-NEGLIGENT,UNCLASSIFIE    3.19031 4845.31117   0.001 0.999475
+OFNS_DESCINTOXICATED &amp; IMPAIRED DRIVING   15.52000 3956.17977   0.004 0.996870
+OFNS_DESCINTOXICATED/IMPAIRED DRIVING     -0.84856 5594.88344   0.000 0.999879
+OFNS_DESCKIDNAPPING &amp; RELATED OFFENSES    -0.52635 5594.88345   0.000 0.999925
+OFNS_DESCMISCELLANEOUS PENAL LAW          15.32177 3956.17972   0.004 0.996910
+OFNS_DESCMURDER &amp; NON-NEGL. MANSLAUGHTE    0.42525 3999.93241   0.000 0.999915
+OFNS_DESCNYS LAWS-UNCLASSIFIED FELONY     15.16609 3956.17980   0.004 0.996941
+OFNS_DESCOFF. AGNST PUB ORD SENSBLTY &amp;    15.76131 3956.17974   0.004 0.996821
+OFNS_DESCOFFENSES AGAINST PUBLIC ADMINI   15.33879 3956.17972   0.004 0.996906
+OFNS_DESCOFFENSES AGAINST THE PERSON      14.35025 3956.17979   0.004 0.997106
+OFNS_DESCOFFENSES INVOLVING FRAUD         15.13177 3956.17973   0.004 0.996948
+OFNS_DESCOTHER OFFENSES RELATED TO THEF   16.20625 3956.17976   0.004 0.996732
+OFNS_DESCOTHER STATE LAWS                 15.56017 3956.17989   0.004 0.996862
+OFNS_DESCOTHER STATE LAWS (NON PENAL LA   -0.94028 4844.51018   0.000 0.999845
+OFNS_DESCOTHER TRAFFIC INFRACTION         15.79269 3956.17974   0.004 0.996815
+OFNS_DESCPETIT LARCENY                    13.71176 3956.17972   0.003 0.997235
+OFNS_DESCPOSSESSION OF STOLEN PROPERTY    15.80920 3956.17974   0.004 0.996812
+OFNS_DESCRAPE                             15.63081 3956.17972   0.004 0.996848
+OFNS_DESCROBBERY                          15.76949 3956.17972   0.004 0.996820
+OFNS_DESCSEX CRIMES                       15.05818 3956.17971   0.004 0.996963
+OFNS_DESCUNAUTHORIZED USE OF A VEHICLE    14.81084 3956.17986   0.004 0.997013
+OFNS_DESCVEHICLE AND TRAFFIC LAWS         15.45099 3956.17972   0.004 0.996884
+                                           
+(Intercept)                                
+BOROBROOKLYN                            ***
+BOROMANHATTAN                           ***
+BOROQUEENS                              ***
+BOROSTATEN ISLAND                          
+PERP_SEXM                                  
+PERP_RACEBLACK                          ***
+PERP_RACEBLACK HISPANIC                 ***
+PERP_RACEWHITE                             
+PERP_RACEWHITE HISPANIC                 ***
+LOC_CLASSFCTN_DESCDWELLING              ***
+LOC_CLASSFCTN_DESCHOUSING               ***
+LOC_CLASSFCTN_DESCOTHER                    
+LOC_CLASSFCTN_DESCPARKING LOT           ** 
+LOC_CLASSFCTN_DESCPLAYGROUND               
+LOC_CLASSFCTN_DESCSTREET                ***
+LOC_CLASSFCTN_DESCTRANSIT                  
+LOC_CLASSFCTN_DESCVEHICLE               ** 
+PERP_AGE_GROUP18-24                     ***
+PERP_AGE_GROUP25-44                     ***
+PERP_AGE_GROUP45-64                     ***
+PERP_AGE_GROUP65+                          
+VIC_SEXM                                   
+VIC_AGE_GROUP18-24                         
+VIC_AGE_GROUP25-44                         
+VIC_AGE_GROUP45-64                      ** 
+VIC_AGE_GROUP65+                           
+VIC_AGE_GROUPUNKNOWN                       
+VIC_RACEBLACK                           ***
+VIC_RACEBLACK HISPANIC                  ***
+VIC_RACEUNKNOWN                            
+VIC_RACEWHITE                           .  
+VIC_RACEWHITE HISPANIC                  ***
+OFNS_DESCALCOHOLIC BEVERAGE CONTROL LAW    
+OFNS_DESCASSAULT 3 &amp; RELATED OFFENSES      
+OFNS_DESCBURGLAR'S TOOLS                   
+OFNS_DESCBURGLARY                          
+OFNS_DESCCANNABIS RELATED OFFENSES         
+OFNS_DESCCHILD ABANDONMENT/NON SUPPORT     
+OFNS_DESCCRIMINAL MISCHIEF &amp; RELATED OF    
+OFNS_DESCCRIMINAL TRESPASS                 
+OFNS_DESCDANGEROUS DRUGS                   
+OFNS_DESCDANGEROUS WEAPONS                 
+OFNS_DESCFELONY ASSAULT                    
+OFNS_DESCFOR OTHER AUTHORITIES             
+OFNS_DESCFORGERY                           
+OFNS_DESCFRAUDS                            
+OFNS_DESCGAMBLING                          
+OFNS_DESCGRAND LARCENY                     
+OFNS_DESCGRAND LARCENY OF MOTOR VEHICLE    
+OFNS_DESCHARRASSMENT 2                     
+OFNS_DESCHOMICIDE-NEGLIGENT,UNCLASSIFIE    
+OFNS_DESCINTOXICATED &amp; IMPAIRED DRIVING    
+OFNS_DESCINTOXICATED/IMPAIRED DRIVING      
+OFNS_DESCKIDNAPPING &amp; RELATED OFFENSES     
+OFNS_DESCMISCELLANEOUS PENAL LAW           
+OFNS_DESCMURDER &amp; NON-NEGL. MANSLAUGHTE    
+OFNS_DESCNYS LAWS-UNCLASSIFIED FELONY      
+OFNS_DESCOFF. AGNST PUB ORD SENSBLTY &amp;     
+OFNS_DESCOFFENSES AGAINST PUBLIC ADMINI    
+OFNS_DESCOFFENSES AGAINST THE PERSON       
+OFNS_DESCOFFENSES INVOLVING FRAUD          
+OFNS_DESCOTHER OFFENSES RELATED TO THEF    
+OFNS_DESCOTHER STATE LAWS                  
+OFNS_DESCOTHER STATE LAWS (NON PENAL LA    
+OFNS_DESCOTHER TRAFFIC INFRACTION          
+OFNS_DESCPETIT LARCENY                     
+OFNS_DESCPOSSESSION OF STOLEN PROPERTY     
+OFNS_DESCRAPE                              
+OFNS_DESCROBBERY                           
+OFNS_DESCSEX CRIMES                        
+OFNS_DESCUNAUTHORIZED USE OF A VEHICLE     
+OFNS_DESCVEHICLE AND TRAFFIC LAWS          
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 1698.5  on 1705  degrees of freedom
-Residual deviance: 1669.2  on 1695  degrees of freedom
-AIC: 1691.2
+    Null deviance: 3626.2  on 3671  degrees of freedom
+Residual deviance: 2850.5  on 3600  degrees of freedom
+AIC: 2994.5
 
-Number of Fisher Scoring iterations: 4</code></pre>
+Number of Fisher Scoring iterations: 16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: not plotting observations with leverage one:
+  942, 1410, 2688, 2985</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -451,7 +591,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: lattice</code></pre>
 </div>
@@ -464,81 +604,187 @@ Attaching package: 'caret'</code></pre>
 
     lift</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>tibble [1,706 × 20] (S3: tbl_df/tbl/data.frame)
- $ INCIDENT_KEY           : num [1:1706] 2.44e+08 2.56e+08 2.50e+08 2.39e+08 2.48e+08 ...
- $ OCCUR_DATE             : Date[1:1706], format: "2022-12-04" NA ...
- $ BORO                   : chr [1:1706] "BRONX" "BRONX" "BRONX" "QUEENS" ...
- $ PRECINCT               : num [1:1706] 49 52 44 113 77 48 81 75 75 20 ...
- $ JURISDICTION_CODE      : num [1:1706] 0 0 0 2 0 0 0 0 0 0 ...
- $ LOC_CLASSFCTN_DESC     : chr [1:1706] "STREET" "STREET" "VEHICLE" "HOUSING" ...
- $ LOCATION_DESC          : chr [1:1706] "(null)" "(null)" "(null)" "MULTI DWELL - PUBLIC HOUS" ...
- $ STATISTICAL_MURDER_FLAG: logi [1:1706] TRUE FALSE FALSE FALSE FALSE FALSE ...
- $ PERP_AGE_GROUP         : chr [1:1706] "18-24" "25-44" "(null)" "(null)" ...
- $ PERP_SEX               : chr [1:1706] "M" "M" "(null)" "(null)" ...
- $ PERP_RACE              : chr [1:1706] "BLACK HISPANIC" "WHITE HISPANIC" "(null)" "(null)" ...
- $ VIC_AGE_GROUP          : chr [1:1706] "18-24" "25-44" "25-44" "18-24" ...
- $ VIC_SEX                : chr [1:1706] "F" "M" "M" "M" ...
- $ VIC_RACE               : chr [1:1706] "BLACK" "WHITE HISPANIC" "WHITE HISPANIC" "BLACK" ...
- $ X_COORD_CD             : num [1:1706] 1020669 1008387 1008878 1044794 1002013 ...
- $ Y_COORD_CD             : num [1:1706] 255027 253290 244480 188802 185752 ...
- $ Latitude               : num [1:1706] 40.9 40.9 40.8 40.7 40.7 ...
- $ Longitude              : num [1:1706] -73.9 -73.9 -73.9 -73.8 -73.9 ...
- $ Lon_Lat                : chr [1:1706] "POINT (-73.86832754 40.86658962)" "POINT (-73.91273918 40.86186421)" "POINT (-73.910994 40.837683)" "POINT (-73.781699 40.684689)" ...
- $ OCCUR_YEAR             : num [1:1706] 2022 NA NA NA NA ...
- - attr(*, "na.action")= 'omit' Named int [1:16296] 1 2 3 4 5 6 7 8 9 10 ...
-  ..- attr(*, "names")= chr [1:16296] "1" "2" "3" "4" ...</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>PERP_RACE <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>PERP_RACE)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>PERP_AGE_GROUP <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>PERP_AGE_GROUP)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>PERP_SEX <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>PERP_SEX)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>STATISTICAL_MURDER_FLAG <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>STATISTICAL_MURDER_FLAG)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the logistic regression model</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(STATISTICAL_MURDER_FLAG <span class="sc">~</span> BORO <span class="sc">+</span> PERP_SEX <span class="sc">+</span> PERP_RACE <span class="sc">+</span> LOC_CLASSFCTN_DESC <span class="sc">+</span> PERP_AGE_GROUP <span class="sc">+</span> VIC_SEX <span class="sc">+</span> VIC_AGE_GROUP <span class="sc">+</span> VIC_RACE <span class="sc">+</span> OFNS_DESC, </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> combined_df, <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the logistic regression model</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(STATISTICAL_MURDER_FLAG <span class="sc">~</span> PERP_RACE <span class="sc">+</span> PERP_AGE_GROUP <span class="sc">+</span> PERP_SEX, <span class="at">data =</span> data, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the model</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the model</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-glm(formula = STATISTICAL_MURDER_FLAG ~ PERP_RACE + PERP_AGE_GROUP + 
-    PERP_SEX, family = "binomial", data = data)
+glm(formula = STATISTICAL_MURDER_FLAG ~ BORO + PERP_SEX + PERP_RACE + 
+    LOC_CLASSFCTN_DESC + PERP_AGE_GROUP + VIC_SEX + VIC_AGE_GROUP + 
+    VIC_RACE + OFNS_DESC, family = "binomial", data = combined_df)
 
-Coefficients: (2 not defined because of singularities)
-                                   Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)                       -1.737692   0.111257 -15.619   &lt;2e-16 ***
-PERP_RACEASIAN / PACIFIC ISLANDER  1.446710   1.373197   1.054    0.292    
-PERP_RACEBLACK                     1.017721   1.231847   0.826    0.409    
-PERP_RACEBLACK HISPANIC            1.337634   1.251603   1.069    0.285    
-PERP_RACEWHITE                     0.777739   1.462919   0.532    0.595    
-PERP_RACEWHITE HISPANIC            1.097492   1.237051   0.887    0.375    
-PERP_AGE_GROUP&lt;18                 -0.931793   1.249104  -0.746    0.456    
-PERP_AGE_GROUP18-24               -0.630785   1.232349  -0.512    0.609    
-PERP_AGE_GROUP25-44               -0.555683   1.230632  -0.452    0.652    
-PERP_AGE_GROUP45-64                0.132840   1.246566   0.107    0.915    
-PERP_AGE_GROUP65+                        NA         NA      NA       NA    
-PERP_SEXF                         -0.007563   0.340429  -0.022    0.982    
-PERP_SEXM                                NA         NA      NA       NA    
+Coefficients: (1 not defined because of singularities)
+                                          Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)                              -13.46172 3956.17989  -0.003 0.997285
+BOROBROOKLYN                              -0.80477    0.13545  -5.941 2.83e-09
+BOROMANHATTAN                             -0.65836    0.14170  -4.646 3.38e-06
+BOROQUEENS                                -1.17328    0.20758  -5.652 1.58e-08
+BOROSTATEN ISLAND                         -0.01359    0.27812  -0.049 0.961024
+PERP_SEXM                                  0.78206    0.49461   1.581 0.113837
+PERP_RACEBLACK                            -6.63825    1.47659  -4.496 6.94e-06
+PERP_RACEBLACK HISPANIC                   -6.85784    1.50201  -4.566 4.98e-06
+PERP_RACEWHITE                           -23.30150 1306.79230  -0.018 0.985774
+PERP_RACEWHITE HISPANIC                   -6.87887    1.48095  -4.645 3.40e-06
+LOC_CLASSFCTN_DESCDWELLING                -1.68901    0.24849  -6.797 1.07e-11
+LOC_CLASSFCTN_DESCHOUSING                 -1.85224    0.22609  -8.192 2.56e-16
+LOC_CLASSFCTN_DESCOTHER                  -18.10176  501.30824  -0.036 0.971195
+LOC_CLASSFCTN_DESCPARKING LOT             -2.99401    1.13072  -2.648 0.008100
+LOC_CLASSFCTN_DESCPLAYGROUND              -0.10074    0.57802  -0.174 0.861643
+LOC_CLASSFCTN_DESCSTREET                  -1.75346    0.16836 -10.415  &lt; 2e-16
+LOC_CLASSFCTN_DESCTRANSIT                  0.01694    0.56825   0.030 0.976223
+LOC_CLASSFCTN_DESCVEHICLE                  3.12812    1.19854   2.610 0.009056
+PERP_AGE_GROUP18-24                        1.01082    0.21083   4.794 1.63e-06
+PERP_AGE_GROUP25-44                        0.90139    0.21982   4.101 4.12e-05
+PERP_AGE_GROUP45-64                        1.71600    0.28214   6.082 1.19e-09
+PERP_AGE_GROUP65+                        -15.59241 1480.31146  -0.011 0.991596
+VIC_SEXM                                   0.11046    0.13691   0.807 0.419797
+VIC_AGE_GROUP18-24                        -0.11672    0.16516  -0.707 0.479753
+VIC_AGE_GROUP25-44                         0.10839    0.16574   0.654 0.513133
+VIC_AGE_GROUP45-64                        -0.72013    0.23827  -3.022 0.002508
+VIC_AGE_GROUP65+                         -16.12617  772.45779  -0.021 0.983344
+VIC_AGE_GROUPUNKNOWN                     -12.40332 1895.20904  -0.007 0.994778
+VIC_RACEBLACK                              4.03840    1.06956   3.776 0.000160
+VIC_RACEBLACK HISPANIC                     3.70554    1.08523   3.415 0.000639
+VIC_RACEUNKNOWN                                 NA         NA      NA       NA
+VIC_RACEWHITE                              1.99505    1.14311   1.745 0.080936
+VIC_RACEWHITE HISPANIC                     3.65555    1.07554   3.399 0.000677
+OFNS_DESCALCOHOLIC BEVERAGE CONTROL LAW   -1.08311 4822.63674   0.000 0.999821
+OFNS_DESCASSAULT 3 &amp; RELATED OFFENSES     15.38200 3956.17971   0.004 0.996898
+OFNS_DESCBURGLAR'S TOOLS                  16.70648 3956.18000   0.004 0.996631
+OFNS_DESCBURGLARY                         15.11783 3956.17973   0.004 0.996951
+OFNS_DESCCANNABIS RELATED OFFENSES        -1.33631 4687.49612   0.000 0.999773
+OFNS_DESCCHILD ABANDONMENT/NON SUPPORT    -1.76276 5594.88344   0.000 0.999749
+OFNS_DESCCRIMINAL MISCHIEF &amp; RELATED OF   15.33409 3956.17972   0.004 0.996907
+OFNS_DESCCRIMINAL TRESPASS                14.68517 3956.17976   0.004 0.997038
+OFNS_DESCDANGEROUS DRUGS                  15.37328 3956.17971   0.004 0.996900
+OFNS_DESCDANGEROUS WEAPONS                15.26705 3956.17972   0.004 0.996921
+OFNS_DESCFELONY ASSAULT                   14.82937 3956.17972   0.004 0.997009
+OFNS_DESCFOR OTHER AUTHORITIES            14.73316 3956.17976   0.004 0.997029
+OFNS_DESCFORGERY                          12.13051 3956.17996   0.003 0.997554
+OFNS_DESCFRAUDS                           -1.04425 4084.60349   0.000 0.999796
+OFNS_DESCGAMBLING                         15.66656 3956.17977   0.004 0.996840
+OFNS_DESCGRAND LARCENY                    14.92729 3956.17973   0.004 0.996989
+OFNS_DESCGRAND LARCENY OF MOTOR VEHICLE   16.53692 3956.17975   0.004 0.996665
+OFNS_DESCHARRASSMENT 2                     3.19031 4845.31117   0.001 0.999475
+OFNS_DESCHOMICIDE-NEGLIGENT,UNCLASSIFIE    3.19031 4845.31117   0.001 0.999475
+OFNS_DESCINTOXICATED &amp; IMPAIRED DRIVING   15.52000 3956.17977   0.004 0.996870
+OFNS_DESCINTOXICATED/IMPAIRED DRIVING     -0.84856 5594.88344   0.000 0.999879
+OFNS_DESCKIDNAPPING &amp; RELATED OFFENSES    -0.52635 5594.88345   0.000 0.999925
+OFNS_DESCMISCELLANEOUS PENAL LAW          15.32177 3956.17972   0.004 0.996910
+OFNS_DESCMURDER &amp; NON-NEGL. MANSLAUGHTE    0.42525 3999.93241   0.000 0.999915
+OFNS_DESCNYS LAWS-UNCLASSIFIED FELONY     15.16609 3956.17980   0.004 0.996941
+OFNS_DESCOFF. AGNST PUB ORD SENSBLTY &amp;    15.76131 3956.17974   0.004 0.996821
+OFNS_DESCOFFENSES AGAINST PUBLIC ADMINI   15.33879 3956.17972   0.004 0.996906
+OFNS_DESCOFFENSES AGAINST THE PERSON      14.35025 3956.17979   0.004 0.997106
+OFNS_DESCOFFENSES INVOLVING FRAUD         15.13177 3956.17973   0.004 0.996948
+OFNS_DESCOTHER OFFENSES RELATED TO THEF   16.20625 3956.17976   0.004 0.996732
+OFNS_DESCOTHER STATE LAWS                 15.56017 3956.17989   0.004 0.996862
+OFNS_DESCOTHER STATE LAWS (NON PENAL LA   -0.94028 4844.51018   0.000 0.999845
+OFNS_DESCOTHER TRAFFIC INFRACTION         15.79269 3956.17974   0.004 0.996815
+OFNS_DESCPETIT LARCENY                    13.71176 3956.17972   0.003 0.997235
+OFNS_DESCPOSSESSION OF STOLEN PROPERTY    15.80920 3956.17974   0.004 0.996812
+OFNS_DESCRAPE                             15.63081 3956.17972   0.004 0.996848
+OFNS_DESCROBBERY                          15.76949 3956.17972   0.004 0.996820
+OFNS_DESCSEX CRIMES                       15.05818 3956.17971   0.004 0.996963
+OFNS_DESCUNAUTHORIZED USE OF A VEHICLE    14.81084 3956.17986   0.004 0.997013
+OFNS_DESCVEHICLE AND TRAFFIC LAWS         15.45099 3956.17972   0.004 0.996884
+                                           
+(Intercept)                                
+BOROBROOKLYN                            ***
+BOROMANHATTAN                           ***
+BOROQUEENS                              ***
+BOROSTATEN ISLAND                          
+PERP_SEXM                                  
+PERP_RACEBLACK                          ***
+PERP_RACEBLACK HISPANIC                 ***
+PERP_RACEWHITE                             
+PERP_RACEWHITE HISPANIC                 ***
+LOC_CLASSFCTN_DESCDWELLING              ***
+LOC_CLASSFCTN_DESCHOUSING               ***
+LOC_CLASSFCTN_DESCOTHER                    
+LOC_CLASSFCTN_DESCPARKING LOT           ** 
+LOC_CLASSFCTN_DESCPLAYGROUND               
+LOC_CLASSFCTN_DESCSTREET                ***
+LOC_CLASSFCTN_DESCTRANSIT                  
+LOC_CLASSFCTN_DESCVEHICLE               ** 
+PERP_AGE_GROUP18-24                     ***
+PERP_AGE_GROUP25-44                     ***
+PERP_AGE_GROUP45-64                     ***
+PERP_AGE_GROUP65+                          
+VIC_SEXM                                   
+VIC_AGE_GROUP18-24                         
+VIC_AGE_GROUP25-44                         
+VIC_AGE_GROUP45-64                      ** 
+VIC_AGE_GROUP65+                           
+VIC_AGE_GROUPUNKNOWN                       
+VIC_RACEBLACK                           ***
+VIC_RACEBLACK HISPANIC                  ***
+VIC_RACEUNKNOWN                            
+VIC_RACEWHITE                           .  
+VIC_RACEWHITE HISPANIC                  ***
+OFNS_DESCALCOHOLIC BEVERAGE CONTROL LAW    
+OFNS_DESCASSAULT 3 &amp; RELATED OFFENSES      
+OFNS_DESCBURGLAR'S TOOLS                   
+OFNS_DESCBURGLARY                          
+OFNS_DESCCANNABIS RELATED OFFENSES         
+OFNS_DESCCHILD ABANDONMENT/NON SUPPORT     
+OFNS_DESCCRIMINAL MISCHIEF &amp; RELATED OF    
+OFNS_DESCCRIMINAL TRESPASS                 
+OFNS_DESCDANGEROUS DRUGS                   
+OFNS_DESCDANGEROUS WEAPONS                 
+OFNS_DESCFELONY ASSAULT                    
+OFNS_DESCFOR OTHER AUTHORITIES             
+OFNS_DESCFORGERY                           
+OFNS_DESCFRAUDS                            
+OFNS_DESCGAMBLING                          
+OFNS_DESCGRAND LARCENY                     
+OFNS_DESCGRAND LARCENY OF MOTOR VEHICLE    
+OFNS_DESCHARRASSMENT 2                     
+OFNS_DESCHOMICIDE-NEGLIGENT,UNCLASSIFIE    
+OFNS_DESCINTOXICATED &amp; IMPAIRED DRIVING    
+OFNS_DESCINTOXICATED/IMPAIRED DRIVING      
+OFNS_DESCKIDNAPPING &amp; RELATED OFFENSES     
+OFNS_DESCMISCELLANEOUS PENAL LAW           
+OFNS_DESCMURDER &amp; NON-NEGL. MANSLAUGHTE    
+OFNS_DESCNYS LAWS-UNCLASSIFIED FELONY      
+OFNS_DESCOFF. AGNST PUB ORD SENSBLTY &amp;     
+OFNS_DESCOFFENSES AGAINST PUBLIC ADMINI    
+OFNS_DESCOFFENSES AGAINST THE PERSON       
+OFNS_DESCOFFENSES INVOLVING FRAUD          
+OFNS_DESCOTHER OFFENSES RELATED TO THEF    
+OFNS_DESCOTHER STATE LAWS                  
+OFNS_DESCOTHER STATE LAWS (NON PENAL LA    
+OFNS_DESCOTHER TRAFFIC INFRACTION          
+OFNS_DESCPETIT LARCENY                     
+OFNS_DESCPOSSESSION OF STOLEN PROPERTY     
+OFNS_DESCRAPE                              
+OFNS_DESCROBBERY                           
+OFNS_DESCSEX CRIMES                        
+OFNS_DESCUNAUTHORIZED USE OF A VEHICLE     
+OFNS_DESCVEHICLE AND TRAFFIC LAWS          
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 1698.5  on 1705  degrees of freedom
-Residual deviance: 1669.2  on 1695  degrees of freedom
-AIC: 1691.2
+    Null deviance: 3626.2  on 3671  degrees of freedom
+Residual deviance: 2850.5  on 3600  degrees of freedom
+AIC: 2994.5
 
-Number of Fisher Scoring iterations: 4</code></pre>
+Number of Fisher Scoring iterations: 16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Type 'citation("pROC")' for a citation.</code></pre>
 </div>
@@ -551,32 +797,32 @@ Attaching package: 'pROC'</code></pre>
 
     cov, smooth, var</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict probabilities</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ROC curve</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>roc_curve <span class="ot">&lt;-</span> <span class="fu">roc</span>(data<span class="sc">$</span>STATISTICAL_MURDER_FLAG, predictions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict probabilities</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ROC curve</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>roc_curve <span class="ot">&lt;-</span> <span class="fu">roc</span>(combined_df<span class="sc">$</span>STATISTICAL_MURDER_FLAG, predictions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Setting levels: control = FALSE, case = TRUE</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Setting direction: controls &lt; cases</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_curve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_curve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(roc_curve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(roc_curve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Area under the curve: 0.586</code></pre>
+<pre><code>Area under the curve: 0.7952</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>shapefile_path <span class="ot">&lt;-</span> <span class="st">"tl_2022_36_tract/tl_2022_36_tract.shp"</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>complete_data <span class="ot">&lt;-</span> <span class="fu">st_read</span>(shapefile_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>shapefile_path <span class="ot">&lt;-</span> <span class="st">"tl_2022_36_tract/tl_2022_36_tract.shp"</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>complete_data <span class="ot">&lt;-</span> <span class="fu">st_read</span>(shapefile_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `tl_2022_36_tract' from data source 
-  `/Users/saisriram/Desktop/MA615/Team6/tl_2022_36_tract/tl_2022_36_tract.shp' 
+  `/Users/wangshiyu/Desktop/MA415 A1+A3/final-project-team6/tl_2022_36_tract/tl_2022_36_tract.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 5411 features and 12 fields
 Geometry type: MULTIPOLYGON
@@ -584,118 +830,118 @@ Dimension:     XY
 Bounding box:  xmin: -79.76259 ymin: 40.47658 xmax: -71.77749 ymax: 45.01586
 Geodetic CRS:  NAD83</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>nyc_tracts <span class="ot">&lt;-</span> complete_data <span class="sc">|&gt;</span> </span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(COUNTYFP <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"005"</span>, <span class="st">"047"</span>, <span class="st">"061"</span>, <span class="st">"081"</span>, <span class="st">"085"</span>))</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>map_df <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(combined_df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>, <span class="at">agr =</span> <span class="st">"constant"</span>)</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the shapefile for NYC tracts and overlaying points</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> nyc_tracts, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> map_df, <span class="at">color =</span> <span class="st">"brown3"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span>  <span class="co"># Adds the points</span></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Map of New York City with Offense Data Points"</span>, <span class="at">x =</span> <span class="st">"Longitude"</span>, <span class="at">y =</span> <span class="st">"Latitude"</span>)</span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the final plot</span></span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(final_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>nyc_tracts <span class="ot">&lt;-</span> complete_data <span class="sc">|&gt;</span> </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(COUNTYFP <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"005"</span>, <span class="st">"047"</span>, <span class="st">"061"</span>, <span class="st">"081"</span>, <span class="st">"085"</span>))</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>map_df <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(combined_df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>, <span class="at">agr =</span> <span class="st">"constant"</span>)</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the shapefile for NYC tracts and overlaying points</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> nyc_tracts, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> map_df, <span class="at">color =</span> <span class="st">"brown3"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span>  <span class="co"># Adds the points</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Map of New York City with Offense Data Points"</span>, <span class="at">x =</span> <span class="st">"Longitude"</span>, <span class="at">y =</span> <span class="st">"Latitude"</span>)</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the final plot</span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(final_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># explores relationships between perpetrator and victim demographics</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare perpetrator and victim age groups</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_df, <span class="fu">aes</span>(<span class="at">x =</span> PERP_AGE_GROUP, <span class="at">fill =</span> VIC_AGE_GROUP)) <span class="sc">+</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Perpetrator Age Group"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Victim Age Group"</span>) <span class="sc">+</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Comparison of Perpetrator and Victim Age Groups"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># explores relationships between perpetrator and victim demographics</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare perpetrator and victim age groups</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_df, <span class="fu">aes</span>(<span class="at">x =</span> PERP_AGE_GROUP, <span class="at">fill =</span> VIC_AGE_GROUP)) <span class="sc">+</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Perpetrator Age Group"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Victim Age Group"</span>) <span class="sc">+</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Comparison of Perpetrator and Victim Age Groups"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyzing race and gender impact</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_df, <span class="fu">aes</span>(<span class="at">x =</span> PERP_RACE, <span class="at">fill =</span> VIC_SEX)) <span class="sc">+</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Perpetrator Race"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Victim Sex"</span>) <span class="sc">+</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Impact of Perpetrator Race on Victim Sex"</span>) <span class="sc">+</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyzing race and gender impact</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_df, <span class="fu">aes</span>(<span class="at">x =</span> PERP_RACE, <span class="at">fill =</span> VIC_SEX)) <span class="sc">+</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Perpetrator Race"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Victim Sex"</span>) <span class="sc">+</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Impact of Perpetrator Race on Victim Sex"</span>) <span class="sc">+</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="672"></p>
+<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># offense and Perpetrator race correlation</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="sc">|&gt;</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(OFNS_DESC) <span class="sc">|&gt;</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Count <span class="sc">&gt;=</span> <span class="dv">50</span>) <span class="sc">|&gt;</span></span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OFNS_DESC, <span class="at">y =</span> Count, <span class="at">fill =</span> OFNS_DESC)) <span class="sc">+</span></span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Offense Description"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># offense and Perpetrator race correlation</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="sc">|&gt;</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(OFNS_DESC) <span class="sc">|&gt;</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Count <span class="sc">&gt;=</span> <span class="dv">50</span>) <span class="sc">|&gt;</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OFNS_DESC, <span class="at">y =</span> Count, <span class="at">fill =</span> OFNS_DESC)) <span class="sc">+</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Offense Description"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: The `&lt;scale&gt;` argument of `guides()` cannot be `FALSE`. Use "none" instead as
 of ggplot2 3.3.4.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>combined_df <span class="sc">|&gt;</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(OFNS_DESC, PERP_RACE) <span class="sc">|&gt;</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Count <span class="sc">&gt;=</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OFNS_DESC, <span class="at">y =</span> Count, <span class="at">fill =</span> PERP_RACE)) <span class="sc">+</span></span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Offense Description"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Perpetrator Race"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>combined_df <span class="sc">|&gt;</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(OFNS_DESC, PERP_RACE) <span class="sc">|&gt;</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Count <span class="sc">&gt;=</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OFNS_DESC, <span class="at">y =</span> Count, <span class="at">fill =</span> PERP_RACE)) <span class="sc">+</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Offense Description"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Perpetrator Race"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid" width="672"></p>
+<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>nypd_payroll <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_payroll.rds"</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>nypd_payroll <span class="ot">&lt;-</span> nypd_payroll <span class="sc">%&gt;%</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">work_boro =</span> <span class="st">`</span><span class="at">Work Location Borough</span><span class="st">`</span>,</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_salary =</span> <span class="st">`</span><span class="at">Base Salary</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>nypd_payroll <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_payroll.rds"</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>nypd_payroll <span class="ot">&lt;-</span> nypd_payroll <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">work_boro =</span> <span class="st">`</span><span class="at">Work Location Borough</span><span class="st">`</span>,</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_salary =</span> <span class="st">`</span><span class="at">Base Salary</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>average_salary_by_borough <span class="ot">&lt;-</span> nypd_payroll <span class="sc">%&gt;%</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(work_boro) <span class="sc">%&gt;%</span></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">AverageSalary =</span> <span class="fu">mean</span>(base_salary, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()  <span class="co"># Ensure that we remove the grouping structure</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Now plot the average salary by borough using ggplot2</span></span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(average_salary_by_borough, <span class="fu">aes</span>(<span class="at">x =</span> work_boro, <span class="at">y =</span> AverageSalary, <span class="at">fill =</span> work_boro)) <span class="sc">+</span></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Salary by Work Location Borough"</span>, <span class="at">x =</span> <span class="st">"Work Location Borough"</span>, <span class="at">y =</span> <span class="st">"Average Salary"</span>) <span class="sc">+</span></span>
-<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>average_salary_by_borough <span class="ot">&lt;-</span> nypd_payroll <span class="sc">%&gt;%</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(work_boro) <span class="sc">%&gt;%</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">AverageSalary =</span> <span class="fu">mean</span>(base_salary, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()  <span class="co"># Ensure that we remove the grouping structure</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Now plot the average salary by borough using ggplot2</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(average_salary_by_borough, <span class="fu">aes</span>(<span class="at">x =</span> work_boro, <span class="at">y =</span> AverageSalary, <span class="at">fill =</span> work_boro)) <span class="sc">+</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Salary by Work Location Borough"</span>, <span class="at">x =</span> <span class="st">"Work Location Borough"</span>, <span class="at">y =</span> <span class="st">"Average Salary"</span>) <span class="sc">+</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate average salary by borough</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>average_salary_by_borough <span class="ot">&lt;-</span> nypd_payroll <span class="sc">%&gt;%</span></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(work_boro) <span class="sc">%&gt;%</span></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">AverageSalary =</span> <span class="fu">mean</span>(base_salary, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>borough_to_fips <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">work_boro =</span> <span class="fu">c</span>(<span class="st">"BRONX"</span>, <span class="st">"BROOKLYN"</span>, <span class="st">"MANHATTAN"</span>, <span class="st">"QUEENS"</span>, <span class="st">"OTHER"</span>),  <span class="co"># Note: Ensure the names match the data</span></span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">COUNTYFP =</span> <span class="fu">c</span>(<span class="st">"005"</span>, <span class="st">"047"</span>, <span class="st">"061"</span>, <span class="st">"081"</span>, <span class="st">"085"</span>))</span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>average_salary_by_fips <span class="ot">&lt;-</span> average_salary_by_borough <span class="sc">%&gt;%</span></span>
-<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(borough_to_fips, <span class="at">by =</span> <span class="st">"work_boro"</span>)</span>
-<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>average_salary_by_fips <span class="ot">&lt;-</span> average_salary_by_fips <span class="sc">%&gt;%</span></span>
-<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(COUNTYFP, AverageSalary)</span>
-<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(average_salary_by_fips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate average salary by borough</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>average_salary_by_borough <span class="ot">&lt;-</span> nypd_payroll <span class="sc">%&gt;%</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(work_boro) <span class="sc">%&gt;%</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">AverageSalary =</span> <span class="fu">mean</span>(base_salary, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>borough_to_fips <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">work_boro =</span> <span class="fu">c</span>(<span class="st">"BRONX"</span>, <span class="st">"BROOKLYN"</span>, <span class="st">"MANHATTAN"</span>, <span class="st">"QUEENS"</span>, <span class="st">"OTHER"</span>),  <span class="co"># Note: Ensure the names match the data</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">COUNTYFP =</span> <span class="fu">c</span>(<span class="st">"005"</span>, <span class="st">"047"</span>, <span class="st">"061"</span>, <span class="st">"081"</span>, <span class="st">"085"</span>))</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>average_salary_by_fips <span class="ot">&lt;-</span> average_salary_by_borough <span class="sc">%&gt;%</span></span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(borough_to_fips, <span class="at">by =</span> <span class="st">"work_boro"</span>)</span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>average_salary_by_fips <span class="ot">&lt;-</span> average_salary_by_fips <span class="sc">%&gt;%</span></span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(COUNTYFP, AverageSalary)</span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(average_salary_by_fips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 2
   COUNTYFP AverageSalary
@@ -708,72 +954,151 @@ of ggplot2 3.3.4.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># map Average Salary by NYC Borough</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>nyc_tracts_salary <span class="ot">&lt;-</span> nyc_tracts <span class="sc">%&gt;%</span></span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(average_salary_by_fips, <span class="at">by =</span> <span class="st">"COUNTYFP"</span>)</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the map with average salaries indicated by color</span></span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nyc_tracts_salary) <span class="sc">+</span></span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> AverageSalary), <span class="at">color =</span> <span class="st">"gray"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"deepskyblue4"</span>, <span class="at">name =</span> <span class="st">"Avg Salary"</span>,</span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.value =</span> <span class="st">"grey50"</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Salary by NYC Borough"</span>,</span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Color intensity indicates average salary levels"</span>,</span>
-<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Average Salary"</span>) <span class="sc">+</span></span>
-<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># map Average Salary by NYC Borough</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>nyc_tracts_salary <span class="ot">&lt;-</span> nyc_tracts <span class="sc">%&gt;%</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(average_salary_by_fips, <span class="at">by =</span> <span class="st">"COUNTYFP"</span>)</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the map with average salaries indicated by color</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nyc_tracts_salary) <span class="sc">+</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> AverageSalary), <span class="at">color =</span> <span class="st">"gray"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"deepskyblue4"</span>, <span class="at">name =</span> <span class="st">"Avg Salary"</span>,</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.value =</span> <span class="st">"grey50"</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Salary by NYC Borough"</span>,</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Color intensity indicates average salary levels"</span>,</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Average Salary"</span>) <span class="sc">+</span></span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average Salary and Crime Data Points by NYC Borough</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>map_df <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(map_df, <span class="fu">st_crs</span>(nyc_tracts_salary)<span class="sc">$</span>epsg)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>final_combined_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> nyc_tracts_salary, <span class="fu">aes</span>(<span class="at">fill =</span> AverageSalary), <span class="at">color =</span> <span class="st">"gray"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> map_df, <span class="fu">aes</span>(<span class="at">color =</span> VIC_RACE), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"deepskyblue4"</span>, <span class="at">name =</span> <span class="st">"Avg Salary"</span>,</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.value =</span> <span class="st">"grey50"</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"ASIAN / PACIFIC ISLANDER"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"BLACK"</span> <span class="ot">=</span> <span class="st">"brown3"</span>, <span class="st">"WHITE HISPANIC"</span> <span class="ot">=</span> <span class="st">"yellow"</span>, <span class="st">"WHITE"</span> <span class="ot">=</span> <span class="st">"deeppink"</span>, <span class="st">"UNKNOWN"</span> <span class="ot">=</span> <span class="st">"darkgray"</span>, <span class="st">"BLACK HISPANIC"</span> <span class="ot">=</span> <span class="st">"darkblue"</span>), <span class="at">name =</span> <span class="st">"Victim's Race"</span>) <span class="sc">+</span></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Salary and Crime Data Points by NYC Borough"</span>,</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Boroughs colored by average salary; Points indicate crime locations"</span>,</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Average Salary"</span>, <span class="at">x =</span> <span class="st">"Longitude"</span>, <span class="at">y =</span> <span class="st">"Latitude"</span>, <span class="at">color =</span> <span class="st">"Victim's Race"</span>) <span class="sc">+</span></span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(final_combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average Salary and Crime Data Points by NYC Borough</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>map_df <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(map_df, <span class="fu">st_crs</span>(nyc_tracts_salary)<span class="sc">$</span>epsg)</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>final_combined_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> nyc_tracts_salary, <span class="fu">aes</span>(<span class="at">fill =</span> AverageSalary), <span class="at">color =</span> <span class="st">"gray"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> map_df, <span class="fu">aes</span>(<span class="at">color =</span> VIC_RACE), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"deepskyblue4"</span>, <span class="at">name =</span> <span class="st">"Avg Salary"</span>,</span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.value =</span> <span class="st">"grey50"</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"ASIAN / PACIFIC ISLANDER"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"BLACK"</span> <span class="ot">=</span> <span class="st">"brown3"</span>, <span class="st">"WHITE HISPANIC"</span> <span class="ot">=</span> <span class="st">"yellow"</span>, <span class="st">"WHITE"</span> <span class="ot">=</span> <span class="st">"deeppink"</span>, <span class="st">"UNKNOWN"</span> <span class="ot">=</span> <span class="st">"darkgray"</span>, <span class="st">"BLACK HISPANIC"</span> <span class="ot">=</span> <span class="st">"darkblue"</span>), <span class="at">name =</span> <span class="st">"Victim's Race"</span>) <span class="sc">+</span></span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Salary and Crime Data Points by NYC Borough"</span>,</span>
-<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Boroughs colored by average salary; Points indicate crime locations"</span>,</span>
-<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Average Salary"</span>, <span class="at">x =</span> <span class="st">"Longitude"</span>, <span class="at">y =</span> <span class="st">"Latitude"</span>, <span class="at">color =</span> <span class="st">"Victim's Race"</span>) <span class="sc">+</span></span>
-<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
-<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(final_combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>map_df <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(map_df, <span class="fu">st_crs</span>(nyc_tracts_salary)<span class="sc">$</span>epsg)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>final_combined_plot2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> nyc_tracts_salary, <span class="fu">aes</span>(<span class="at">fill =</span> AverageSalary), <span class="at">color =</span> <span class="st">"gray"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> map_df, <span class="fu">aes</span>(<span class="at">color =</span> PERP_RACE), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"deepskyblue4"</span>, <span class="at">name =</span> <span class="st">"Avg Salary"</span>,</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.value =</span> <span class="st">"grey50"</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"ASIAN / PACIFIC ISLANDER"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"BLACK"</span> <span class="ot">=</span> <span class="st">"brown3"</span>, <span class="st">"WHITE HISPANIC"</span> <span class="ot">=</span> <span class="st">"yellow"</span>, <span class="st">"WHITE"</span> <span class="ot">=</span> <span class="st">"deeppink"</span>, <span class="st">"UNKNOWN"</span> <span class="ot">=</span> <span class="st">"darkgray"</span>, <span class="st">"BLACK HISPANIC"</span> <span class="ot">=</span> <span class="st">"darkblue"</span>), <span class="at">name =</span> <span class="st">"Perpetrator's Race"</span>) <span class="sc">+</span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Salary and Crime Data Points by NYC Borough"</span>,</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Boroughs colored by average salary; Points indicate crime locations"</span>,</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Average Salary"</span>, <span class="at">x =</span> <span class="st">"Longitude"</span>, <span class="at">y =</span> <span class="st">"Latitude"</span>, <span class="at">color =</span> <span class="st">"Perpetrator's Race"</span>) <span class="sc">+</span></span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(final_combined_plot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>map_df <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(map_df, <span class="fu">st_crs</span>(nyc_tracts_salary)<span class="sc">$</span>epsg)</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>final_combined_plot2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> nyc_tracts_salary, <span class="fu">aes</span>(<span class="at">fill =</span> AverageSalary), <span class="at">color =</span> <span class="st">"gray"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> map_df, <span class="fu">aes</span>(<span class="at">color =</span> PERP_RACE), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"deepskyblue4"</span>, <span class="at">name =</span> <span class="st">"Avg Salary"</span>,</span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.value =</span> <span class="st">"grey50"</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"ASIAN / PACIFIC ISLANDER"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"BLACK"</span> <span class="ot">=</span> <span class="st">"brown3"</span>, <span class="st">"WHITE HISPANIC"</span> <span class="ot">=</span> <span class="st">"yellow"</span>, <span class="st">"WHITE"</span> <span class="ot">=</span> <span class="st">"deeppink"</span>, <span class="st">"UNKNOWN"</span> <span class="ot">=</span> <span class="st">"darkgray"</span>, <span class="st">"BLACK HISPANIC"</span> <span class="ot">=</span> <span class="st">"darkblue"</span>), <span class="at">name =</span> <span class="st">"Perpetrator's Race"</span>) <span class="sc">+</span></span>
-<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Salary and Crime Data Points by NYC Borough"</span>,</span>
-<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Boroughs colored by average salary; Points indicate crime locations"</span>,</span>
-<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Average Salary"</span>, <span class="at">x =</span> <span class="st">"Longitude"</span>, <span class="at">y =</span> <span class="st">"Latitude"</span>, <span class="at">color =</span> <span class="st">"Perpetrator's Race"</span>) <span class="sc">+</span></span>
-<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
-<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(final_combined_plot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>vic_race <span class="ot">&lt;-</span> combined_df <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(VIC_RACE) <span class="sc">|&gt;</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vic_race, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(VIC_RACE, n), <span class="at">y =</span> n, <span class="at">fill =</span> VIC_RACE)) <span class="sc">+</span> </span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Victim Race Distribution"</span>, <span class="at">x =</span> <span class="st">"Victim Race"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>vic_race <span class="ot">&lt;-</span> combined_df <span class="sc">|&gt;</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(VIC_RACE) <span class="sc">|&gt;</span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vic_race, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(VIC_RACE, n), <span class="at">y =</span> n, <span class="at">fill =</span> VIC_RACE)) <span class="sc">+</span> </span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Victim Race Distribution"</span>, <span class="at">x =</span> <span class="st">"Victim Race"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>randomForest 4.7-1.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Type rfNews() to see new features/changes/bug fixes.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'randomForest'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    combine</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggplot2':
+
+    margin</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>modeldata <span class="ot">&lt;-</span> combined_df <span class="sc">%&gt;%</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor))</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>freq <span class="ot">&lt;-</span> <span class="fu">table</span>(modeldata<span class="sc">$</span>OFNS_DESC)</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>modeldata <span class="ot">&lt;-</span> modeldata[modeldata<span class="sc">$</span>OFNS_DESC <span class="sc">%in%</span> <span class="fu">names</span>(freq[freq <span class="sc">&gt;=</span> <span class="dv">200</span>]), ]</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>train_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(modeldata), <span class="fl">0.8</span> <span class="sc">*</span> <span class="fu">nrow</span>(modeldata))  <span class="co"># 80% for training</span></span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> modeldata[train_indices, ]</span>
+<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> modeldata[<span class="sc">-</span>train_indices, ]</span>
+<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-12"><a href="#cb71-12" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(BORO <span class="sc">~</span> PERP_SEX <span class="sc">+</span> PERP_RACE <span class="sc">+</span> LOC_CLASSFCTN_DESC <span class="sc">+</span> PERP_AGE_GROUP <span class="sc">+</span> VIC_SEX <span class="sc">+</span> VIC_AGE_GROUP <span class="sc">+</span> VIC_RACE <span class="sc">+</span> OFNS_DESC <span class="sc">+</span> STATISTICAL_MURDER_FLAG, </span>
+<span id="cb71-13"><a href="#cb71-13" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> train_data, </span>
+<span id="cb71-14"><a href="#cb71-14" aria-hidden="true" tabindex="-1"></a>                         <span class="at">ntree =</span> <span class="dv">500</span>,</span>
+<span id="cb71-15"><a href="#cb71-15" aria-hidden="true" tabindex="-1"></a>                         <span class="at">importance =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb71-16"><a href="#cb71-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">na.action =</span> na.omit)</span>
+<span id="cb71-17"><a href="#cb71-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>test_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf_model, test_data)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>conf_mat <span class="ot">&lt;-</span> <span class="fu">table</span>(test_data<span class="sc">$</span>BORO, test_pred)</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(conf_mat)) <span class="sc">/</span> <span class="fu">sum</span>(conf_mat)</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Accuracy:"</span>, accuracy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Accuracy: 0.839729119638826"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">importance</span>(rf_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                           BRONX  BROOKLYN MANHATTAN   QUEENS STATEN ISLAND
+PERP_SEX                12.69318  9.458377  5.221241 16.35497      -1.33696
+PERP_RACE               50.62434 70.470422 53.080604 39.21863      32.21420
+LOC_CLASSFCTN_DESC      72.91659 67.026035 63.682934 45.41541      32.74132
+PERP_AGE_GROUP          63.38661 67.086130 65.958136 49.27119      36.09068
+VIC_SEX                 35.63953 32.607221 36.428757 18.75103      19.36226
+VIC_AGE_GROUP           53.10915 61.768631 76.562749 48.94069      30.56484
+VIC_RACE                52.47619 63.871629 58.334073 54.85735      24.35468
+OFNS_DESC               69.32860 89.785256 68.497566 62.34784      29.72071
+STATISTICAL_MURDER_FLAG 29.06915 31.629669 56.325519 22.57633      20.41800
+                        MeanDecreaseAccuracy MeanDecreaseGini
+PERP_SEX                            18.76525         6.746145
+PERP_RACE                           81.56647        79.962885
+LOC_CLASSFCTN_DESC                  95.26111       150.759675
+PERP_AGE_GROUP                      99.03290       122.623032
+VIC_SEX                             49.50069        41.896652
+VIC_AGE_GROUP                       99.71094       136.192321
+VIC_RACE                            85.09536       141.208794
+OFNS_DESC                          123.01682       182.182583
+STATISTICAL_MURDER_FLAG             57.42919        44.251227</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
