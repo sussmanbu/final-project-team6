@@ -5,7 +5,7 @@ toc: true
 draft: FALSE
 ---
 
-![](images/nyc.jpeg)
+![](images/nypd_big_picture.jpeg)
 
 
 ```{r imports, echo=FALSE, message=FALSE, warning=FALSE}
