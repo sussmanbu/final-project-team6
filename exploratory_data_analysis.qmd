@@ -405,5 +405,25 @@ importance(rf_model)
 varImpPlot(rf_model)
 ```
 
+```{r}
+library(nnet)
+
+
+combined_df$BORO <- factor(combined_df$BORO)
+combined_df$LOC_CLASSFCTN_DESC <- factor(combined_df$LOC_CLASSFCTN_DESC)
+combined_df$PERP_AGE_GROUP <- factor(combined_df$PERP_AGE_GROUP)
+combined_df$VIC_AGE_GROUP <- factor(combined_df$VIC_AGE_GROUP)
+combined_df$VIC_RACE <- factor(combined_df$VIC_RACE)
+combined_df$OFNS_DESC <- factor(combined_df$OFNS_DESC)
+
+model <- multinom(BORO ~ LOC_CLASSFCTN_DESC + PERP_AGE_GROUP + VIC_AGE_GROUP + 
+                    VIC_RACE + OFNS_DESC, data = combined_df)
+
+summary(model)
+
+predicted_classes <- predict(model, newdata = combined_df)
+predicted_probs <- predict(model, newdata = combined_df, type = "probs")
+
+```
 
 
