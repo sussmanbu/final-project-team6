@@ -1,0 +1,15 @@
+---
+title: "Blog Post 7"
+author: "Team 6"
+date: "2024-04-26"
+date-modified: "2024-04-26"
+draft: FALSE
+---
+
+## Tentative Thesis
+Our objective is to unveil the intersection of poverty, race, and policing in NYC.
+
+In New York City, there exists a significant correlation between low-income areas, predominantly black populations, and elevated rates of both arrests and police-involved shootings. Through an exploration of key datasets encompassing NYPD shooting incidents, payroll information, and arrest records, this analysis sheds light on the complex dynamics at play within the city’s socio-economic and racial landscape.
+
+## Polish Our Visualization
+We added titles, annotations, and highlights to the plots.
