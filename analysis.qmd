@@ -115,6 +115,8 @@ ggplot(age_boro_count2, aes(x = BORO, y = n, fill = VIC_AGE_GROUP)) +
 
 ## Section 1.3: Crime Location Classification
 
+This bar chart displays the distribution of crime location classifications. The majority of crimes are classified under "Street", indicating that this is the most common location for crime in the dataset, with a significantly higher count compared to other categories. "Dwelling" and "Housing" also appear to be relatively common crime locations, with "Housing" showing a notably higher count than "Dwelling". The chart provides a clear visual summary of where crimes tend to occur, which could be used by law enforcement and city planners to allocate resources more effectively.
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Perpetrator and Victim Demographics: Age Group Distribution
 loc_counts <- data |>
@@ -129,6 +131,8 @@ ggplot(loc_counts, aes(x = reorder(LOC_CLASSFCTN_DESC, n), y = n, fill = LOC_CLA
 ```
 
 ## Section 1.4: Offense Descriptions
+
+The horizontal bar chart presents a breakdown of various types of offenses. The most frequent offense, represented by the longest bar, is "Vehicle and Traffic Laws," suggesting a high number of incidents related to traffic violations. "Sex Crimes" and "Robbery" follow, indicating significant occurrence rates within the dataset. Offenses like "Rape" and "Petit Larceny" show lower counts but are still notable. Other categories, including "Offenses Involving Fraud," "Offenses Against Public Administration," and "Miscellaneous Penal Law," display moderate counts. This variable could be instrumental for law enforcement prioritization and public awareness initiatives.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 combined_df |>
