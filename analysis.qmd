@@ -5,7 +5,143 @@ toc: true
 draft: false
 ---
 
-![](https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg)
+![](images/nypd_analysis_page.jpeg)
+
+```{r imports, echo=FALSE, message=FALSE, warning=FALSE}
+# Load necessary libraries
+library(tidyverse)
+library(ggplot2)
+library(ggcorrplot) 
+library(GGally) 
+library(readr)
+library(dplyr)
+library(lubridate)
+library(sf)
+
+# Read the dataset
+data <- readRDS("dataset/nypd_shooting_clean.rds")
+NYPD_arrest_data <- readRDS("dataset/nypd_arrest.rds")
+combined_df <- merge(data, NYPD_arrest_data, by = c("X_COORD_CD", "Y_COORD_CD","Latitude","Longitude","PERP_SEX","JURISDICTION_CODE","PERP_RACE"))
+nypd_payroll <- readRDS("dataset/nypd_payroll.rds")
+nypd_payroll <- nypd_payroll %>%
+  rename(
+    work_boro = `Work Location Borough`,
+    base_salary = `Base Salary`)
+average_salary_by_borough <- nypd_payroll %>%
+  group_by(work_boro) %>%
+  summarise(AverageSalary = mean(base_salary, na.rm = TRUE)) %>%
+  ungroup()  # Ensure that we remove the grouping structure
+
+```
+
+
+# Section 1: Deep-Dive Analysis and Motivation
+
+Our team decided to work with the datasets that could give us more information to help us understand the complex dynamics at play within the city's socio-economic and racial landscape.The datasets we used provide a nuanced view of the patterns and contexts in which crimes occur, enabling a more targeted approach to prevention. By analyzing perpetrator and victim demographics, along with the specific characteristics of crime locations, researchers can identify underlying trends and potential hotspots of criminal activity. Including the borough in which the crime takes place adds another layer of geographic specificity, which is crucial for understanding regional variations in crime rates and the effectiveness of local law enforcement strategies. This deep-dive analysis helps in developing tailored interventions that are more likely to be effective in specific communities, ultimately aiding in the reduction of crime and enhancement of public safety.
+
+- Perpetrator Race
+- Perpetrator Age Group
+- Victim Race
+- Crime Location Classification
+
+## Section 1.1: Perpetrator Information
+### Section 1.1.1: Perpetrator Race
+
+The data indicates that individuals identified as Black constitute the largest group of perpetrators, followed by a significantly smaller number of White Hispanics, and even fewer Whites and Black Hispanics. Asian/Pacific Islanders have the smallest count among the identified races. It could be inferred that understanding the racial distribution of perpetrators can be an important factor when analyzing crime data by borough, especially considering the demographic composition of each borough. The importance of analyzing perpetrator race lies in its potential to highlight areas where targeted social and law enforcement interventions may be needed.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+perp_race <- combined_df |>
+  count(PERP_RACE) |>
+  arrange(desc(n))
+
+ggplot(perp_race, aes(x = reorder(PERP_RACE, n), y = n, fill = PERP_RACE)) + 
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Perpetrator Race Distribution", x = "Perpetrator Race", y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+```
+
+### Section 1.1.2: Relationship between Borough and Perpetrator Age
+
+The bar chart illustrates the distribution of perpetrators by age group across different boroughs of New York City. It seems that Brooklyn and the Bronx have the highest counts of perpetrators across all age groups, with those aged 25-44 being the most numerous in these areas. Manhattan follows, displaying a similar pattern with the 25-44 age group being predominant. Queens and Staten Island have significantly lower counts of perpetrators, but the same trend persists where individuals aged 25-44 are the most represented. The least number of perpetrators are those aged 65 and above, which is consistent across all boroughs. The chart suggests that middle-aged adults (25-44) are the most common age group for perpetrators in the city, and that there is a considerable variance in the number of perpetrators between the boroughs, with Brooklyn and the Bronx being the most affected.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+perp_age_counts <- combined_df %>%
+  count(BORO, PERP_AGE_GROUP) %>%
+  arrange(BORO, desc(n))
+
+ggplot(perp_age_counts, aes(x = BORO, y = n, fill = PERP_AGE_GROUP)) +
+  geom_bar(stat = "identity", position = "stack") + 
+  theme_minimal() +
+  labs(title = "Relationship between Borough and Perpetrator Age",
+       x = "Borough",
+       y = "Count",
+       fill = "Perpetrator Age Group") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+```
+## Section 1.2: Victim Information
+### Section 1.2.1: Victim Race
+
+It is noticeable that Black individuals constitute the largest group among the recorded victim races, with a notably high count. White Hispanics and Whites follow, with the former having a slightly higher count than the latter. The count for Asian/Pacific Islander and Black Hispanic victims is lower, and there is also a category for "Unknown," indicating instances where the victim's race was not recorded or identified. The distribution of victim race can be a crucial factor in understanding and predicting crime in different boroughs (BOROs) of New York City, as it might reflect underlying patterns of victimization related to social, economic, and possibly racial dynamics within these areas.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+vic_race <- combined_df |>
+  count(VIC_RACE) |>
+  arrange(desc(n))
+
+ggplot(vic_race, aes(x = reorder(VIC_RACE, n), y = n, fill = VIC_RACE)) + 
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Victim Race Distribution", x = "Victim Race", y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+```
+
+### Section 1.2.2: Victim Age Group
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+age_boro_count2 <- combined_df %>%
+  count(BORO, VIC_AGE_GROUP) %>%
+  arrange(BORO, desc(n))
+
+ggplot(age_boro_count2, aes(x = BORO, y = n, fill = VIC_AGE_GROUP)) +
+  geom_bar(stat = "identity", position = "stack") + 
+  theme_minimal() +
+  labs(title = "Relationship between Borough and Victim Age",
+       x = "Borough",
+       y = "Count",
+       fill = "Victim Age Group") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+```
+
+## Section 1.3: Crime Location Classification
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Perpetrator and Victim Demographics: Age Group Distribution
+loc_counts <- data |>
+  count(LOC_CLASSFCTN_DESC) |>
+  arrange(desc(n))
+
+ggplot(loc_counts, aes(x = reorder(LOC_CLASSFCTN_DESC, n), y = n, fill = LOC_CLASSFCTN_DESC)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = 'Crime Location Classification Distribution', x = 'Crime Location Classification', y = 'Count') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Section 1.4: Offense Descriptions
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+combined_df |>
+  group_by(OFNS_DESC) |>
+  summarise(Count = n(), .groups = 'drop') |>
+  filter(Count >= 50) |>
+  ggplot(aes(x = OFNS_DESC, y = Count, fill = OFNS_DESC)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +
+  theme_minimal() +
+  labs(x = "Offense Description", y = "Count") +
+  guides(fill = FALSE)
+```
 
 This comes from the file `analysis.qmd`.
 

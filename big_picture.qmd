@@ -76,8 +76,7 @@ Zooming in on the age demographics of victims, we discover a chilling trend: the
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Plotting Victim Age Group Distribution
-vic_age_counts <- data %>%
-  filter(VIC_AGE_GROUP != "1022") %>%
+vic_age_counts <- combined_df %>%
   count(VIC_AGE_GROUP) %>%
   arrange(desc(n))
 
