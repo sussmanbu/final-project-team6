@@ -98,6 +98,8 @@ ggplot(vic_race, aes(x = reorder(VIC_RACE, n), y = n, fill = VIC_RACE)) +
 
 ### Section 1.2.2: Victim Age Group
 
+The stacked bar chart illustrates the relationship between various New York City boroughs and the age groups of crime victims. Manhattan appears to have the highest total count of victims across all age groups, followed closely by Brooklyn. Both boroughs show a particularly high prevalence of victims aged 25-44. The Bronx also shows a significant number of victims, especially in the 25-44 and 45-64 age categories. Queens and Staten Island have a lower total count of victims, but similar patterns in age distribution can be observed, with the majority of victims falling into the 25-44 age group. The age group '65+' has the lowest count across all boroughs, and there is a notable number of cases where the victim's age is unknown. This visualization can provide insights into which age groups are more affected by crime in specific boroughs, which can be valuable for targeted policy-making and resource allocation.
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 age_boro_count2 <- combined_df %>%
   count(BORO, VIC_AGE_GROUP) %>%
