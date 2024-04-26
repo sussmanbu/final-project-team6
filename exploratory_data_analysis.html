@@ -822,7 +822,7 @@ Attaching package: 'pROC'</code></pre>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>complete_data <span class="ot">&lt;-</span> <span class="fu">st_read</span>(shapefile_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `tl_2022_36_tract' from data source 
-  `/Users/wanqingzhao/Documents/MA415/final-project-team6/tl_2022_36_tract/tl_2022_36_tract.shp' 
+  `/Users/wangshiyu/Desktop/MA415 A1+A3/final-project-team6/tl_2022_36_tract/tl_2022_36_tract.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 5411 features and 12 fields
 Geometry type: MULTIPOLYGON
@@ -1515,6 +1515,431 @@ AIC: 8074.481 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>predicted_classes <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> combined_df)</span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>predicted_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> combined_df, <span class="at">type =</span> <span class="st">"probs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>combined_df<span class="sc">$</span>BORO <span class="ot">&lt;-</span> <span class="fu">factor</span>(combined_df<span class="sc">$</span>BORO)</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>combined_df<span class="sc">$</span>LOC_CLASSFCTN_DESC <span class="ot">&lt;-</span> <span class="fu">factor</span>(combined_df<span class="sc">$</span>LOC_CLASSFCTN_DESC)</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>combined_df<span class="sc">$</span>PERP_AGE_GROUP <span class="ot">&lt;-</span> <span class="fu">factor</span>(combined_df<span class="sc">$</span>PERP_AGE_GROUP)</span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>combined_df<span class="sc">$</span>VIC_AGE_GROUP <span class="ot">&lt;-</span> <span class="fu">factor</span>(combined_df<span class="sc">$</span>VIC_AGE_GROUP)</span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a>combined_df<span class="sc">$</span>VIC_RACE <span class="ot">&lt;-</span> <span class="fu">factor</span>(combined_df<span class="sc">$</span>VIC_RACE)</span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a>combined_df<span class="sc">$</span>OFNS_DESC <span class="ot">&lt;-</span> <span class="fu">factor</span>(combined_df<span class="sc">$</span>OFNS_DESC)</span>
+<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-11"><a href="#cb82-11" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">multinom</span>(BORO <span class="sc">~</span> LOC_CLASSFCTN_DESC <span class="sc">+</span> PERP_RACE <span class="sc">+</span> PERP_AGE_GROUP <span class="sc">+</span> VIC_AGE_GROUP <span class="sc">+</span> </span>
+<span id="cb82-12"><a href="#cb82-12" aria-hidden="true" tabindex="-1"></a>                    VIC_RACE <span class="sc">+</span> OFNS_DESC, <span class="at">data =</span> combined_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># weights:  340 (268 variable)
+initial  value 5909.856014 
+iter  10 value 4346.177699
+iter  20 value 3985.365782
+iter  30 value 3766.005650
+iter  40 value 3697.523673
+iter  50 value 3672.737513
+iter  60 value 3656.389152
+iter  70 value 3650.721596
+iter  80 value 3648.619727
+iter  90 value 3647.553311
+iter 100 value 3646.883265
+final  value 3646.883265 
+stopped after 100 iterations</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+multinom(formula = BORO ~ LOC_CLASSFCTN_DESC + PERP_RACE + PERP_AGE_GROUP + 
+    VIC_AGE_GROUP + VIC_RACE + OFNS_DESC, data = combined_df)
+
+Coefficients:
+              (Intercept) LOC_CLASSFCTN_DESCDWELLING LOC_CLASSFCTN_DESCHOUSING
+BROOKLYN        -2.373918                  0.1221416                  3.012517
+MANHATTAN       -5.166003                 -2.2408176                  1.888519
+QUEENS          15.302853                 -1.6785343                  1.964891
+STATEN ISLAND  -13.374809                  1.7407029                 -8.091718
+              LOC_CLASSFCTN_DESCOTHER LOC_CLASSFCTN_DESCPARKING LOT
+BROOKLYN                   -17.380383                     12.606658
+MANHATTAN                   -1.390217                     15.077706
+QUEENS                     -13.390927                     14.396440
+STATEN ISLAND               -9.819640                      5.974809
+              LOC_CLASSFCTN_DESCPLAYGROUND LOC_CLASSFCTN_DESCSTREET
+BROOKLYN                       -0.07064734               0.09804304
+MANHATTAN                     -15.01557591              -0.96167149
+QUEENS                         -1.58376597              -0.69435812
+STATEN ISLAND                  -7.54638821               0.06403714
+              LOC_CLASSFCTN_DESCTRANSIT LOC_CLASSFCTN_DESCVEHICLE
+BROOKLYN                       2.065785                -20.411063
+MANHATTAN                     -2.941965                -20.130867
+QUEENS                         3.136824                 -3.635781
+STATEN ISLAND                 -1.765486                -14.336368
+              PERP_RACEBLACK PERP_RACEBLACK HISPANIC PERP_RACEWHITE
+BROOKLYN            7.257759                2.576457      0.5269339
+MANHATTAN           5.566472                4.137775     -1.9974501
+QUEENS            -16.814595              -19.552619    -10.3496025
+STATEN ISLAND      -2.361860               -8.048572     19.1105182
+              PERP_RACEWHITE HISPANIC PERP_AGE_GROUP18-24 PERP_AGE_GROUP25-44
+BROOKLYN                     6.172678          -0.8352539          -0.1182323
+MANHATTAN                    4.734586          -1.6948341          -1.2072681
+QUEENS                     -16.388660          -2.1166145          -1.2173662
+STATEN ISLAND               -8.362695          -2.4655966          -4.3411867
+              PERP_AGE_GROUP45-64 PERP_AGE_GROUP65+ VIC_AGE_GROUP18-24
+BROOKLYN               0.94499542         -13.35905          0.2943241
+MANHATTAN             -0.07371546         -16.27690          1.8817583
+QUEENS                -1.60772732         -12.56288          1.2253106
+STATEN ISLAND         -0.08329483          -7.16342          9.5105098
+              VIC_AGE_GROUP25-44 VIC_AGE_GROUP45-64 VIC_AGE_GROUP65+
+BROOKLYN              -0.3752018         -1.0853066       -0.5884557
+MANHATTAN              1.6577723          1.9084363      -13.4846472
+QUEENS                 0.6981710          0.1812106      -10.3703336
+STATEN ISLAND          9.5148597          8.0086777       -0.3196128
+              VIC_AGE_GROUPUNKNOWN VIC_RACEBLACK VIC_RACEBLACK HISPANIC
+BROOKLYN                  4.377609    -1.0858192             -1.7044946
+MANHATTAN                -1.249051     0.1267509             -0.8912605
+QUEENS                   -1.082861    -0.4398343              0.1653753
+STATEN ISLAND             3.303089     5.4044408             -2.6109862
+              VIC_RACEUNKNOWN VIC_RACEWHITE VIC_RACEWHITE HISPANIC
+BROOKLYN             4.377609   -2.41276458             -1.9884726
+MANHATTAN           -1.249051   -0.00460398             -0.8660246
+QUEENS              -1.082861   -4.02871885             -2.1737595
+STATEN ISLAND        3.303089   -3.29667776             -2.5700047
+              OFNS_DESCALCOHOLIC BEVERAGE CONTROL LAW
+BROOKLYN                                    8.2336958
+MANHATTAN                                  -3.6529684
+QUEENS                                     -1.0848431
+STATEN ISLAND                              -0.4307234
+              OFNS_DESCASSAULT 3 &amp; RELATED OFFENSES OFNS_DESCBURGLAR'S TOOLS
+BROOKLYN                                 -3.1630252                 5.204052
+MANHATTAN                                 0.0879050                 8.062815
+QUEENS                                    2.1978875                -1.218981
+STATEN ISLAND                             0.1087353                -2.260365
+              OFNS_DESCBURGLARY OFNS_DESCCANNABIS RELATED OFFENSES
+BROOKLYN              -2.605770                         -6.9238697
+MANHATTAN              1.633311                          8.2703326
+QUEENS                 1.713103                         11.6460965
+STATEN ISLAND          1.972926                         -0.9573584
+              OFNS_DESCCHILD ABANDONMENT/NON SUPPORT
+BROOKLYN                                  -10.381361
+MANHATTAN                                  -7.967030
+QUEENS                                     -3.058734
+STATEN ISLAND                              -4.530470
+              OFNS_DESCCRIMINAL MISCHIEF &amp; RELATED OF
+BROOKLYN                                   -3.1046075
+MANHATTAN                                  -0.0922304
+QUEENS                                      2.0517055
+STATEN ISLAND                               0.3199100
+              OFNS_DESCCRIMINAL TRESPASS OFNS_DESCDANGEROUS DRUGS
+BROOKLYN                     -3.31505274                -2.639850
+MANHATTAN                    -0.03627709                 1.229356
+QUEENS                        2.41913325                 1.535873
+STATEN ISLAND                -4.85964831                 1.742550
+              OFNS_DESCDANGEROUS WEAPONS OFNS_DESCFELONY ASSAULT
+BROOKLYN                      -2.2815398             -3.29025472
+MANHATTAN                      0.5398624             -0.05922242
+QUEENS                         3.0131076              2.55716200
+STATEN ISLAND                  1.4081399              0.78409551
+              OFNS_DESCFOR OTHER AUTHORITIES OFNS_DESCFORGERY OFNS_DESCFRAUDS
+BROOKLYN                           -3.746351        -1.705361       -3.721927
+MANHATTAN                          -0.321545         1.823530       -3.152096
+QUEENS                             -9.112956         2.724973       -9.009103
+STATEN ISLAND                      -5.790101        -4.628855        3.419626
+              OFNS_DESCGAMBLING OFNS_DESCGRAND LARCENY
+BROOKLYN              -2.508884              -1.337965
+MANHATTAN             -1.761691               1.251408
+QUEENS                -8.637388               2.275195
+STATEN ISLAND         -5.918874               3.372359
+              OFNS_DESCGRAND LARCENY OF MOTOR VEHICLE OFNS_DESCHARRASSMENT 2
+BROOKLYN                                    -3.513100            -1.21501172
+MANHATTAN                                  -12.811909             1.71785221
+QUEENS                                      -7.665202             0.04428426
+STATEN ISLAND                                2.313070            -0.21056524
+              OFNS_DESCHOMICIDE-NEGLIGENT,UNCLASSIFIE
+BROOKLYN                                  -1.21501172
+MANHATTAN                                  1.71785221
+QUEENS                                     0.04428426
+STATEN ISLAND                             -0.21056524
+              OFNS_DESCINTOXICATED &amp; IMPAIRED DRIVING
+BROOKLYN                                   -2.5520516
+MANHATTAN                                   0.2201628
+QUEENS                                      2.9579383
+STATEN ISLAND                               0.2310322
+              OFNS_DESCINTOXICATED/IMPAIRED DRIVING
+BROOKLYN                                  8.3841198
+MANHATTAN                                -3.0745798
+QUEENS                                   -1.0191140
+STATEN ISLAND                            -0.1100694
+              OFNS_DESCKIDNAPPING &amp; RELATED OFFENSES
+BROOKLYN                                  6.67016039
+MANHATTAN                                -2.99096065
+QUEENS                                   -2.45511266
+STATEN ISLAND                             0.06634855
+              OFNS_DESCMISCELLANEOUS PENAL LAW
+BROOKLYN                             -2.759093
+MANHATTAN                             0.744649
+QUEENS                                3.163586
+STATEN ISLAND                         2.231243
+              OFNS_DESCMURDER &amp; NON-NEGL. MANSLAUGHTE
+BROOKLYN                                   -4.3328833
+MANHATTAN                                  -0.4239123
+QUEENS                                      3.7490261
+STATEN ISLAND                              -7.1542534
+              OFNS_DESCNYS LAWS-UNCLASSIFIED FELONY
+BROOKLYN                                  -2.892620
+MANHATTAN                                -11.401162
+QUEENS                                     3.240193
+STATEN ISLAND                             -5.979946
+              OFNS_DESCOFF. AGNST PUB ORD SENSBLTY &amp;
+BROOKLYN                                  -3.9793037
+MANHATTAN                                 -0.3314121
+QUEENS                                     1.1020024
+STATEN ISLAND                             -4.8840801
+              OFNS_DESCOFFENSES AGAINST PUBLIC ADMINI
+BROOKLYN                                    -3.161254
+MANHATTAN                                    0.241304
+QUEENS                                       1.156733
+STATEN ISLAND                                1.724242
+              OFNS_DESCOFFENSES AGAINST THE PERSON
+BROOKLYN                                -3.3022501
+MANHATTAN                               -0.6489853
+QUEENS                                  -8.7896812
+STATEN ISLAND                            2.8591081
+              OFNS_DESCOFFENSES INVOLVING FRAUD
+BROOKLYN                              -2.686364
+MANHATTAN                              1.776641
+QUEENS                                -6.431878
+STATEN ISLAND                          2.498034
+              OFNS_DESCOTHER OFFENSES RELATED TO THEF OFNS_DESCOTHER STATE LAWS
+BROOKLYN                                     7.807339                  9.360799
+MANHATTAN                                   11.892542                 13.832912
+QUEENS                                      14.556856                 -3.004911
+STATEN ISLAND                                5.989067                  1.044460
+              OFNS_DESCOTHER STATE LAWS (NON PENAL LA
+BROOKLYN                                   -5.1108509
+MANHATTAN                                  12.1571537
+QUEENS                                     -1.3887966
+STATEN ISLAND                               0.1408587
+              OFNS_DESCOTHER TRAFFIC INFRACTION OFNS_DESCPETIT LARCENY
+BROOKLYN                              -2.950695             -2.7523521
+MANHATTAN                            -12.430420              0.5926297
+QUEENS                                 2.887470              1.5648049
+STATEN ISLAND                          2.573880             -6.2457192
+              OFNS_DESCPOSSESSION OF STOLEN PROPERTY OFNS_DESCRAPE
+BROOKLYN                                   -3.548744    -1.9283839
+MANHATTAN                                  -1.352005    -0.0922759
+QUEENS                                      1.585890     2.5251511
+STATEN ISLAND                               2.364024     2.2242799
+              OFNS_DESCROBBERY OFNS_DESCSEX CRIMES
+BROOKLYN            -2.9691321          -2.0721705
+MANHATTAN            0.8240710           0.8196095
+QUEENS               2.2911473           3.2508879
+STATEN ISLAND        0.5474707           2.8450814
+              OFNS_DESCUNAUTHORIZED USE OF A VEHICLE
+BROOKLYN                                   -3.973077
+MANHATTAN                                  -2.554067
+QUEENS                                      1.976917
+STATEN ISLAND                              -4.980322
+              OFNS_DESCVEHICLE AND TRAFFIC LAWS
+BROOKLYN                             -2.3554988
+MANHATTAN                             0.6204204
+QUEENS                                4.4163541
+STATEN ISLAND                         2.3906467
+
+Std. Errors:
+              (Intercept) LOC_CLASSFCTN_DESCDWELLING LOC_CLASSFCTN_DESCHOUSING
+BROOKLYN         2.475680                  0.2893580                 0.3839506
+MANHATTAN        5.546627                  0.3316622                 0.3699146
+QUEENS          14.514822                  0.4654247                 0.4438445
+STATEN ISLAND   14.445551                  0.8815954                79.2936076
+              LOC_CLASSFCTN_DESCOTHER LOC_CLASSFCTN_DESCPARKING LOT
+BROOKLYN                 2.636761e-05                     0.8060919
+MANHATTAN                3.486555e-01                     0.6111661
+QUEENS                   1.206772e+02                     0.7142570
+STATEN ISLAND            6.037758e+01                     1.0335359
+              LOC_CLASSFCTN_DESCPLAYGROUND LOC_CLASSFCTN_DESCSTREET
+BROOKLYN                      6.219333e-01                0.2349476
+MANHATTAN                     8.201556e-05                0.2120541
+QUEENS                        1.209765e+00                0.2938414
+STATEN ISLAND                 7.251280e+01                0.7803210
+              LOC_CLASSFCTN_DESCTRANSIT LOC_CLASSFCTN_DESCVEHICLE
+BROOKLYN                       1.224717              1.507987e-05
+MANHATTAN                      1.658728              2.168612e-05
+QUEENS                         1.324996              8.017836e-01
+STATEN ISLAND                 15.267480              7.474944e+01
+              PERP_RACEBLACK PERP_RACEBLACK HISPANIC PERP_RACEWHITE
+BROOKLYN           0.8591915                1.109700   2.083260e-07
+MANHATTAN          1.8509230                1.860893   9.154079e-08
+QUEENS             4.9026198                4.922927   9.392986e-02
+STATEN ISLAND      5.9526968               11.367733   9.395367e-02
+              PERP_RACEWHITE HISPANIC PERP_AGE_GROUP18-24 PERP_AGE_GROUP25-44
+BROOKLYN                    0.8623001           0.2125433           0.2261244
+MANHATTAN                   1.8524455           0.2169528           0.2258099
+QUEENS                      4.9038531           0.2546401           0.2659732
+STATEN ISLAND               6.9223139           0.3497728           0.6324370
+              PERP_AGE_GROUP45-64 PERP_AGE_GROUP65+ VIC_AGE_GROUP18-24
+BROOKLYN                0.3395641      1.535295e-05          0.1561677
+MANHATTAN               0.3474382      2.096217e-06          0.2255448
+QUEENS                  0.4926693      6.521206e-05          0.2445657
+STATEN ISLAND           0.5616370      2.267146e-03         13.7793115
+              VIC_AGE_GROUP25-44 VIC_AGE_GROUP45-64 VIC_AGE_GROUP65+
+BROOKLYN               0.1629780          0.2366768     4.801175e-01
+MANHATTAN              0.2276552          0.2661800     1.183092e-04
+QUEENS                 0.2538300          0.3512843     1.054845e+02
+STATEN ISLAND         13.7795298         13.7853937     9.737610e+01
+              VIC_AGE_GROUPUNKNOWN VIC_RACEBLACK VIC_RACEBLACK HISPANIC
+BROOKLYN              5.161205e+01     0.5584027              0.5883901
+MANHATTAN             9.378493e-01     0.6369578              0.6679914
+QUEENS                1.649147e+00     0.6655160              0.6906061
+STATEN ISLAND         6.115585e-04    11.1270211             21.2640025
+              VIC_RACEUNKNOWN VIC_RACEWHITE VIC_RACEWHITE HISPANIC
+BROOKLYN         5.161205e+01     0.7590163              0.5747958
+MANHATTAN        9.378493e-01     0.7535498              0.6546495
+QUEENS           1.649147e+00     1.0716898              0.6997092
+STATEN ISLAND    6.115585e-04    72.6738310             13.7430901
+              OFNS_DESCALCOHOLIC BEVERAGE CONTROL LAW
+BROOKLYN                                   0.03195188
+MANHATTAN                                  0.00373652
+QUEENS                                     0.03315128
+STATEN ISLAND                              0.02474071
+              OFNS_DESCASSAULT 3 &amp; RELATED OFFENSES OFNS_DESCBURGLAR'S TOOLS
+BROOKLYN                                   3.226219                72.951839
+MANHATTAN                                  7.362668                73.249082
+QUEENS                                    19.399792                 1.172118
+STATEN ISLAND                              7.051969                 1.402493
+              OFNS_DESCBURGLARY OFNS_DESCCANNABIS RELATED OFFENSES
+BROOKLYN               3.245646                          4.2075654
+MANHATTAN              7.369060                         73.0168113
+QUEENS                19.413614                         74.7447077
+STATEN ISLAND          7.114532                          0.9846135
+              OFNS_DESCCHILD ABANDONMENT/NON SUPPORT
+BROOKLYN                                    47.05941
+MANHATTAN                                   68.45276
+QUEENS                                      40.12260
+STATEN ISLAND                               47.19064
+              OFNS_DESCCRIMINAL MISCHIEF &amp; RELATED OF
+BROOKLYN                                     3.232122
+MANHATTAN                                    7.365651
+QUEENS                                      19.402064
+STATEN ISLAND                                7.107213
+              OFNS_DESCCRIMINAL TRESPASS OFNS_DESCDANGEROUS DRUGS
+BROOKLYN                        3.292041                 3.227059
+MANHATTAN                       7.390535                 7.362477
+QUEENS                         19.413347                19.401125
+STATEN ISLAND                  30.821715                 7.045238
+              OFNS_DESCDANGEROUS WEAPONS OFNS_DESCFELONY ASSAULT
+BROOKLYN                        3.232650                3.228272
+MANHATTAN                       7.366141                7.363642
+QUEENS                         19.401294               19.400077
+STATEN ISLAND                   7.062158                7.048412
+              OFNS_DESCFOR OTHER AUTHORITIES OFNS_DESCFORGERY OFNS_DESCFRAUDS
+BROOKLYN                            3.286651         3.322337        3.337766
+MANHATTAN                           7.381994         7.404837        7.625587
+QUEENS                             39.317347        19.438595        9.163893
+STATEN ISLAND                      46.269632        39.037878        7.146960
+              OFNS_DESCGAMBLING OFNS_DESCGRAND LARCENY
+BROOKLYN               3.349085               3.243860
+MANHATTAN              7.478954               7.372600
+QUEENS                19.495055              19.414510
+STATEN ISLAND        112.502384               7.073117
+              OFNS_DESCGRAND LARCENY OF MOTOR VEHICLE OFNS_DESCHARRASSMENT 2
+BROOKLYN                                     3.343023           2.593394e+01
+MANHATTAN                                    0.172956           2.552519e+01
+QUEENS                                     126.773562           4.993257e+01
+STATEN ISLAND                                7.125568           1.242395e-04
+              OFNS_DESCHOMICIDE-NEGLIGENT,UNCLASSIFIE
+BROOKLYN                                 2.593394e+01
+MANHATTAN                                2.552519e+01
+QUEENS                                   4.993257e+01
+STATEN ISLAND                            1.242395e-04
+              OFNS_DESCINTOXICATED &amp; IMPAIRED DRIVING
+BROOKLYN                                     3.305236
+MANHATTAN                                    7.410816
+QUEENS                                      19.417832
+STATEN ISLAND                               41.782037
+              OFNS_DESCINTOXICATED/IMPAIRED DRIVING
+BROOKLYN                                0.024004703
+MANHATTAN                               0.004305309
+QUEENS                                  0.028436423
+STATEN ISLAND                           0.002243371
+              OFNS_DESCKIDNAPPING &amp; RELATED OFFENSES
+BROOKLYN                                5.211567e-02
+MANHATTAN                               2.083543e-02
+QUEENS                                  8.297418e-02
+STATEN ISLAND                           1.769213e-08
+              OFNS_DESCMISCELLANEOUS PENAL LAW
+BROOKLYN                              3.229041
+MANHATTAN                             7.363806
+QUEENS                               19.400214
+STATEN ISLAND                         7.050516
+              OFNS_DESCMURDER &amp; NON-NEGL. MANSLAUGHTE
+BROOKLYN                                     3.407450
+MANHATTAN                                    7.421784
+QUEENS                                      19.421127
+STATEN ISLAND                               81.196624
+              OFNS_DESCNYS LAWS-UNCLASSIFIED FELONY
+BROOKLYN                                  3.3423370
+MANHATTAN                                 0.6414121
+QUEENS                                   19.4224917
+STATEN ISLAND                            69.9382438
+              OFNS_DESCOFF. AGNST PUB ORD SENSBLTY &amp;
+BROOKLYN                                    3.269627
+MANHATTAN                                   7.379333
+QUEENS                                     19.416815
+STATEN ISLAND                              32.478872
+              OFNS_DESCOFFENSES AGAINST PUBLIC ADMINI
+BROOKLYN                                     3.233233
+MANHATTAN                                    7.366073
+QUEENS                                      19.405405
+STATEN ISLAND                                7.054856
+              OFNS_DESCOFFENSES AGAINST THE PERSON
+BROOKLYN                                  3.288078
+MANHATTAN                                 7.410257
+QUEENS                                   14.786491
+STATEN ISLAND                             7.104285
+              OFNS_DESCOFFENSES INVOLVING FRAUD
+BROOKLYN                               3.261392
+MANHATTAN                              7.371974
+QUEENS                                53.649051
+STATEN ISLAND                          7.070728
+              OFNS_DESCOTHER OFFENSES RELATED TO THEF OFNS_DESCOTHER STATE LAWS
+BROOKLYN                                     35.67819              3.493044e+00
+MANHATTAN                                    36.02008              3.421493e+00
+QUEENS                                       37.76761              5.881336e-03
+STATEN ISLAND                                81.62285              1.316643e-05
+              OFNS_DESCOTHER STATE LAWS (NON PENAL LA
+BROOKLYN                                  0.024665650
+MANHATTAN                                 0.195414423
+QUEENS                                    0.026734043
+STATEN ISLAND                             0.004016735
+              OFNS_DESCOTHER TRAFFIC INFRACTION OFNS_DESCPETIT LARCENY
+BROOKLYN                              3.2717205               3.226571
+MANHATTAN                             0.2521706               7.363078
+QUEENS                               19.4092622              19.402232
+STATEN ISLAND                         7.0922108              23.791050
+              OFNS_DESCPOSSESSION OF STOLEN PROPERTY OFNS_DESCRAPE
+BROOKLYN                                    3.270239      3.232076
+MANHATTAN                                   7.400413      7.370966
+QUEENS                                     19.415171     19.403627
+STATEN ISLAND                               7.099297      7.058730
+              OFNS_DESCROBBERY OFNS_DESCSEX CRIMES
+BROOKLYN              3.236635            3.224496
+MANHATTAN             7.366055            7.362071
+QUEENS               19.403140           19.399242
+STATEN ISLAND         7.108963            7.040376
+              OFNS_DESCUNAUTHORIZED USE OF A VEHICLE
+BROOKLYN                                    3.387518
+MANHATTAN                                   7.669677
+QUEENS                                     19.433308
+STATEN ISLAND                              70.844476
+              OFNS_DESCVEHICLE AND TRAFFIC LAWS
+BROOKLYN                               3.235327
+MANHATTAN                              7.367224
+QUEENS                                19.400613
+STATEN ISLAND                          7.051979
+
+Residual Deviance: 7293.767 
+AIC: 7821.767 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>predicted_classes <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> combined_df)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>predicted_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> combined_df, <span class="at">type =</span> <span class="st">"probs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

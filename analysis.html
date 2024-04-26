@@ -240,6 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="section-1.2.2-victim-age-group" class="level3">
 <h3 class="anchored" data-anchor-id="section-1.2.2-victim-age-group">Section 1.2.2: Victim Age Group</h3>
+<p>The stacked bar chart illustrates the relationship between various New York City boroughs and the age groups of crime victims. Manhattan appears to have the highest total count of victims across all age groups, followed closely by Brooklyn. Both boroughs show a particularly high prevalence of victims aged 25-44. The Bronx also shows a significant number of victims, especially in the 25-44 and 45-64 age categories. Queens and Staten Island have a lower total count of victims, but similar patterns in age distribution can be observed, with the majority of victims falling into the 25-44 age group. The age group ‘65+’ has the lowest count across all boroughs, and there is a notable number of cases where the victim’s age is unknown. This visualization can provide insights into which age groups are more affected by crime in specific boroughs, which can be valuable for targeted policy-making and resource allocation.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
@@ -276,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">getwd</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "/Users/wanqingzhao/Documents/MA415/final-project-team6"</code></pre>
+<pre><code>[1] "/Users/wangshiyu/Desktop/MA415 A1+A3/final-project-team6"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal_clean.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
