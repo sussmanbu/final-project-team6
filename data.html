@@ -153,7 +153,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data-background" id="toc-data-background" class="nav-link" data-scroll-target="#data-background">Data Background</a></li>
   <li><a href="#summary-of-the-dataset-structure-and-some-key-statistics" id="toc-summary-of-the-dataset-structure-and-some-key-statistics" class="nav-link" data-scroll-target="#summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</a></li>
   <li><a href="#data-cleaning-and-loading" id="toc-data-cleaning-and-loading" class="nav-link" data-scroll-target="#data-cleaning-and-loading">Data Cleaning and Loading</a></li>
-  <li><a href="#combining-datasets" id="toc-combining-datasets" class="nav-link" data-scroll-target="#combining-datasets">Combining Datasets</a></li>
+  <li><a href="#cleaning-process" id="toc-cleaning-process" class="nav-link" data-scroll-target="#cleaning-process">Cleaning Process</a></li>
+  <li><a href="#combining-datasets" id="toc-combining-datasets" class="nav-link" data-scroll-target="#combining-datasets">Combining Datasets</a>
+  <ul class="collapse">
+  <li><a href="#other-dataset-used-in-the-project-analysis" id="toc-other-dataset-used-in-the-project-analysis" class="nav-link" data-scroll-target="#other-dataset-used-in-the-project-analysis">Other Dataset Used in the Project Analysis</a></li>
+  </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
   </ul>
@@ -184,28 +188,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="nypd-shooting-data---team-6" class="level2">
-<h2 class="anchored" data-anchor-id="nypd-shooting-data---team-6">NYPD Shooting Data - Team 6</h2>
-<section id="data-background" class="level3">
-<h3 class="anchored" data-anchor-id="data-background">Data Background</h3>
+<section id="nypd-shooting-data---team-6" class="level1">
+<h1>NYPD Shooting Data - Team 6</h1>
+<section id="data-background" class="level2">
+<h2 class="anchored" data-anchor-id="data-background">Data Background</h2>
 <p>This dataset encompasses a detailed account of each shooting incident in NYC from 2006 up until the end of the last calendar year. Compiled and meticulously reviewed quarterly by the Office of Management Analysis and Planning, it is then made accessible on the NYPD website. Every entry in this dataset chronicles a specific shooting event, detailing the incident’s circumstances, location, and timing. Additionally, it provides demographics regarding suspects and victims.</p>
 <p>The data set primarily focuses on shooting incidents within New York, so it inherently limits the possibility of generalizing our findings to other locations. The age is categorized by ranges, such as 18-24, 25-44, and 45-64, which may reduce the precision of our analysis. Without a more detailed record of the shooting incidents, we do not know the number of perpetrators and victims. The lack of a detailed understanding of the level of severity of the incidents may cause bias in our analysis.</p>
 <p>The data has been used on another capstone project, “Phantom Shootings,” by Allan Ambris, The Graduate Center, City University of New York. This data is used to prove the author’s statement that the data NYPD reported is just a subset of the true dataset. The author asks whether a single victim may appear in many entries. (Ambris)</p>
 <p>We are able to download the dataset from the original source. Link to the data: <a href="https://catalog.data.gov/dataset/nypd-shooting-incident-data-historic">NYPD Police Shootings</a></p>
 </section>
-<section id="summary-of-the-dataset-structure-and-some-key-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</h3>
+<section id="summary-of-the-dataset-structure-and-some-key-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</h2>
+<p>We will concentrate our analysis on examining potential differences among NYC boroughs in shooting crime incidents, focusing specifically on the interplay between the perpetrator’s and victim’s information, including their race, age, sex, in conjunction with offense types and other possible crucial factors.</p>
 <ul>
 <li><p><strong>Total Entries</strong>: 1,706 incidents.</p></li>
 <li><p><strong>Date Range</strong>: The dataset includes an OCCUR_DATE column, suggesting the dates on which incidents occurred.</p></li>
 <li><p><strong>Location Data</strong>: There are multiple columns related to the location of the incidents, such as BORO, PRECINCT, X_COORD_CD, Y_COORD_CD, Latitude, and Longitude.</p></li>
 <li><p><strong>Incident Details</strong>: Includes details like JURISDICTION_CODE, LOC_CLASSFCTN_DESC (Location Classification Description), and LOCATION_DESC.</p></li>
-<li><p><strong>Perpetrator and Victim Information</strong>: Information on the perpetrator (PERP_AGE_GROUP, PERP_SEX, PERP_RACE) and victim (VIC_AGE_GROUP, VIC_SEX, VIC_RACE) is available. We will concentrate our analysis on examining potential differences among racial groups in shooting incidents, focusing specifically on the interplay between the perpetrator’s race (PERP_RACE) and the victim’s race (VIC_RACE), in conjunction with their gender and age.</p></li>
+<li><p><strong>Perpetrator and Victim Information</strong>: Information on the perpetrator (PERP_AGE_GROUP, PERP_SEX, PERP_RACE) and victim (VIC_AGE_GROUP, VIC_SEX, VIC_RACE) is available.</p></li>
 <li><p><strong>Statistical Flags</strong>: Includes a flag for statistical murders (STATISTICAL_MURDER_FLAG)</p></li>
 </ul>
 </section>
-<section id="data-cleaning-and-loading" class="level3">
-<h3 class="anchored" data-anchor-id="data-cleaning-and-loading">Data Cleaning and Loading</h3>
+<section id="data-cleaning-and-loading" class="level2">
+<h2 class="anchored" data-anchor-id="data-cleaning-and-loading">Data Cleaning and Loading</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"scripts/load_and_clean_data.R"</span>,</span>
@@ -408,56 +413,38 @@ tibble [1,706 × 19] (S3: tbl_df/tbl/data.frame)
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the dataset</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>NYPD_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dataset/NYPD_Shooting_Incident_Data__Historic__20240322.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 27312 Columns: 21
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr  (12): OCCUR_DATE, BORO, LOC_OF_OCCUR_DESC, LOC_CLASSFCTN_DESC, LOCATION...
-dbl   (7): INCIDENT_KEY, PRECINCT, JURISDICTION_CODE, X_COORD_CD, Y_COORD_CD...
-lgl   (1): STATISTICAL_MURDER_FLAG
-time  (1): OCCUR_TIME
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>NYPD_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dataset/NYPD_Shooting_Incident_Data__Historic__20240322.csv"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>NYPD_clean_data <span class="ot">&lt;-</span> NYPD_data <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(OCCUR_TIME, LOC_OF_OCCUR_DESC)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(PERP_RACE) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(VIC_RACE)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">OCCUR_DATE =</span> <span class="fu">dmy</span>(OCCUR_DATE), </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">OCCUR_YEAR =</span> <span class="fu">year</span>(OCCUR_DATE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>NYPD_clean_data <span class="ot">&lt;-</span> NYPD_data <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(OCCUR_TIME, LOC_OF_OCCUR_DESC)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(PERP_RACE) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(VIC_RACE)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">OCCUR_DATE =</span> <span class="fu">dmy</span>(OCCUR_DATE), </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">OCCUR_YEAR =</span> <span class="fu">year</span>(OCCUR_DATE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There was 1 warning in `mutate()`.
-ℹ In argument: `OCCUR_DATE = dmy(OCCUR_DATE)`.
-Caused by warning:
-!  11001 failed to parse.</code></pre>
-</div>
-</div>
-<section id="cleaning-process" class="level4">
-<h4 class="anchored" data-anchor-id="cleaning-process">Cleaning Process</h4>
+</section>
+<section id="cleaning-process" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-process">Cleaning Process</h2>
 <ul>
 <li>We removed the OCCUR_TIME and LOC_OF_OCCUR_DESC as we did not find them useful for our analysis.</li>
 <li>We changed ‘OCCUR_DATE’ to DateTime format.</li>
 <li>We also removed columns where we did not have the perpetrator’s race or the victim’s race.</li>
 </ul>
 </section>
-<section id="extra-packages" class="level4">
-<h4 class="anchored" data-anchor-id="extra-packages">Extra packages</h4>
-<ul>
-<li><p><strong>corrplot</strong>: used for visualizing correlation matrices and seeing the relationships between variables</p></li>
-<li><p><strong>GGally</strong>: used in addition to ggplot again to visualize relationships between variables. lubricate: used for datetime manipulation</p></li>
-</ul>
-</section>
-</section>
-<section id="combining-datasets" class="level3">
-<h3 class="anchored" data-anchor-id="combining-datasets">Combining Datasets</h3>
+<section id="combining-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="combining-datasets">Combining Datasets</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>NYPD_arrest_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_arrest.rds"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(NYPD_clean_data, NYPD_arrest_data, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"X_COORD_CD"</span>, <span class="st">"Y_COORD_CD"</span>,<span class="st">"Latitude"</span>,<span class="st">"Longitude"</span>,<span class="st">"PERP_SEX"</span>,<span class="st">"JURISDICTION_CODE"</span>,<span class="st">"PERP_RACE"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>NYPD_arrest_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_arrest.rds"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(NYPD_clean_data, NYPD_arrest_data, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"X_COORD_CD"</span>, <span class="st">"Y_COORD_CD"</span>,<span class="st">"Latitude"</span>,<span class="st">"Longitude"</span>,<span class="st">"PERP_SEX"</span>,<span class="st">"JURISDICTION_CODE"</span>,<span class="st">"PERP_RACE"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="other-dataset-used-in-the-project-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="other-dataset-used-in-the-project-analysis">Other Dataset Used in the Project Analysis</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>nypd_payroll <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_payroll.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="references" class="level3">
-<h3 class="anchored" data-anchor-id="references">References</h3>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
 <p>Ambris, Allan. “Phantom Shootings.” CUNY Academic Works, academicworks.cuny.edu/gc_etds/5410/. Accessed 25 Mar.&nbsp;2024.</p>
 
 

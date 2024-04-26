@@ -148,9 +148,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#example-of-loading-data" id="toc-example-of-loading-data" class="nav-link active" data-scroll-target="#example-of-loading-data">Example of loading data</a></li>
+  <li><a href="#section-1-deep-dive-analysis-and-motivation" id="toc-section-1-deep-dive-analysis-and-motivation" class="nav-link active" data-scroll-target="#section-1-deep-dive-analysis-and-motivation">Section 1: Deep-Dive Analysis and Motivation</a>
+  <ul class="collapse">
+  <li><a href="#section-1.1-perpetrator-information" id="toc-section-1.1-perpetrator-information" class="nav-link" data-scroll-target="#section-1.1-perpetrator-information">Section 1.1: Perpetrator Information</a>
+  <ul class="collapse">
+  <li><a href="#section-1.1.1-perpetrator-race" id="toc-section-1.1.1-perpetrator-race" class="nav-link" data-scroll-target="#section-1.1.1-perpetrator-race">Section 1.1.1: Perpetrator Race</a></li>
+  <li><a href="#section-1.1.2-relationship-between-borough-and-perpetrator-age" id="toc-section-1.1.2-relationship-between-borough-and-perpetrator-age" class="nav-link" data-scroll-target="#section-1.1.2-relationship-between-borough-and-perpetrator-age">Section 1.1.2: Relationship between Borough and Perpetrator Age</a></li>
+  </ul></li>
+  <li><a href="#section-1.2-victim-information" id="toc-section-1.2-victim-information" class="nav-link" data-scroll-target="#section-1.2-victim-information">Section 1.2: Victim Information</a>
+  <ul class="collapse">
+  <li><a href="#section-1.2.1-victim-race" id="toc-section-1.2.1-victim-race" class="nav-link" data-scroll-target="#section-1.2.1-victim-race">Section 1.2.1: Victim Race</a></li>
+  <li><a href="#section-1.2.2-victim-age-group" id="toc-section-1.2.2-victim-age-group" class="nav-link" data-scroll-target="#section-1.2.2-victim-age-group">Section 1.2.2: Victim Age Group</a></li>
+  </ul></li>
+  <li><a href="#section-1.3-crime-location-classification" id="toc-section-1.3-crime-location-classification" class="nav-link" data-scroll-target="#section-1.3-crime-location-classification">Section 1.3: Crime Location Classification</a></li>
+  <li><a href="#section-1.4-offense-descriptions" id="toc-section-1.4-offense-descriptions" class="nav-link" data-scroll-target="#section-1.4-offense-descriptions">Section 1.4: Offense Descriptions</a>
+  <ul class="collapse">
+  <li><a href="#example-of-loading-data" id="toc-example-of-loading-data" class="nav-link" data-scroll-target="#example-of-loading-data">Example of loading data</a></li>
+  </ul></li>
   <li><a href="#note-on-attribution" id="toc-note-on-attribution" class="nav-link" data-scroll-target="#note-on-attribution">Note on Attribution</a></li>
   <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -179,7 +196,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg" class="img-fluid"></p>
+<p><img src="images/nypd_analysis_page.jpeg" class="img-fluid"></p>
+<section id="section-1-deep-dive-analysis-and-motivation" class="level1">
+<h1>Section 1: Deep-Dive Analysis and Motivation</h1>
+<p>Our team decided to work with the datasets that could give us more information to help us understand the complex dynamics at play within the city’s socio-economic and racial landscape.The datasets we used provide a nuanced view of the patterns and contexts in which crimes occur, enabling a more targeted approach to prevention. By analyzing perpetrator and victim demographics, along with the specific characteristics of crime locations, researchers can identify underlying trends and potential hotspots of criminal activity. Including the borough in which the crime takes place adds another layer of geographic specificity, which is crucial for understanding regional variations in crime rates and the effectiveness of local law enforcement strategies. This deep-dive analysis helps in developing tailored interventions that are more likely to be effective in specific communities, ultimately aiding in the reduction of crime and enhancement of public safety.</p>
+<ul>
+<li>Perpetrator Race</li>
+<li>Perpetrator Age Group</li>
+<li>Victim Race</li>
+<li>Crime Location Classification</li>
+</ul>
+<section id="section-1.1-perpetrator-information" class="level2">
+<h2 class="anchored" data-anchor-id="section-1.1-perpetrator-information">Section 1.1: Perpetrator Information</h2>
+<section id="section-1.1.1-perpetrator-race" class="level3">
+<h3 class="anchored" data-anchor-id="section-1.1.1-perpetrator-race">Section 1.1.1: Perpetrator Race</h3>
+<p>The data indicates that individuals identified as Black constitute the largest group of perpetrators, followed by a significantly smaller number of White Hispanics, and even fewer Whites and Black Hispanics. Asian/Pacific Islanders have the smallest count among the identified races. It could be inferred that understanding the racial distribution of perpetrators can be an important factor when analyzing crime data by borough, especially considering the demographic composition of each borough. The importance of analyzing perpetrator race lies in its potential to highlight areas where targeted social and law enforcement interventions may be needed.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="section-1.1.2-relationship-between-borough-and-perpetrator-age" class="level3">
+<h3 class="anchored" data-anchor-id="section-1.1.2-relationship-between-borough-and-perpetrator-age">Section 1.1.2: Relationship between Borough and Perpetrator Age</h3>
+<p>The bar chart illustrates the distribution of perpetrators by age group across different boroughs of New York City. It seems that Brooklyn and the Bronx have the highest counts of perpetrators across all age groups, with those aged 25-44 being the most numerous in these areas. Manhattan follows, displaying a similar pattern with the 25-44 age group being predominant. Queens and Staten Island have significantly lower counts of perpetrators, but the same trend persists where individuals aged 25-44 are the most represented. The least number of perpetrators are those aged 65 and above, which is consistent across all boroughs. The chart suggests that middle-aged adults (25-44) are the most common age group for perpetrators in the city, and that there is a considerable variance in the number of perpetrators between the boroughs, with Brooklyn and the Bronx being the most affected.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="section-1.2-victim-information" class="level2">
+<h2 class="anchored" data-anchor-id="section-1.2-victim-information">Section 1.2: Victim Information</h2>
+<section id="section-1.2.1-victim-race" class="level3">
+<h3 class="anchored" data-anchor-id="section-1.2.1-victim-race">Section 1.2.1: Victim Race</h3>
+<p>It is noticeable that Black individuals constitute the largest group among the recorded victim races, with a notably high count. White Hispanics and Whites follow, with the former having a slightly higher count than the latter. The count for Asian/Pacific Islander and Black Hispanic victims is lower, and there is also a category for “Unknown,” indicating instances where the victim’s race was not recorded or identified. The distribution of victim race can be a crucial factor in understanding and predicting crime in different boroughs (BOROs) of New York City, as it might reflect underlying patterns of victimization related to social, economic, and possibly racial dynamics within these areas.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="section-1.2.2-victim-age-group" class="level3">
+<h3 class="anchored" data-anchor-id="section-1.2.2-victim-age-group">Section 1.2.2: Victim Age Group</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="section-1.3-crime-location-classification" class="level2">
+<h2 class="anchored" data-anchor-id="section-1.3-crime-location-classification">Section 1.3: Crime Location Classification</h2>
+<p>This bar chart displays the distribution of crime location classifications. The majority of crimes are classified under “Street”, indicating that this is the most common location for crime in the dataset, with a significantly higher count compared to other categories. “Dwelling” and “Housing” also appear to be relatively common crime locations, with “Housing” showing a notably higher count than “Dwelling”. The chart provides a clear visual summary of where crimes tend to occur, which could be used by law enforcement and city planners to allocate resources more effectively.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="section-1.4-offense-descriptions" class="level2">
+<h2 class="anchored" data-anchor-id="section-1.4-offense-descriptions">Section 1.4: Offense Descriptions</h2>
+<p>The horizontal bar chart presents a breakdown of various types of offenses. The most frequent offense, represented by the longest bar, is “Vehicle and Traffic Laws,” suggesting a high number of incidents related to traffic violations. “Sex Crimes” and “Robbery” follow, indicating significant occurrence rates within the dataset. Offenses like “Rape” and “Petit Larceny” show lower counts but are still notable. Other categories, including “Offenses Involving Fraud,” “Offenses Against Public Administration,” and “Miscellaneous Penal Law,” display moderate counts. This variable could be instrumental for law enforcement prioritization and public awareness initiatives.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>This comes from the file <code>analysis.qmd</code>.</p>
 <p>We describe here our detailed data analysis. This page will provide an overview of what questions you addressed, illustrations of relevant aspects of the data with tables and figures, and a statistical model that attempts to answer part of the question. You’ll also reflect on next steps and further analysis.</p>
 <p>The audience for this page is someone like your class mates, so you can expect that they have some level of statistical and quantitative sophistication and understand ideas like linear and logistic regression, coefficients, confidence intervals, overfitting, etc.</p>
@@ -189,24 +273,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="example-of-loading-data">Example of loading data</h3>
 <p>The code below shows an example of loading the loan refusal data set (which you should delete at some point).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.0
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">getwd</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">getwd</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "/Users/wangshiyu/Desktop/MA415 A1+A3/final-project-team6"</code></pre>
+<pre><code>[1] "/Users/wanqingzhao/Documents/MA415/final-project-team6"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal_clean.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal_clean.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 20 Columns: 5
 ── Column specification ────────────────────────────────────────────────────────
@@ -217,12 +289,18 @@ dbl (4): min, white, himin, hiwhite
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal.RData"</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal.RData"</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "data"            "has_annotations" "loan_data_clean"</code></pre>
+<pre><code> [1] "age_boro_count2"           "average_salary_by_borough"
+ [3] "combined_df"               "data"                     
+ [5] "has_annotations"           "loan_data_clean"          
+ [7] "loc_counts"                "NYPD_arrest_data"         
+ [9] "nypd_payroll"              "perp_age_counts"          
+[11] "perp_race"                 "vic_race"                 </code></pre>
 </div>
 </div>
+</section>
 </section>
 <section id="note-on-attribution" class="level2">
 <h2 class="anchored" data-anchor-id="note-on-attribution">Note on Attribution</h2>
@@ -273,6 +351,7 @@ dbl (4): min, white, himin, hiwhite
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
