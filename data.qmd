@@ -54,7 +54,7 @@ NYPD_clean_data <- NYPD_data %>%
   mutate(OCCUR_DATE = dmy(OCCUR_DATE), 
          OCCUR_YEAR = year(OCCUR_DATE))
 ```
-## Cleaning Process
+### Cleaning Process
 
 - We removed the OCCUR_TIME and LOC_OF_OCCUR_DESC as we did not find them useful for our analysis.
 - We changed  'OCCUR_DATE' to DateTime format.

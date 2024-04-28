@@ -149,6 +149,13 @@ combined_df |>
   guides(fill = FALSE)
 ```
 
+# Section 3: Limitations and Constraints in Geographic and Variable Diversity 
+
+In analyzing data specific to New York City, it's crucial to recognize the limitations this imposes when attempting to generalize findings to other regions or populations. The data's geographical constraint to NYC means the insights derived are most valid within this specific context. This is not inherently a bias but rather a limitation on the scope of the conclusions. The variables, behaviors, and trends observed in the NYC dataset may not be representative of other areas due to differences in demographics, legal systems, cultural norms, and crime patterns. Therefore, while this dataset provides valuable insights into crime dynamics within NYC, extrapolating these findings to a broader context without additional data from other regions would lead to inaccurate conclusions and potentially misleading policy recommendations.
+
+Furthermore, the model used in the analysis relies solely on categorical variables, including location classification, perpetrator race, perpetrator age group, victim age group, victim race, and offense description. This reliance on categorical data limits the analytical depth and complexity that could be achieved with a mix of categorical and continuous variables. For instance, continuous variables could provide nuanced insights into the timing of crimes, distances between crime locations, or economic factors, which might significantly influence crime patterns. Additionally, the model's current structure may not capture interactions between variables or nonlinear relationships, which are often critical in understanding complex social phenomena like crime. Incorporating more diverse data types and expanding the model to include interaction terms or polynomial components could enhance its predictive power and provide a more comprehensive understanding of the factors influencing crime in NYC.
+
+
 This comes from the file `analysis.qmd`.
 
 We describe here our detailed data analysis. This page will provide an overview of what questions you addressed, illustrations of relevant aspects of the data with tables and figures, and a statistical model that attempts to answer part of the question. You'll also reflect on next steps and further analysis.
