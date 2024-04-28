@@ -161,10 +161,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#section-1.2.2-victim-age-group" id="toc-section-1.2.2-victim-age-group" class="nav-link" data-scroll-target="#section-1.2.2-victim-age-group">Section 1.2.2: Victim Age Group</a></li>
   </ul></li>
   <li><a href="#section-1.3-crime-location-classification" id="toc-section-1.3-crime-location-classification" class="nav-link" data-scroll-target="#section-1.3-crime-location-classification">Section 1.3: Crime Location Classification</a></li>
-  <li><a href="#section-1.4-offense-descriptions" id="toc-section-1.4-offense-descriptions" class="nav-link" data-scroll-target="#section-1.4-offense-descriptions">Section 1.4: Offense Descriptions</a>
+  <li><a href="#section-1.4-offense-descriptions" id="toc-section-1.4-offense-descriptions" class="nav-link" data-scroll-target="#section-1.4-offense-descriptions">Section 1.4: Offense Descriptions</a></li>
+  </ul></li>
+  <li><a href="#section-3-limitations-and-constraints-in-geographic-and-variable-diversity" id="toc-section-3-limitations-and-constraints-in-geographic-and-variable-diversity" class="nav-link" data-scroll-target="#section-3-limitations-and-constraints-in-geographic-and-variable-diversity">Section 3: Limitations and Constraints in Geographic and Variable Diversity</a>
   <ul class="collapse">
   <li><a href="#example-of-loading-data" id="toc-example-of-loading-data" class="nav-link" data-scroll-target="#example-of-loading-data">Example of loading data</a></li>
-  </ul></li>
   <li><a href="#note-on-attribution" id="toc-note-on-attribution" class="nav-link" data-scroll-target="#note-on-attribution">Note on Attribution</a></li>
   <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
   </ul></li>
@@ -265,6 +266,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+</section>
+<section id="section-3-limitations-and-constraints-in-geographic-and-variable-diversity" class="level1">
+<h1>Section 3: Limitations and Constraints in Geographic and Variable Diversity</h1>
+<p>In analyzing data specific to New York City, it’s crucial to recognize the limitations this imposes when attempting to generalize findings to other regions or populations. The data’s geographical constraint to NYC means the insights derived are most valid within this specific context. This is not inherently a bias but rather a limitation on the scope of the conclusions. The variables, behaviors, and trends observed in the NYC dataset may not be representative of other areas due to differences in demographics, legal systems, cultural norms, and crime patterns. Therefore, while this dataset provides valuable insights into crime dynamics within NYC, extrapolating these findings to a broader context without additional data from other regions would lead to inaccurate conclusions and potentially misleading policy recommendations.</p>
+<p>Furthermore, the model used in the analysis relies solely on categorical variables, including location classification, perpetrator race, perpetrator age group, victim age group, victim race, and offense description. This reliance on categorical data limits the analytical depth and complexity that could be achieved with a mix of categorical and continuous variables. For instance, continuous variables could provide nuanced insights into the timing of crimes, distances between crime locations, or economic factors, which might significantly influence crime patterns. Additionally, the model’s current structure may not capture interactions between variables or nonlinear relationships, which are often critical in understanding complex social phenomena like crime. Incorporating more diverse data types and expanding the model to include interaction terms or polynomial components could enhance its predictive power and provide a more comprehensive understanding of the factors influencing crime in NYC.</p>
 <p>This comes from the file <code>analysis.qmd</code>.</p>
 <p>We describe here our detailed data analysis. This page will provide an overview of what questions you addressed, illustrations of relevant aspects of the data with tables and figures, and a statistical model that attempts to answer part of the question. You’ll also reflect on next steps and further analysis.</p>
 <p>The audience for this page is someone like your class mates, so you can expect that they have some level of statistical and quantitative sophistication and understand ideas like linear and logistic regression, coefficients, confidence intervals, overfitting, etc.</p>
@@ -301,7 +308,6 @@ dbl (4): min, white, himin, hiwhite
 [11] "perp_race"                 "vic_race"                 </code></pre>
 </div>
 </div>
-</section>
 </section>
 <section id="note-on-attribution" class="level2">
 <h2 class="anchored" data-anchor-id="note-on-attribution">Note on Attribution</h2>

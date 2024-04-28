@@ -152,8 +152,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#data-background" id="toc-data-background" class="nav-link" data-scroll-target="#data-background">Data Background</a></li>
   <li><a href="#summary-of-the-dataset-structure-and-some-key-statistics" id="toc-summary-of-the-dataset-structure-and-some-key-statistics" class="nav-link" data-scroll-target="#summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</a></li>
-  <li><a href="#data-cleaning-and-loading" id="toc-data-cleaning-and-loading" class="nav-link" data-scroll-target="#data-cleaning-and-loading">Data Cleaning and Loading</a></li>
+  <li><a href="#data-cleaning-and-loading" id="toc-data-cleaning-and-loading" class="nav-link" data-scroll-target="#data-cleaning-and-loading">Data Cleaning and Loading</a>
+  <ul class="collapse">
   <li><a href="#cleaning-process" id="toc-cleaning-process" class="nav-link" data-scroll-target="#cleaning-process">Cleaning Process</a></li>
+  </ul></li>
   <li><a href="#combining-datasets" id="toc-combining-datasets" class="nav-link" data-scroll-target="#combining-datasets">Combining Datasets</a>
   <ul class="collapse">
   <li><a href="#other-dataset-used-in-the-project-analysis" id="toc-other-dataset-used-in-the-project-analysis" class="nav-link" data-scroll-target="#other-dataset-used-in-the-project-analysis">Other Dataset Used in the Project Analysis</a></li>
@@ -421,14 +423,14 @@ tibble [1,706 × 19] (S3: tbl_df/tbl/data.frame)
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">OCCUR_DATE =</span> <span class="fu">dmy</span>(OCCUR_DATE), </span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">OCCUR_YEAR =</span> <span class="fu">year</span>(OCCUR_DATE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="cleaning-process" class="level2">
-<h2 class="anchored" data-anchor-id="cleaning-process">Cleaning Process</h2>
+<section id="cleaning-process" class="level3">
+<h3 class="anchored" data-anchor-id="cleaning-process">Cleaning Process</h3>
 <ul>
 <li>We removed the OCCUR_TIME and LOC_OF_OCCUR_DESC as we did not find them useful for our analysis.</li>
 <li>We changed ‘OCCUR_DATE’ to DateTime format.</li>
 <li>We also removed columns where we did not have the perpetrator’s race or the victim’s race.</li>
 </ul>
+</section>
 </section>
 <section id="combining-datasets" class="level2">
 <h2 class="anchored" data-anchor-id="combining-datasets">Combining Datasets</h2>
