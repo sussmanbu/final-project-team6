@@ -150,9 +150,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#nypd-shooting-data---team-6" id="toc-nypd-shooting-data---team-6" class="nav-link active" data-scroll-target="#nypd-shooting-data---team-6">NYPD Shooting Data - Team 6</a>
   <ul class="collapse">
-  <li><a href="#data-background" id="toc-data-background" class="nav-link" data-scroll-target="#data-background">Data Background</a></li>
+  <li><a href="#data-background" id="toc-data-background" class="nav-link" data-scroll-target="#data-background">Data Background</a>
+  <ul class="collapse">
+  <li><a href="#nypd-shooting-incident-data" id="toc-nypd-shooting-incident-data" class="nav-link" data-scroll-target="#nypd-shooting-incident-data">NYPD Shooting Incident Data</a></li>
+  <li><a href="#nypd-arrest-data-combined-data" id="toc-nypd-arrest-data-combined-data" class="nav-link" data-scroll-target="#nypd-arrest-data-combined-data">NYPD Arrest Data (Combined Data)</a></li>
+  <li><a href="#nyc-payroll-data" id="toc-nyc-payroll-data" class="nav-link" data-scroll-target="#nyc-payroll-data">NYC Payroll Data</a></li>
+  </ul></li>
   <li><a href="#summary-of-the-dataset-structure-and-some-key-statistics" id="toc-summary-of-the-dataset-structure-and-some-key-statistics" class="nav-link" data-scroll-target="#summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</a></li>
-  <li><a href="#data-cleaning-and-loading" id="toc-data-cleaning-and-loading" class="nav-link" data-scroll-target="#data-cleaning-and-loading">Data Cleaning and Loading</a>
+  <li><a href="#data-loading-and-cleaning" id="toc-data-loading-and-cleaning" class="nav-link" data-scroll-target="#data-loading-and-cleaning">Data Loading and Cleaning</a>
   <ul class="collapse">
   <li><a href="#cleaning-process" id="toc-cleaning-process" class="nav-link" data-scroll-target="#cleaning-process">Cleaning Process</a></li>
   </ul></li>
@@ -160,7 +165,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#other-dataset-used-in-the-project-analysis" id="toc-other-dataset-used-in-the-project-analysis" class="nav-link" data-scroll-target="#other-dataset-used-in-the-project-analysis">Other Dataset Used in the Project Analysis</a></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -194,234 +198,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>NYPD Shooting Data - Team 6</h1>
 <section id="data-background" class="level2">
 <h2 class="anchored" data-anchor-id="data-background">Data Background</h2>
+<section id="nypd-shooting-incident-data" class="level3">
+<h3 class="anchored" data-anchor-id="nypd-shooting-incident-data">NYPD Shooting Incident Data</h3>
 <p>This dataset encompasses a detailed account of each shooting incident in NYC from 2006 up until the end of the last calendar year. Compiled and meticulously reviewed quarterly by the Office of Management Analysis and Planning, it is then made accessible on the NYPD website. Every entry in this dataset chronicles a specific shooting event, detailing the incident’s circumstances, location, and timing. Additionally, it provides demographics regarding suspects and victims.</p>
 <p>The data set primarily focuses on shooting incidents within New York, so it inherently limits the possibility of generalizing our findings to other locations. The age is categorized by ranges, such as 18-24, 25-44, and 45-64, which may reduce the precision of our analysis. Without a more detailed record of the shooting incidents, we do not know the number of perpetrators and victims. The lack of a detailed understanding of the level of severity of the incidents may cause bias in our analysis.</p>
-<p>The data has been used on another capstone project, “Phantom Shootings,” by Allan Ambris, The Graduate Center, City University of New York. This data is used to prove the author’s statement that the data NYPD reported is just a subset of the true dataset. The author asks whether a single victim may appear in many entries. (Ambris)</p>
 <p>We are able to download the dataset from the original source. Link to the data: <a href="https://catalog.data.gov/dataset/nypd-shooting-incident-data-historic">NYPD Police Shootings</a></p>
+</section>
+<section id="nypd-arrest-data-combined-data" class="level3">
+<h3 class="anchored" data-anchor-id="nypd-arrest-data-combined-data">NYPD Arrest Data (Combined Data)</h3>
+<p>We combined the two datasets based on Latitude and Longitude to explore potential relationships between shooting incidents across each borough in NYC. This dataset includes the offense type and the policy description for each shooting incident. By merging these datasets, we can analyze comprehensive details surrounding each incident, including the types of offenses and the corresponding police actions. This approach not only enhances the depth of the data but also supports a more robust statistical analysis to better understand the dynamics of crime and law enforcement responses in New York City.</p>
+</section>
+<section id="nyc-payroll-data" class="level3">
+<h3 class="anchored" data-anchor-id="nyc-payroll-data">NYC Payroll Data</h3>
+<p>This dataset gives the information of the average basic salary for each borough in NYC. Incorporating the dataset detailing the average basic salary for each borough in NYC into our analysis offers a valuable dimension to understanding the socio-economic context of shooting incidents. By examining the relationship between economic factors and crime rates across different boroughs, we can explore whether disparities in income levels correlate with variations in shooting incidents. This combined approach allows us to investigate not just the geographic distribution of crime, but also how economic conditions might influence criminal activities.</p>
+</section>
 </section>
 <section id="summary-of-the-dataset-structure-and-some-key-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</h2>
 <p>We will concentrate our analysis on examining potential differences among NYC boroughs in shooting crime incidents, focusing specifically on the interplay between the perpetrator’s and victim’s information, including their race, age, sex, in conjunction with offense types and other possible crucial factors.</p>
 <ul>
-<li><p><strong>Total Entries</strong>: 1,706 incidents.</p></li>
-<li><p><strong>Date Range</strong>: The dataset includes an OCCUR_DATE column, suggesting the dates on which incidents occurred.</p></li>
 <li><p><strong>Location Data</strong>: There are multiple columns related to the location of the incidents, such as BORO, PRECINCT, X_COORD_CD, Y_COORD_CD, Latitude, and Longitude.</p></li>
-<li><p><strong>Incident Details</strong>: Includes details like JURISDICTION_CODE, LOC_CLASSFCTN_DESC (Location Classification Description), and LOCATION_DESC.</p></li>
+<li><p><strong>Incident Details</strong>: Includes details like OFNS_DESC, LOC_CLASSFCTN_DESC (Location Classification Description), and LOCATION_DESC.</p></li>
 <li><p><strong>Perpetrator and Victim Information</strong>: Information on the perpetrator (PERP_AGE_GROUP, PERP_SEX, PERP_RACE) and victim (VIC_AGE_GROUP, VIC_SEX, VIC_RACE) is available.</p></li>
 <li><p><strong>Statistical Flags</strong>: Includes a flag for statistical murders (STATISTICAL_MURDER_FLAG)</p></li>
 </ul>
 </section>
-<section id="data-cleaning-and-loading" class="level2">
-<h2 class="anchored" data-anchor-id="data-cleaning-and-loading">Data Cleaning and Loading</h2>
+<section id="data-loading-and-cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading-and-cleaning">Data Loading and Cleaning</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"scripts/load_and_clean_data.R"</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo =</span> <span class="cn">FALSE</span> <span class="co"># Use echo=FALSE or omit it to avoid code output</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.0
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
-Rows: 27312 Columns: 21
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr  (12): OCCUR_DATE, BORO, LOC_OF_OCCUR_DESC, LOC_CLASSFCTN_DESC, LOCATION...
-dbl   (7): INCIDENT_KEY, PRECINCT, JURISDICTION_CODE, X_COORD_CD, Y_COORD_CD...
-lgl   (1): STATISTICAL_MURDER_FLAG
-time  (1): OCCUR_TIME
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 226872 Columns: 19
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (10): ARREST_DATE, PD_DESC, OFNS_DESC, LAW_CODE, LAW_CAT_CD, ARREST_BORO...
-dbl  (9): ARREST_KEY, PD_CD, KY_CD, ARREST_PRECINCT, JURISDICTION_CODE, X_CO...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 1651 Columns: 17
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (9): Agency Name, Last Name, First Name, Mid Init, Agency Start Date, Wo...
-dbl (8): Fiscal Year, Payroll Number, Base Salary, Regular Hours, Regular Gr...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>spc_tbl_ [27,312 × 21] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ INCIDENT_KEY           : num [1:27312] 2.29e+08 1.37e+08 1.48e+08 1.47e+08 5.89e+07 ...
- $ OCCUR_DATE             : chr [1:27312] "05/27/2021" "06/27/2014" "11/21/2015" "10/09/2015" ...
- $ OCCUR_TIME             : 'hms' num [1:27312] 21:30:00 17:40:00 03:56:00 18:30:00 ...
-  ..- attr(*, "units")= chr "secs"
- $ BORO                   : chr [1:27312] "QUEENS" "BRONX" "QUEENS" "BRONX" ...
- $ LOC_OF_OCCUR_DESC      : chr [1:27312] NA NA NA NA ...
- $ PRECINCT               : num [1:27312] 105 40 108 44 47 81 114 81 105 101 ...
- $ JURISDICTION_CODE      : num [1:27312] 0 0 0 0 0 0 0 0 0 0 ...
- $ LOC_CLASSFCTN_DESC     : chr [1:27312] NA NA NA NA ...
- $ LOCATION_DESC          : chr [1:27312] NA NA NA NA ...
- $ STATISTICAL_MURDER_FLAG: logi [1:27312] FALSE FALSE TRUE FALSE TRUE TRUE ...
- $ PERP_AGE_GROUP         : chr [1:27312] NA NA NA NA ...
- $ PERP_SEX               : chr [1:27312] NA NA NA NA ...
- $ PERP_RACE              : chr [1:27312] NA NA NA NA ...
- $ VIC_AGE_GROUP          : chr [1:27312] "18-24" "18-24" "25-44" "&lt;18" ...
- $ VIC_SEX                : chr [1:27312] "M" "M" "M" "M" ...
- $ VIC_RACE               : chr [1:27312] "BLACK" "BLACK" "WHITE" "WHITE HISPANIC" ...
- $ X_COORD_CD             : num [1:27312] 1058925 1005028 1007668 1006537 1024922 ...
- $ Y_COORD_CD             : num [1:27312] 180924 234516 209837 244511 262189 ...
- $ Latitude               : num [1:27312] 40.7 40.8 40.7 40.8 40.9 ...
- $ Longitude              : num [1:27312] -73.7 -73.9 -73.9 -73.9 -73.9 ...
- $ Lon_Lat                : chr [1:27312] "POINT (-73.73083868899994 40.662964620000025)" "POINT (-73.92494232599995 40.81035186300006)" "POINT (-73.91549174199997 40.74260663300004)" "POINT (-73.91945661499994 40.83778200300003)" ...
- - attr(*, "spec")=
-  .. cols(
-  ..   INCIDENT_KEY = col_double(),
-  ..   OCCUR_DATE = col_character(),
-  ..   OCCUR_TIME = col_time(format = ""),
-  ..   BORO = col_character(),
-  ..   LOC_OF_OCCUR_DESC = col_character(),
-  ..   PRECINCT = col_double(),
-  ..   JURISDICTION_CODE = col_double(),
-  ..   LOC_CLASSFCTN_DESC = col_character(),
-  ..   LOCATION_DESC = col_character(),
-  ..   STATISTICAL_MURDER_FLAG = col_logical(),
-  ..   PERP_AGE_GROUP = col_character(),
-  ..   PERP_SEX = col_character(),
-  ..   PERP_RACE = col_character(),
-  ..   VIC_AGE_GROUP = col_character(),
-  ..   VIC_SEX = col_character(),
-  ..   VIC_RACE = col_character(),
-  ..   X_COORD_CD = col_double(),
-  ..   Y_COORD_CD = col_double(),
-  ..   Latitude = col_double(),
-  ..   Longitude = col_double(),
-  ..   Lon_Lat = col_character()
-  .. )
- - attr(*, "problems")=&lt;externalptr&gt; 
-spc_tbl_ [226,872 × 19] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ ARREST_KEY              : num [1:226872] 2.61e+08 2.61e+08 2.61e+08 2.61e+08 2.61e+08 ...
- $ ARREST_DATE             : chr [1:226872] "01/03/2023" "01/03/2023" "01/04/2023" "01/04/2023" ...
- $ PD_CD                   : num [1:226872] 397 105 397 105 244 109 263 109 263 105 ...
- $ PD_DESC                 : chr [1:226872] "ROBBERY,OPEN AREA UNCLASSIFIED" "STRANGULATION 1ST" "ROBBERY,OPEN AREA UNCLASSIFIED" "STRANGULATION 1ST" ...
- $ KY_CD                   : num [1:226872] 105 106 105 106 107 106 114 106 114 106 ...
- $ OFNS_DESC               : chr [1:226872] "ROBBERY" "FELONY ASSAULT" "ROBBERY" "FELONY ASSAULT" ...
- $ LAW_CODE                : chr [1:226872] "PL 1600500" "PL 1211200" "PL 1601001" "PL 1211200" ...
- $ LAW_CAT_CD              : chr [1:226872] "F" "F" "F" "F" ...
- $ ARREST_BORO             : chr [1:226872] "B" "S" "K" "Q" ...
- $ ARREST_PRECINCT         : num [1:226872] 49 120 61 114 44 76 49 90 63 34 ...
- $ JURISDICTION_CODE       : num [1:226872] 0 0 0 0 0 0 71 0 0 0 ...
- $ AGE_GROUP               : chr [1:226872] "18-24" "25-44" "&lt;18" "18-24" ...
- $ PERP_SEX                : chr [1:226872] "M" "M" "M" "M" ...
- $ PERP_RACE               : chr [1:226872] "BLACK" "WHITE" "BLACK" "BLACK" ...
- $ X_COORD_CD              : num [1:226872] 1027430 962808 995118 1007694 1007174 ...
- $ Y_COORD_CD              : num [1:226872] 251104 174275 155708 219656 239542 ...
- $ Latitude                : num [1:226872] 40.9 40.6 40.6 40.8 40.8 ...
- $ Longitude               : num [1:226872] -73.8 -74.1 -74 -73.9 -73.9 ...
- $ New Georeferenced Column: chr [1:226872] "POINT (-73.843908 40.855793)" "POINT (-74.077263 40.644996)" "POINT (-73.960866 40.594054)" "POINT (-73.915361 40.769552)" ...
- - attr(*, "spec")=
-  .. cols(
-  ..   ARREST_KEY = col_double(),
-  ..   ARREST_DATE = col_character(),
-  ..   PD_CD = col_double(),
-  ..   PD_DESC = col_character(),
-  ..   KY_CD = col_double(),
-  ..   OFNS_DESC = col_character(),
-  ..   LAW_CODE = col_character(),
-  ..   LAW_CAT_CD = col_character(),
-  ..   ARREST_BORO = col_character(),
-  ..   ARREST_PRECINCT = col_double(),
-  ..   JURISDICTION_CODE = col_double(),
-  ..   AGE_GROUP = col_character(),
-  ..   PERP_SEX = col_character(),
-  ..   PERP_RACE = col_character(),
-  ..   X_COORD_CD = col_double(),
-  ..   Y_COORD_CD = col_double(),
-  ..   Latitude = col_double(),
-  ..   Longitude = col_double(),
-  ..   `New Georeferenced Column` = col_character()
-  .. )
- - attr(*, "problems")=&lt;externalptr&gt; 
-spc_tbl_ [1,651 × 17] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ Fiscal Year               : num [1:1651] 2022 2022 2022 2022 2022 ...
- $ Payroll Number            : num [1:1651] 742 742 742 742 742 742 742 742 742 742 ...
- $ Agency Name               : chr [1:1651] "DEPT OF ED PEDAGOGICAL" "DEPT OF ED PEDAGOGICAL" "DEPT OF ED PEDAGOGICAL" "DEPT OF ED PEDAGOGICAL" ...
- $ Last Name                 : chr [1:1651] "ANTHONY NOEL" "ANTHONY TIDD" "APPELMAN" "APUZZO" ...
- $ First Name                : chr [1:1651] "JOANNE" "SHARON" "BROOKE" "ANNEMARIE" ...
- $ Mid Init                  : chr [1:1651] "A" "B" "A" NA ...
- $ Agency Start Date         : chr [1:1651] "1/31/89" "9/6/88" "10/20/15" "2/1/86" ...
- $ Work Location Borough     : chr [1:1651] "OTHER" "MANHATTAN" "MANHATTAN" "OTHER" ...
- $ Title Description         : chr [1:1651] "TEACHER" "GUIDANCE COUNSELOR" "TEACHER" "TEACHER" ...
- $ Leave Status as of June 30: chr [1:1651] "CEASED" "CEASED" "ACTIVE" "CEASED" ...
- $ Base Salary               : num [1:1651] 105142 128409 97469 108811 169456 ...
- $ Pay Basis                 : chr [1:1651] "per Annum" "per Annum" "per Annum" "per Annum" ...
- $ Regular Hours             : num [1:1651] 0 0 0 0 0 0 0 0 0 0 ...
- $ Regular Gross Paid        : num [1:1651] 0 0 90693 0 168222 ...
- $ OT Hours                  : num [1:1651] 0 0 0 0 0 0 0 0 0 0 ...
- $ Total OT Paid             : num [1:1651] 0 0 0 0 0 0 0 0 0 0 ...
- $ Total Other Pay           : num [1:1651] 5597 8259 1486 13979 16947 ...
- - attr(*, "spec")=
-  .. cols(
-  ..   `Fiscal Year` = col_double(),
-  ..   `Payroll Number` = col_double(),
-  ..   `Agency Name` = col_character(),
-  ..   `Last Name` = col_character(),
-  ..   `First Name` = col_character(),
-  ..   `Mid Init` = col_character(),
-  ..   `Agency Start Date` = col_character(),
-  ..   `Work Location Borough` = col_character(),
-  ..   `Title Description` = col_character(),
-  ..   `Leave Status as of June 30` = col_character(),
-  ..   `Base Salary` = col_double(),
-  ..   `Pay Basis` = col_character(),
-  ..   `Regular Hours` = col_double(),
-  ..   `Regular Gross Paid` = col_double(),
-  ..   `OT Hours` = col_double(),
-  ..   `Total OT Paid` = col_double(),
-  ..   `Total Other Pay` = col_double()
-  .. )
- - attr(*, "problems")=&lt;externalptr&gt; 
-tibble [1,706 × 19] (S3: tbl_df/tbl/data.frame)
- $ INCIDENT_KEY           : num [1:1706] 2.44e+08 2.56e+08 2.50e+08 2.39e+08 2.48e+08 ...
- $ OCCUR_DATE             : chr [1:1706] "04/12/2022" "12/17/2022" "08/27/2022" "01/15/2022" ...
- $ BORO                   : chr [1:1706] "BRONX" "BRONX" "BRONX" "QUEENS" ...
- $ PRECINCT               : num [1:1706] 49 52 44 113 77 48 81 75 75 20 ...
- $ JURISDICTION_CODE      : num [1:1706] 0 0 0 2 0 0 0 0 0 0 ...
- $ LOC_CLASSFCTN_DESC     : chr [1:1706] "STREET" "STREET" "VEHICLE" "HOUSING" ...
- $ LOCATION_DESC          : chr [1:1706] "(null)" "(null)" "(null)" "MULTI DWELL - PUBLIC HOUS" ...
- $ STATISTICAL_MURDER_FLAG: logi [1:1706] TRUE FALSE FALSE FALSE FALSE FALSE ...
- $ PERP_AGE_GROUP         : chr [1:1706] "18-24" "25-44" "(null)" "(null)" ...
- $ PERP_SEX               : chr [1:1706] "M" "M" "(null)" "(null)" ...
- $ PERP_RACE              : chr [1:1706] "BLACK HISPANIC" "WHITE HISPANIC" "(null)" "(null)" ...
- $ VIC_AGE_GROUP          : chr [1:1706] "18-24" "25-44" "25-44" "18-24" ...
- $ VIC_SEX                : chr [1:1706] "F" "M" "M" "M" ...
- $ VIC_RACE               : chr [1:1706] "BLACK" "WHITE HISPANIC" "WHITE HISPANIC" "BLACK" ...
- $ X_COORD_CD             : num [1:1706] 1020669 1008387 1008878 1044794 1002013 ...
- $ Y_COORD_CD             : num [1:1706] 255027 253290 244480 188802 185752 ...
- $ Latitude               : num [1:1706] 40.9 40.9 40.8 40.7 40.7 ...
- $ Longitude              : num [1:1706] -73.9 -73.9 -73.9 -73.8 -73.9 ...
- $ Lon_Lat                : chr [1:1706] "POINT (-73.86832754 40.86658962)" "POINT (-73.91273918 40.86186421)" "POINT (-73.910994 40.837683)" "POINT (-73.781699 40.684689)" ...
- - attr(*, "na.action")= 'omit' Named int [1:16296] 1 2 3 4 5 6 7 8 9 10 ...
-  ..- attr(*, "names")= chr [1:16296] "1" "2" "3" "4" ...</code></pre>
-</div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"scripts/load_and_clean_data.R"</span>, <span class="at">echo =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the dataset</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>NYPD_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dataset/NYPD_Shooting_Incident_Data__Historic__20240322.csv"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>NYPD_clean_data <span class="ot">&lt;-</span> NYPD_data <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(OCCUR_TIME, LOC_OF_OCCUR_DESC)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(PERP_RACE) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(VIC_RACE)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">OCCUR_DATE =</span> <span class="fu">dmy</span>(OCCUR_DATE), </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">OCCUR_YEAR =</span> <span class="fu">year</span>(OCCUR_DATE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the dataset</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>NYPD_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dataset/NYPD_Shooting_Incident_Data__Historic__20240322.csv"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>NYPD_clean_data <span class="ot">&lt;-</span> NYPD_data <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(OCCUR_TIME, LOC_OF_OCCUR_DESC)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(PERP_RACE) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(VIC_RACE)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">OCCUR_DATE =</span> <span class="fu">dmy</span>(OCCUR_DATE), </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">OCCUR_YEAR =</span> <span class="fu">year</span>(OCCUR_DATE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="cleaning-process" class="level3">
 <h3 class="anchored" data-anchor-id="cleaning-process">Cleaning Process</h3>
@@ -435,21 +253,17 @@ tibble [1,706 × 19] (S3: tbl_df/tbl/data.frame)
 <section id="combining-datasets" class="level2">
 <h2 class="anchored" data-anchor-id="combining-datasets">Combining Datasets</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>NYPD_arrest_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_arrest.rds"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(NYPD_clean_data, NYPD_arrest_data, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"X_COORD_CD"</span>, <span class="st">"Y_COORD_CD"</span>,<span class="st">"Latitude"</span>,<span class="st">"Longitude"</span>,<span class="st">"PERP_SEX"</span>,<span class="st">"JURISDICTION_CODE"</span>,<span class="st">"PERP_RACE"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>NYPD_arrest_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_arrest.rds"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(NYPD_clean_data, NYPD_arrest_data, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"X_COORD_CD"</span>, <span class="st">"Y_COORD_CD"</span>,<span class="st">"Latitude"</span>,<span class="st">"Longitude"</span>,<span class="st">"PERP_SEX"</span>,<span class="st">"JURISDICTION_CODE"</span>,<span class="st">"PERP_RACE"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="other-dataset-used-in-the-project-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="other-dataset-used-in-the-project-analysis">Other Dataset Used in the Project Analysis</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>nypd_payroll <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_payroll.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nypd_payroll <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_payroll.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<p>Ambris, Allan. “Phantom Shootings.” CUNY Academic Works, academicworks.cuny.edu/gc_etds/5410/. Accessed 25 Mar.&nbsp;2024.</p>
 
 
+</section>
 </section>
 </section>
 
