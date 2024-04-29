@@ -1,5 +1,5 @@
 ---
-title: "Second Post (Data Background & Data for Equity)"
+title: "Blog Post 2"
 author: "Team 6"
 date: "2024-03-25"
 date-modified: "2024-03-25"
