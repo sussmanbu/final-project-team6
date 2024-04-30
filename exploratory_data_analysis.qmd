@@ -449,5 +449,41 @@ predicted_classes <- predict(model, newdata = combined_df)
 predicted_probs <- predict(model, newdata = combined_df, type = "probs")
 ```
 
+```{r}
+set.seed(123)  # for reproducibility
+index <- createDataPartition(combined_df$BORO, p = 0.80, list = FALSE)
+train_data <- combined_df[index, ]
+test_data <- combined_df[-index, ]
 
+model1 <- multinom(BORO ~ LOC_CLASSFCTN_DESC + PERP_RACE + PERP_AGE_GROUP + VIC_AGE_GROUP + VIC_RACE + OFNS_DESC + STATISTICAL_MURDER_FLAG, data = train_data)
 
+predictions <- predict(model1, test_data)
+summary(model1)
+```
+
+```{r}
+accuracy <- mean(predictions == test_data$BORO)
+print(paste("Accuracy:", accuracy))
+
+confusion_matrix <- table(Predicted = predictions, Actual = test_data$BORO)
+
+library(caret)
+confusionMatrix(confusion_matrix)
+```
+
+## Section 1.5: Offense Descriptions
+
+The horizontal bar chart presents a breakdown of various types of offenses. The most frequent offense, represented by the longest bar, is "Vehicle and Traffic Laws," suggesting a high number of incidents related to traffic violations. "Sex Crimes" and "Robbery" follow, indicating significant occurrence rates within the dataset. Offenses like "Rape" and "Petit Larceny" show lower counts but are still notable. Other categories, including "Offenses Involving Fraud," "Offenses Against Public Administration," and "Miscellaneous Penal Law," display moderate counts. This variable could be instrumental for law enforcement prioritization and public awareness initiatives.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+combined_df |>
+  group_by(OFNS_DESC) |>
+  summarise(Count = n(), .groups = 'drop') |>
+  filter(Count >= 50) |>
+  ggplot(aes(x = OFNS_DESC, y = Count, fill = OFNS_DESC)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +
+  theme_minimal() +
+  labs(x = "Offense Description", y = "Count") +
+  guides(fill = FALSE)
+```

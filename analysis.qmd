@@ -44,6 +44,7 @@ Our team decided to use this dataset to understand regional differences in shoot
 - Victim Race
 - Victim Age Group
 - Crime Location Classification
+- Murder Rate
 - Offense Description
 
 ## Section 1.1: Perpetrator Information
@@ -59,7 +60,8 @@ perp_race <- combined_df |>
 ggplot(perp_race, aes(x = reorder(PERP_RACE, n), y = n, fill = PERP_RACE)) + 
   geom_bar(stat = "identity") +
   theme_minimal() +
-  labs(title = "Perpetrator Race Distribution", x = "Perpetrator Race", y = "Count") +
+  labs(title = "Perpetrator Race Distribution", x = "Perpetrator Race", y = "Count", 
+       fill = "Perpetrator Race") +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
@@ -78,8 +80,7 @@ ggplot(perp_age_counts, aes(x = BORO, y = n, fill = PERP_AGE_GROUP)) +
   labs(title = "Relationship between Borough and Perpetrator Age",
        x = "Borough",
        y = "Count",
-       fill = "Perpetrator Age Group") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+       fill = "Perpetrator Age Group")
 ```
 ## Section 1.2: Victim Information
 ### Section 1.2.1: Victim Race
@@ -94,7 +95,7 @@ vic_race <- combined_df |>
 ggplot(vic_race, aes(x = reorder(VIC_RACE, n), y = n, fill = VIC_RACE)) + 
   geom_bar(stat = "identity") +
   theme_minimal() +
-  labs(title = "Victim Race Distribution", x = "Victim Race", y = "Count") +
+  labs(title = "Victim Race Distribution", x = "Victim Race", y = "Count", fill = "Victim Race") +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
@@ -113,8 +114,7 @@ ggplot(age_boro_count2, aes(x = BORO, y = n, fill = VIC_AGE_GROUP)) +
   labs(title = "Relationship between Borough and Victim Age",
        x = "Borough",
        y = "Count",
-       fill = "Victim Age Group") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+       fill = "Victim Age Group")
 ```
 
 ## Section 1.3: Crime Location Classification
@@ -130,25 +130,30 @@ loc_counts <- data |>
 ggplot(loc_counts, aes(x = reorder(LOC_CLASSFCTN_DESC, n), y = n, fill = LOC_CLASSFCTN_DESC)) +
   geom_bar(stat = "identity") +
   theme_minimal() +
-  labs(title = 'Crime Location Classification Distribution', x = 'Crime Location Classification', y = 'Count') +
+  labs(title = 'Crime Location Classification Distribution', x = 'Crime Location Classification', y = 'Count', fill = "Location Classification") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Section 1.4: Offense Descriptions
+## Section 1.4: Murder Rate
 
-The horizontal bar chart presents a breakdown of various types of offenses. The most frequent offense, represented by the longest bar, is "Vehicle and Traffic Laws," suggesting a high number of incidents related to traffic violations. "Sex Crimes" and "Robbery" follow, indicating significant occurrence rates within the dataset. Offenses like "Rape" and "Petit Larceny" show lower counts but are still notable. Other categories, including "Offenses Involving Fraud," "Offenses Against Public Administration," and "Miscellaneous Penal Law," display moderate counts. This variable could be instrumental for law enforcement prioritization and public awareness initiatives.
+The bar chart illustrates the murder rates as percentages for each borough. It's noticeable that the Bronx and Staten Island exhibit the highest murder rates. The murder rate is a significant indicator because it reflects the frequency of violent crimes within a community. Understanding the murder rate is vital for predicting where shooting crime incidents are more likely to occur, which in turn is essential for prioritizing law enforcement resources, improving public safety measures, and implementing preventative programs. High murder rates in certain boroughs might suggest the need for increased police presence and other interventions aimed at violence reduction. Conversely, boroughs with lower rates can provide which policies or social structures may be contributing to a safer environment. Understanding these patterns are critical steps towards effective crime prevention and ensuring the safety and well-being of the residents.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-combined_df |>
-  group_by(OFNS_DESC) |>
-  summarise(Count = n(), .groups = 'drop') |>
-  filter(Count >= 50) |>
-  ggplot(aes(x = OFNS_DESC, y = Count, fill = OFNS_DESC)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  coord_flip() +
+murder_rate <- combined_df %>%
+  group_by(BORO) %>%
+  summarise(
+    total_cases = n(),
+    murder_cases = sum(STATISTICAL_MURDER_FLAG == TRUE, na.rm = TRUE),
+    murder_rate = murder_cases / total_cases * 100
+  )
+
+
+ggplot(data = murder_rate, aes(x = BORO, y = murder_rate)) +
+  geom_bar(stat = "identity", fill = "steelblue", width = 0.6) +
   theme_minimal() +
-  labs(x = "Offense Description", y = "Count") +
-  guides(fill = FALSE)
+  labs(title = "Murder Rate by Borough",
+       x = "Borough",
+       y = "Murder Rate (%)")
 ```
 
 # Section 3: Limitations and Constraints in Geographic and Variable Diversity 
