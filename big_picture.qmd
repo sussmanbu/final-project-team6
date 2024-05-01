@@ -68,25 +68,6 @@ final_plot <- ggplot() +
 print(final_plot)
 ```
 
-
-
-## The Faces of Tragedy
-
-Zooming in on the age demographics of victims, we discover a chilling trend: the prime years of adulthood, ages 25-44, are when individuals are most vulnerable to becoming victims of violence. Among these victims, a disproportionate number are black—a reflection of the systemic biases ingrained within our society.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Plotting Victim Age Group Distribution
-vic_age_counts <- combined_df %>%
-  count(VIC_AGE_GROUP) %>%
-  arrange(desc(n))
-
-ggplot(vic_age_counts, aes(x = reorder(VIC_AGE_GROUP, n), y = n, fill = VIC_AGE_GROUP)) +
-  geom_bar(stat = "identity") +
-  theme_minimal() +
-  labs(title = 'Victim Age Group Distribution', x = 'Age Group', y = 'Count') +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-
 ## Crimes of Desperation
 
 Examining the most common crime descriptions, a troubling pattern emerges. Sex crimes, assault, and drug-related offenses dominate the landscape, pointing to the pervasive influence of poverty, addiction, and desperation within marginalized communities.
@@ -96,7 +77,7 @@ combined_df |>
   group_by(OFNS_DESC) |>
   summarise(Count = n(), .groups = 'drop') |>
   filter(Count >= 50) |>
-  ggplot(aes(x = OFNS_DESC, y = Count, fill = OFNS_DESC)) +
+  ggplot(aes(x = reorder(OFNS_DESC, -Count), y = Count, fill = OFNS_DESC)) +
   geom_bar(stat = "identity", position = "dodge") +
   coord_flip() +
   theme_minimal() +
