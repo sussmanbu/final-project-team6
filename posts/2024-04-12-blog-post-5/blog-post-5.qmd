@@ -1,12 +1,5 @@
 ---
-title: "Blog Post 5"
-description:  |
-  We found that the NYPD_Arrest_data dataset can be combined with out
-  NYPD_Shooting_incident dataset as we will try to see if there is a
-  relationship between shooting incidents and arrests based on locations. We
-  are also thinking of checking median income by location and seeing how our
-  data correlates with the income. We are combining the datasets based on
-  Latitude and Longitude.
+title: "Blog Post 5 - Combine Dataset"
 author: "Team 6"
 date: "2024-04-12"
 date-modified: "2024-04-12"
