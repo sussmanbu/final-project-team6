@@ -39,6 +39,8 @@ average_salary_by_borough <- nypd_payroll %>%
 
 Our team decided to use this dataset to understand regional differences in shooting crime rates and the boroughs in which they occur, reflecting the complex dynamics in urban socioeconomic and racial landscapes. The dataset provides a detailed view of the patterns and context in which crime occurs, allowing for more targeted prevention approaches. By analyzing perpetrator and victim demographics as well as specific characteristics of crime locations, the project identifies potential trends and potential hotspots of criminal activity. This in-depth analysis helps develop specialized interventions that are more likely to be effective in specific communities, ultimately helping to reduce crime and enhance public safety.
 
+The variables that intrigue us the most include:
+
 - Perpetrator Race
 - Perpetrator Age Group
 - Victim Race
@@ -47,8 +49,20 @@ Our team decided to use this dataset to understand regional differences in shoot
 - Murder Rate
 - Offense Description
 
+**In our quest for deeper insights, we seek answers to the following questions:**
+
+What are the predominant racial demographics among perpetrators and victims?
+
+Which crime location classifications witness the highest frequency of criminal activity?
+
+Are there discernible patterns in murder rates across NYC boroughs?
+
+How do these variables collectively contribute to predicting the borough in which a crime occurs?
+
+With these questions in mind, we embark on a journey through exploratory data analysis and statistical modeling to uncover meaningful insights into crime dynamics within NYC.
+
 ## Section 1.1: Perpetrator Information
-### Section 1.1.1: Perpetrator Race
+<!-- ### Section 1.1.1: Perpetrator Race -->
 
 The data indicates that individuals identified as Black constitute the largest group of perpetrators, followed by a significantly smaller number of White Hispanics, and even fewer Whites and Black Hispanics. Asian/Pacific Islanders have the smallest count among the identified races. It could be inferred that understanding the racial distribution of perpetrators can be an important factor when analyzing crime data by borough, especially considering the demographic composition of each borough. The importance of analyzing perpetrator race lies in its potential to highlight areas where targeted social and law enforcement interventions may be needed.
 
@@ -65,25 +79,26 @@ ggplot(perp_race, aes(x = reorder(PERP_RACE, n), y = n, fill = PERP_RACE)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
-### Section 1.1.2: Relationship between Borough and Perpetrator Age
+<!-- ### Section 1.1.2: Relationship between Borough and Perpetrator Age -->
 
-The bar chart illustrates the distribution of perpetrators by age group across different boroughs of New York City. It seems that Brooklyn and the Bronx have the highest counts of perpetrators across all age groups, with those aged 25-44 being the most numerous in these areas. Manhattan follows, displaying a similar pattern with the 25-44 age group being predominant. Queens and Staten Island have significantly lower counts of perpetrators, but the same trend persists where individuals aged 25-44 are the most represented. The least number of perpetrators are those aged 65 and above, which is consistent across all boroughs. The chart suggests that middle-aged adults (25-44) are the most common age group for perpetrators in the city, and that there is a considerable variance in the number of perpetrators between the boroughs, with Brooklyn and the Bronx being the most affected.
+<!-- The bar chart illustrates the distribution of perpetrators by age group across different boroughs of New York City. It seems that Brooklyn and the Bronx have the highest counts of perpetrators across all age groups, with those aged 25-44 being the most numerous in these areas. Manhattan follows, displaying a similar pattern with the 25-44 age group being predominant. Queens and Staten Island have significantly lower counts of perpetrators, but the same trend persists where individuals aged 25-44 are the most represented. The least number of perpetrators are those aged 65 and above, which is consistent across all boroughs. The chart suggests that middle-aged adults (25-44) are the most common age group for perpetrators in the city, and that there is a considerable variance in the number of perpetrators between the boroughs, with Brooklyn and the Bronx being the most affected. -->
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-perp_age_counts <- combined_df %>%
-  count(BORO, PERP_AGE_GROUP) %>%
-  arrange(BORO, desc(n))
+<!-- ```{r, echo=FALSE, message=FALSE, warning=FALSE} -->
+<!-- perp_age_counts <- combined_df %>% -->
+<!--   count(BORO, PERP_AGE_GROUP) %>% -->
+<!--   arrange(BORO, desc(n)) -->
+<!--  -->
+<!-- ggplot(perp_age_counts, aes(x = BORO, y = n, fill = PERP_AGE_GROUP)) + -->
+<!--   geom_bar(stat = "identity", position = "stack") +  -->
+<!--   theme_minimal() + -->
+<!--   labs(title = "Relationship between Borough and Perpetrator Age", -->
+<!--        x = "Borough", -->
+<!--        y = "Count", -->
+<!--        fill = "Perpetrator Age Group") -->
+<!-- ``` -->
 
-ggplot(perp_age_counts, aes(x = BORO, y = n, fill = PERP_AGE_GROUP)) +
-  geom_bar(stat = "identity", position = "stack") + 
-  theme_minimal() +
-  labs(title = "Relationship between Borough and Perpetrator Age",
-       x = "Borough",
-       y = "Count",
-       fill = "Perpetrator Age Group")
-```
 ## Section 1.2: Victim Information
-### Section 1.2.1: Victim Race
+<!-- ### Section 1.2.1: Victim Race -->
 
 It is noticeable that Black individuals constitute the largest group among the recorded victim races, with a notably high count. White Hispanics and Whites follow, with the former having a slightly higher count than the latter. The count for Asian/Pacific Islander and Black Hispanic victims is lower, and there is also a category for "Unknown," indicating instances where the victim's race was not recorded or identified. The distribution of victim race can be a crucial factor in understanding and predicting crime in different boroughs (BOROs) of New York City, as it might reflect underlying patterns of victimization related to social, economic, and possibly racial dynamics within these areas.
 
@@ -99,23 +114,23 @@ ggplot(vic_race, aes(x = reorder(VIC_RACE, n), y = n, fill = VIC_RACE)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
-### Section 1.2.2: Victim Age Group
+<!-- ### Section 1.2.2: Victim Age Group -->
 
-The stacked bar chart illustrates the relationship between various New York City boroughs and the age groups of crime victims. Manhattan appears to have the highest total count of victims across all age groups, followed closely by Brooklyn. Both boroughs show a particularly high prevalence of victims aged 25-44. The Bronx also shows a significant number of victims, especially in the 25-44 and 45-64 age categories. Queens and Staten Island have a lower total count of victims, but similar patterns in age distribution can be observed, with the majority of victims falling into the 25-44 age group. The age group '65+' has the lowest count across all boroughs, and there is a notable number of cases where the victim's age is unknown. This visualization can provide insights into which age groups are more affected by crime in specific boroughs, which can be valuable for targeted policy-making and resource allocation.
+<!-- The stacked bar chart illustrates the relationship between various New York City boroughs and the age groups of crime victims. Manhattan appears to have the highest total count of victims across all age groups, followed closely by Brooklyn. Both boroughs show a particularly high prevalence of victims aged 25-44. The Bronx also shows a significant number of victims, especially in the 25-44 and 45-64 age categories. Queens and Staten Island have a lower total count of victims, but similar patterns in age distribution can be observed, with the majority of victims falling into the 25-44 age group. The age group '65+' has the lowest count across all boroughs, and there is a notable number of cases where the victim's age is unknown. This visualization can provide insights into which age groups are more affected by crime in specific boroughs, which can be valuable for targeted policy-making and resource allocation. -->
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-age_boro_count2 <- combined_df %>%
-  count(BORO, VIC_AGE_GROUP) %>%
-  arrange(BORO, desc(n))
+<!-- ```{r, echo=FALSE, message=FALSE, warning=FALSE} -->
+<!-- age_boro_count2 <- combined_df %>% -->
+<!--   count(BORO, VIC_AGE_GROUP) %>% -->
+<!--   arrange(BORO, desc(n)) -->
 
-ggplot(age_boro_count2, aes(x = BORO, y = n, fill = VIC_AGE_GROUP)) +
-  geom_bar(stat = "identity", position = "stack") + 
-  theme_minimal() +
-  labs(title = "Relationship between Borough and Victim Age",
-       x = "Borough",
-       y = "Count",
-       fill = "Victim Age Group")
-```
+<!-- ggplot(age_boro_count2, aes(x = BORO, y = n, fill = VIC_AGE_GROUP)) + -->
+<!--   geom_bar(stat = "identity", position = "stack") +  -->
+<!--   theme_minimal() + -->
+<!--   labs(title = "Relationship between Borough and Victim Age", -->
+<!--        x = "Borough", -->
+<!--        y = "Count", -->
+<!--        fill = "Victim Age Group") -->
+<!-- ``` -->
 
 ## Section 1.3: Crime Location Classification
 
@@ -134,7 +149,73 @@ ggplot(loc_counts, aes(x = reorder(LOC_CLASSFCTN_DESC, n), y = n, fill = LOC_CLA
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Section 1.4: Murder Rate
+## Section 1.4 Average Salary by NYC Borough 
+
+These plots explore the average salary distribution across the five boroughs of New York City (NYC). The first plot illustrates the average salary by work location borough, providing a comparative view of salary levels among the Bronx, Brooklyn, Manhattan, Queens, and other areas. Using a bar chart, the plot visualizes the mean salary for each borough, allowing for easy comparison of salary magnitudes. The second plot extends this analysis spatially by mapping the average salary by NYC borough onto a geographic representation of the city. Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods.
+
+It is easy to visualize the disparity of income levels in NYC with these plots. We can see the vast disparity between the Borough Brooklyn and Manhattan.
+
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+shapefile_path <- "tl_2022_36_tract/tl_2022_36_tract.shp"
+complete_data <- st_read(shapefile_path)
+
+nyc_tracts <- complete_data |> 
+  filter(COUNTYFP %in% c("005", "047", "061", "081", "085"))
+
+nypd_payroll <- readRDS("dataset/nypd_payroll.rds")
+nypd_payroll <- nypd_payroll %>%
+  rename(
+    work_boro = `Work Location Borough`,
+    base_salary = `Base Salary`)
+
+average_salary_by_borough <- nypd_payroll %>%
+  group_by(work_boro) %>%
+  summarise(AverageSalary = mean(base_salary, na.rm = TRUE)) %>%
+  ungroup()  # Ensure that we remove the grouping structure
+
+# # Now plot the average salary by borough using ggplot2
+# ggplot(average_salary_by_borough, aes(x = work_boro, y = AverageSalary, fill = work_boro)) +
+#   geom_col(position = "dodge") +
+#   theme_minimal() +
+#   labs(title = "Average Salary by Work Location Borough", x = "Work Location Borough", y = "Average Salary") +
+#   guides(fill = FALSE)
+
+# Calculate average salary by borough
+average_salary_by_borough <- nypd_payroll %>%
+  group_by(work_boro) %>%
+  summarise(AverageSalary = mean(base_salary, na.rm = TRUE)) %>%
+  ungroup()
+
+borough_to_fips <- data.frame(
+  work_boro = c("BRONX", "BROOKLYN", "MANHATTAN", "QUEENS", "OTHER"),  # Note: Ensure the names match the data
+  COUNTYFP = c("005", "047", "061", "081", "085"))
+
+average_salary_by_fips <- average_salary_by_borough %>%
+  left_join(borough_to_fips, by = "work_boro")
+average_salary_by_fips <- average_salary_by_fips %>%
+  select(COUNTYFP, AverageSalary)
+
+# map Average Salary by NYC Borough
+nyc_tracts_salary <- nyc_tracts %>%
+  left_join(average_salary_by_fips, by = "COUNTYFP")
+# Plot the map with average salaries indicated by color
+ggplot(nyc_tracts_salary) +
+  geom_sf(aes(fill = AverageSalary), color = "gray", size = 0.5) +
+  scale_fill_gradient(low = "white", high = "deepskyblue4", name = "Avg Salary",
+                      na.value = "grey50", labels = scales::dollar_format()) +
+  labs(title = "Average Salary by NYC Borough",
+       subtitle = "Color intensity indicates average salary levels",
+       fill = "Average Salary") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+
+## Section 1.5: Murder Rate
 
 The bar chart illustrates the murder rates as percentages for each borough. It's noticeable that the Bronx and Staten Island exhibit the highest murder rates. The murder rate is a significant indicator because it reflects the frequency of violent crimes within a community. Understanding the murder rate is vital for predicting where shooting crime incidents are more likely to occur, which in turn is essential for prioritizing law enforcement resources, improving public safety measures, and implementing preventative programs. High murder rates in certain boroughs might suggest the need for increased police presence and other interventions aimed at violence reduction. Conversely, boroughs with lower rates can provide which policies or social structures may be contributing to a safer environment. Understanding these patterns are critical steps towards effective crime prevention and ensuring the safety and well-being of the residents.
 
@@ -155,6 +236,72 @@ ggplot(data = murder_rate, aes(x = BORO, y = murder_rate)) +
        x = "Borough",
        y = "Murder Rate (%)")
 ```
+# Section 2: Statistical Models
+
+We want to make a model to see if our thesis and model correlate with eachother. We are predicting the Borough in which a crime takes place based on several predictors which we state below: 
+
+For our predictors, we have first converted our characters into factors as statistical models require categorical variables encoded as factors. 
+
+We choose the variables: Perpetrator Sex, Perpetrator Race, Location, Perpetrator age group, Victim Sex, Victim Age group, Victim Race, Offense Description Murder Flag
+
+These choices were driven by their potential to capture key aspects of crime patterns and dynamics within the city. Demographic characteristics of both perpetrators and victims, along with the type and location of offenses, provide valuable insights into crime commission and victimization patterns. By exploring these variables and their relationships with the borough where the crime occurs, correlations were identified that suggest their relevance as predictors.
+
+
+The first model we thought to use was Multinomial Logistic Regression, but this model only gave us an accuracy of **59%** which we were not satsifed with.
+
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+library(nnet)
+library(caret)
+set.seed(123)  # for reproducibility
+index <- createDataPartition(combined_df$BORO, p = 0.80, list = FALSE)
+train_data <- combined_df[index, ]
+test_data <- combined_df[-index, ]
+
+model1 <- multinom(BORO ~ LOC_CLASSFCTN_DESC + PERP_RACE + PERP_AGE_GROUP + VIC_AGE_GROUP + VIC_RACE + OFNS_DESC + STATISTICAL_MURDER_FLAG, data = train_data)
+
+predictions <- predict(model1, test_data)
+
+accuracy <- mean(predictions == test_data$BORO)
+print(paste("Accuracy %:", accuracy*100))
+```
+
+We then attempted to use a Random Forest model. We also only coose features that have atleast 200 to make sure the model has sufficient data to make a prediction.
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+library(randomForest)
+
+modeldata <- combined_df %>%
+  mutate(across(where(is.character), as.factor))
+
+freq <- table(modeldata$OFNS_DESC)
+modeldata <- modeldata[modeldata$OFNS_DESC %in% names(freq[freq >= 200]), ]
+
+set.seed(123)
+train_indices <- sample(1:nrow(modeldata), 0.8 * nrow(modeldata))  # 80% for training
+train_data <- modeldata[train_indices, ]
+test_data <- modeldata[-train_indices, ]
+
+rf_model <- randomForest(BORO ~ PERP_SEX + PERP_RACE + LOC_CLASSFCTN_DESC + PERP_AGE_GROUP + VIC_SEX + VIC_AGE_GROUP + VIC_RACE + OFNS_DESC + STATISTICAL_MURDER_FLAG, 
+                         data = train_data, 
+                         ntree = 500,
+                         importance = TRUE,
+                         na.action = na.omit)
+plot(rf_model)
+```
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+test_pred <- predict(rf_model, test_data)
+conf_mat <- table(test_data$BORO, test_pred)
+accuracy <- sum(diag(conf_mat)) / sum(conf_mat)
+print(paste("Accuracy %:", accuracy*100))
+```
+
+The various lines here represent the various predictors and we observe that the error is going down proving to become a better model.
+
+We got an accuracy of almost **84%** which is much better. However, due to the data having most of the offenses in a small subset of the boroughs we believe that the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.
+
+An accuray of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.4 above
 
 # Section 3: Limitations and Constraints in Geographic and Variable Diversity 
 
