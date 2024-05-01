@@ -150,19 +150,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#section-1-deep-dive-analysis-and-motivation" id="toc-section-1-deep-dive-analysis-and-motivation" class="nav-link active" data-scroll-target="#section-1-deep-dive-analysis-and-motivation">Section 1: Deep-Dive Analysis and Motivation</a>
   <ul class="collapse">
-  <li><a href="#section-1.1-perpetrator-information" id="toc-section-1.1-perpetrator-information" class="nav-link" data-scroll-target="#section-1.1-perpetrator-information">Section 1.1: Perpetrator Information</a>
-  <ul class="collapse">
-  <li><a href="#section-1.1.1-perpetrator-race" id="toc-section-1.1.1-perpetrator-race" class="nav-link" data-scroll-target="#section-1.1.1-perpetrator-race">Section 1.1.1: Perpetrator Race</a></li>
-  <li><a href="#section-1.1.2-relationship-between-borough-and-perpetrator-age" id="toc-section-1.1.2-relationship-between-borough-and-perpetrator-age" class="nav-link" data-scroll-target="#section-1.1.2-relationship-between-borough-and-perpetrator-age">Section 1.1.2: Relationship between Borough and Perpetrator Age</a></li>
-  </ul></li>
-  <li><a href="#section-1.2-victim-information" id="toc-section-1.2-victim-information" class="nav-link" data-scroll-target="#section-1.2-victim-information">Section 1.2: Victim Information</a>
-  <ul class="collapse">
-  <li><a href="#section-1.2.1-victim-race" id="toc-section-1.2.1-victim-race" class="nav-link" data-scroll-target="#section-1.2.1-victim-race">Section 1.2.1: Victim Race</a></li>
-  <li><a href="#section-1.2.2-victim-age-group" id="toc-section-1.2.2-victim-age-group" class="nav-link" data-scroll-target="#section-1.2.2-victim-age-group">Section 1.2.2: Victim Age Group</a></li>
-  </ul></li>
+  <li><a href="#section-1.1-perpetrator-information" id="toc-section-1.1-perpetrator-information" class="nav-link" data-scroll-target="#section-1.1-perpetrator-information">Section 1.1: Perpetrator Information</a></li>
+  <li><a href="#section-1.2-victim-information" id="toc-section-1.2-victim-information" class="nav-link" data-scroll-target="#section-1.2-victim-information">Section 1.2: Victim Information</a></li>
   <li><a href="#section-1.3-crime-location-classification" id="toc-section-1.3-crime-location-classification" class="nav-link" data-scroll-target="#section-1.3-crime-location-classification">Section 1.3: Crime Location Classification</a></li>
-  <li><a href="#section-1.4-offense-descriptions" id="toc-section-1.4-offense-descriptions" class="nav-link" data-scroll-target="#section-1.4-offense-descriptions">Section 1.4: Offense Descriptions</a></li>
+  <li><a href="#section-1.4-average-salary-by-nyc-borough" id="toc-section-1.4-average-salary-by-nyc-borough" class="nav-link" data-scroll-target="#section-1.4-average-salary-by-nyc-borough">Section 1.4 Average Salary by NYC Borough</a></li>
+  <li><a href="#section-1.5-murder-rate" id="toc-section-1.5-murder-rate" class="nav-link" data-scroll-target="#section-1.5-murder-rate">Section 1.5: Murder Rate</a></li>
   </ul></li>
+  <li><a href="#section-2-statistical-models" id="toc-section-2-statistical-models" class="nav-link" data-scroll-target="#section-2-statistical-models">Section 2: Statistical Models</a></li>
   <li><a href="#section-3-limitations-and-constraints-in-geographic-and-variable-diversity" id="toc-section-3-limitations-and-constraints-in-geographic-and-variable-diversity" class="nav-link" data-scroll-target="#section-3-limitations-and-constraints-in-geographic-and-variable-diversity">Section 3: Limitations and Constraints in Geographic and Variable Diversity</a>
   <ul class="collapse">
   <li><a href="#example-of-loading-data" id="toc-example-of-loading-data" class="nav-link" data-scroll-target="#example-of-loading-data">Example of loading data</a></li>
@@ -201,74 +195,153 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="section-1-deep-dive-analysis-and-motivation" class="level1">
 <h1>Section 1: Deep-Dive Analysis and Motivation</h1>
 <p>Our team decided to use this dataset to understand regional differences in shooting crime rates and the boroughs in which they occur, reflecting the complex dynamics in urban socioeconomic and racial landscapes. The dataset provides a detailed view of the patterns and context in which crime occurs, allowing for more targeted prevention approaches. By analyzing perpetrator and victim demographics as well as specific characteristics of crime locations, the project identifies potential trends and potential hotspots of criminal activity. This in-depth analysis helps develop specialized interventions that are more likely to be effective in specific communities, ultimately helping to reduce crime and enhance public safety.</p>
+<p>The variables that intrigue us the most include:</p>
 <ul>
 <li>Perpetrator Race</li>
 <li>Perpetrator Age Group</li>
 <li>Victim Race</li>
 <li>Victim Age Group</li>
 <li>Crime Location Classification</li>
+<li>Murder Rate</li>
 <li>Offense Description</li>
 </ul>
+<p><strong>In our quest for deeper insights, we seek answers to the following questions:</strong></p>
+<p>What are the predominant racial demographics among perpetrators and victims?</p>
+<p>Which crime location classifications witness the highest frequency of criminal activity?</p>
+<p>Are there discernible patterns in murder rates across NYC boroughs?</p>
+<p>How do these variables collectively contribute to predicting the borough in which a crime occurs?</p>
+<p>With these questions in mind, we embark on a journey through exploratory data analysis and statistical modeling to uncover meaningful insights into crime dynamics within NYC.</p>
 <section id="section-1.1-perpetrator-information" class="level2">
 <h2 class="anchored" data-anchor-id="section-1.1-perpetrator-information">Section 1.1: Perpetrator Information</h2>
-<section id="section-1.1.1-perpetrator-race" class="level3">
-<h3 class="anchored" data-anchor-id="section-1.1.1-perpetrator-race">Section 1.1.1: Perpetrator Race</h3>
+<!-- ### Section 1.1.1: Perpetrator Race -->
 <p>The data indicates that individuals identified as Black constitute the largest group of perpetrators, followed by a significantly smaller number of White Hispanics, and even fewer Whites and Black Hispanics. Asian/Pacific Islanders have the smallest count among the identified races. It could be inferred that understanding the racial distribution of perpetrators can be an important factor when analyzing crime data by borough, especially considering the demographic composition of each borough. The importance of analyzing perpetrator race lies in its potential to highlight areas where targeted social and law enforcement interventions may be needed.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<!-- ### Section 1.1.2: Relationship between Borough and Perpetrator Age -->
+<!-- The bar chart illustrates the distribution of perpetrators by age group across different boroughs of New York City. It seems that Brooklyn and the Bronx have the highest counts of perpetrators across all age groups, with those aged 25-44 being the most numerous in these areas. Manhattan follows, displaying a similar pattern with the 25-44 age group being predominant. Queens and Staten Island have significantly lower counts of perpetrators, but the same trend persists where individuals aged 25-44 are the most represented. The least number of perpetrators are those aged 65 and above, which is consistent across all boroughs. The chart suggests that middle-aged adults (25-44) are the most common age group for perpetrators in the city, and that there is a considerable variance in the number of perpetrators between the boroughs, with Brooklyn and the Bronx being the most affected. -->
+<!-- ```{r, echo=FALSE, message=FALSE, warning=FALSE} -->
+<!-- perp_age_counts <- combined_df %>% -->
+<!--   count(BORO, PERP_AGE_GROUP) %>% -->
+<!--   arrange(BORO, desc(n)) -->
+<!--  -->
+<!-- ggplot(perp_age_counts, aes(x = BORO, y = n, fill = PERP_AGE_GROUP)) + -->
+<!--   geom_bar(stat = "identity", position = "stack") +  -->
+<!--   theme_minimal() + -->
+<!--   labs(title = "Relationship between Borough and Perpetrator Age", -->
+<!--        x = "Borough", -->
+<!--        y = "Count", -->
+<!--        fill = "Perpetrator Age Group") -->
+<!-- ``` -->
 </section>
-<section id="section-1.1.2-relationship-between-borough-and-perpetrator-age" class="level3">
-<h3 class="anchored" data-anchor-id="section-1.1.2-relationship-between-borough-and-perpetrator-age">Section 1.1.2: Relationship between Borough and Perpetrator Age</h3>
-<p>The bar chart illustrates the distribution of perpetrators by age group across different boroughs of New York City. It seems that Brooklyn and the Bronx have the highest counts of perpetrators across all age groups, with those aged 25-44 being the most numerous in these areas. Manhattan follows, displaying a similar pattern with the 25-44 age group being predominant. Queens and Staten Island have significantly lower counts of perpetrators, but the same trend persists where individuals aged 25-44 are the most represented. The least number of perpetrators are those aged 65 and above, which is consistent across all boroughs. The chart suggests that middle-aged adults (25-44) are the most common age group for perpetrators in the city, and that there is a considerable variance in the number of perpetrators between the boroughs, with Brooklyn and the Bronx being the most affected.</p>
+<section id="section-1.2-victim-information" class="level2">
+<h2 class="anchored" data-anchor-id="section-1.2-victim-information">Section 1.2: Victim Information</h2>
+<!-- ### Section 1.2.1: Victim Race -->
+<p>It is noticeable that Black individuals constitute the largest group among the recorded victim races, with a notably high count. White Hispanics and Whites follow, with the former having a slightly higher count than the latter. The count for Asian/Pacific Islander and Black Hispanic victims is lower, and there is also a category for “Unknown,” indicating instances where the victim’s race was not recorded or identified. The distribution of victim race can be a crucial factor in understanding and predicting crime in different boroughs (BOROs) of New York City, as it might reflect underlying patterns of victimization related to social, economic, and possibly racial dynamics within these areas.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
-</section>
-<section id="section-1.2-victim-information" class="level2">
-<h2 class="anchored" data-anchor-id="section-1.2-victim-information">Section 1.2: Victim Information</h2>
-<section id="section-1.2.1-victim-race" class="level3">
-<h3 class="anchored" data-anchor-id="section-1.2.1-victim-race">Section 1.2.1: Victim Race</h3>
-<p>It is noticeable that Black individuals constitute the largest group among the recorded victim races, with a notably high count. White Hispanics and Whites follow, with the former having a slightly higher count than the latter. The count for Asian/Pacific Islander and Black Hispanic victims is lower, and there is also a category for “Unknown,” indicating instances where the victim’s race was not recorded or identified. The distribution of victim race can be a crucial factor in understanding and predicting crime in different boroughs (BOROs) of New York City, as it might reflect underlying patterns of victimization related to social, economic, and possibly racial dynamics within these areas.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="section-1.2.2-victim-age-group" class="level3">
-<h3 class="anchored" data-anchor-id="section-1.2.2-victim-age-group">Section 1.2.2: Victim Age Group</h3>
-<p>The stacked bar chart illustrates the relationship between various New York City boroughs and the age groups of crime victims. Manhattan appears to have the highest total count of victims across all age groups, followed closely by Brooklyn. Both boroughs show a particularly high prevalence of victims aged 25-44. The Bronx also shows a significant number of victims, especially in the 25-44 and 45-64 age categories. Queens and Staten Island have a lower total count of victims, but similar patterns in age distribution can be observed, with the majority of victims falling into the 25-44 age group. The age group ‘65+’ has the lowest count across all boroughs, and there is a notable number of cases where the victim’s age is unknown. This visualization can provide insights into which age groups are more affected by crime in specific boroughs, which can be valuable for targeted policy-making and resource allocation.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
+<!-- ### Section 1.2.2: Victim Age Group -->
+
+<!-- The stacked bar chart illustrates the relationship between various New York City boroughs and the age groups of crime victims. Manhattan appears to have the highest total count of victims across all age groups, followed closely by Brooklyn. Both boroughs show a particularly high prevalence of victims aged 25-44. The Bronx also shows a significant number of victims, especially in the 25-44 and 45-64 age categories. Queens and Staten Island have a lower total count of victims, but similar patterns in age distribution can be observed, with the majority of victims falling into the 25-44 age group. The age group '65+' has the lowest count across all boroughs, and there is a notable number of cases where the victim's age is unknown. This visualization can provide insights into which age groups are more affected by crime in specific boroughs, which can be valuable for targeted policy-making and resource allocation. -->
+<!-- ```{r, echo=FALSE, message=FALSE, warning=FALSE} -->
+<!-- age_boro_count2 <- combined_df %>% -->
+<!--   count(BORO, VIC_AGE_GROUP) %>% -->
+<!--   arrange(BORO, desc(n)) -->
+<!-- ggplot(age_boro_count2, aes(x = BORO, y = n, fill = VIC_AGE_GROUP)) + -->
+<!--   geom_bar(stat = "identity", position = "stack") +  -->
+<!--   theme_minimal() + -->
+<!--   labs(title = "Relationship between Borough and Victim Age", -->
+<!--        x = "Borough", -->
+<!--        y = "Count", -->
+<!--        fill = "Victim Age Group") -->
+<!-- ``` -->
 </section>
 <section id="section-1.3-crime-location-classification" class="level2">
 <h2 class="anchored" data-anchor-id="section-1.3-crime-location-classification">Section 1.3: Crime Location Classification</h2>
 <p>This bar chart displays the distribution of crime location classifications. The majority of crimes are classified under “Street”, indicating that this is the most common location for crime in the dataset, with a significantly higher count compared to other categories. “Dwelling” and “Housing” also appear to be relatively common crime locations, with “Housing” showing a notably higher count than “Dwelling”. The chart provides a clear visual summary of where crimes tend to occur, which could be used by law enforcement and city planners to allocate resources more effectively.</p>
 <div class="cell">
 <div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="section-1.4-average-salary-by-nyc-borough" class="level2">
+<h2 class="anchored" data-anchor-id="section-1.4-average-salary-by-nyc-borough">Section 1.4 Average Salary by NYC Borough</h2>
+<p>These plots explore the average salary distribution across the five boroughs of New York City (NYC). The first plot illustrates the average salary by work location borough, providing a comparative view of salary levels among the Bronx, Brooklyn, Manhattan, Queens, and other areas. Using a bar chart, the plot visualizes the mean salary for each borough, allowing for easy comparison of salary magnitudes. The second plot extends this analysis spatially by mapping the average salary by NYC borough onto a geographic representation of the city. Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods.</p>
+<p>It is easy to visualize the disparity of income levels in NYC with these plots. We can see the vast disparity between the Borough Brooklyn and Manhattan.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `tl_2022_36_tract' from data source 
+  `/Users/saisriram/Desktop/MA615/Team6/tl_2022_36_tract/tl_2022_36_tract.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 5411 features and 12 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -79.76259 ymin: 40.47658 xmax: -71.77749 ymax: 45.01586
+Geodetic CRS:  NAD83</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="section-1.5-murder-rate" class="level2">
+<h2 class="anchored" data-anchor-id="section-1.5-murder-rate">Section 1.5: Murder Rate</h2>
+<p>The bar chart illustrates the murder rates as percentages for each borough. It’s noticeable that the Bronx and Staten Island exhibit the highest murder rates. The murder rate is a significant indicator because it reflects the frequency of violent crimes within a community. Understanding the murder rate is vital for predicting where shooting crime incidents are more likely to occur, which in turn is essential for prioritizing law enforcement resources, improving public safety measures, and implementing preventative programs. High murder rates in certain boroughs might suggest the need for increased police presence and other interventions aimed at violence reduction. Conversely, boroughs with lower rates can provide which policies or social structures may be contributing to a safer environment. Understanding these patterns are critical steps towards effective crime prevention and ensuring the safety and well-being of the residents.</p>
+<div class="cell">
+<div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="section-1.4-offense-descriptions" class="level2">
-<h2 class="anchored" data-anchor-id="section-1.4-offense-descriptions">Section 1.4: Offense Descriptions</h2>
-<p>The horizontal bar chart presents a breakdown of various types of offenses. The most frequent offense, represented by the longest bar, is “Vehicle and Traffic Laws,” suggesting a high number of incidents related to traffic violations. “Sex Crimes” and “Robbery” follow, indicating significant occurrence rates within the dataset. Offenses like “Rape” and “Petit Larceny” show lower counts but are still notable. Other categories, including “Offenses Involving Fraud,” “Offenses Against Public Administration,” and “Miscellaneous Penal Law,” display moderate counts. This variable could be instrumental for law enforcement prioritization and public awareness initiatives.</p>
+</section>
+<section id="section-2-statistical-models" class="level1">
+<h1>Section 2: Statistical Models</h1>
+<p>We want to make a model to see if our thesis and model correlate with eachother. We are predicting the Borough in which a crime takes place based on several predictors which we state below:</p>
+<p>For our predictors, we have first converted our characters into factors as statistical models require categorical variables encoded as factors.</p>
+<p>We choose the variables: Perpetrator Sex, Perpetrator Race, Location, Perpetrator age group, Victim Sex, Victim Age group, Victim Race, Offense Description Murder Flag</p>
+<p>These choices were driven by their potential to capture key aspects of crime patterns and dynamics within the city. Demographic characteristics of both perpetrators and victims, along with the type and location of offenses, provide valuable insights into crime commission and victimization patterns. By exploring these variables and their relationships with the borough where the crime occurs, correlations were identified that suggest their relevance as predictors.</p>
+<p>The first model we thought to use was Multinomial Logistic Regression, but this model only gave us an accuracy of <strong>59%</strong> which we were not satsifed with.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># weights:  345 (272 variable)
+initial  value 4731.747463 
+iter  10 value 3503.178937
+iter  20 value 3139.207783
+iter  30 value 2953.000193
+iter  40 value 2920.501733
+iter  50 value 2898.352874
+iter  60 value 2885.566650
+iter  70 value 2881.773075
+iter  80 value 2880.241604
+iter  90 value 2879.331694
+iter 100 value 2878.781392
+final  value 2878.781392 
+stopped after 100 iterations</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Accuracy %: 59.2896174863388"</code></pre>
+</div>
+</div>
+<p>We then attempted to use a Random Forest model. We also only coose features that have atleast 200 to make sure the model has sufficient data to make a prediction.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Accuracy %: 83.9729119638826"</code></pre>
+</div>
+</div>
+<p>The various lines here represent the various predictors and we observe that the error is going down proving to become a better model.</p>
+<p>We got an accuracy of almost <strong>84%</strong> which is much better. However, due to the data having most of the offenses in a small subset of the boroughs we believe that the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.</p>
+<p>An accuray of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.4 above</p>
 </section>
 <section id="section-3-limitations-and-constraints-in-geographic-and-variable-diversity" class="level1">
 <h1>Section 3: Limitations and Constraints in Geographic and Variable Diversity</h1>
@@ -283,12 +356,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="example-of-loading-data">Example of loading data</h3>
 <p>The code below shows an example of loading the loan refusal data set (which you should delete at some point).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">getwd</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">getwd</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "/Users/wangshiyu/Desktop/MA415 A1+A3/final-project-team6"</code></pre>
+<pre><code>[1] "/Users/saisriram/Desktop/MA615/Team6"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal_clean.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal_clean.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 20 Columns: 5
 ── Column specification ────────────────────────────────────────────────────────
@@ -299,15 +372,24 @@ dbl (4): min, white, himin, hiwhite
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal.RData"</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal.RData"</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "age_boro_count2"           "average_salary_by_borough"
- [3] "combined_df"               "data"                     
- [5] "has_annotations"           "loan_data_clean"          
- [7] "loc_counts"                "NYPD_arrest_data"         
- [9] "nypd_payroll"              "perp_age_counts"          
-[11] "perp_race"                 "vic_race"                 </code></pre>
+<pre><code> [1] "accuracy"                  "average_salary_by_borough"
+ [3] "average_salary_by_fips"    "borough_to_fips"          
+ [5] "combined_df"               "complete_data"            
+ [7] "conf_mat"                  "data"                     
+ [9] "freq"                      "has_annotations"          
+[11] "index"                     "loan_data_clean"          
+[13] "loc_counts"                "model1"                   
+[15] "modeldata"                 "murder_rate"              
+[17] "nyc_tracts"                "nyc_tracts_salary"        
+[19] "NYPD_arrest_data"          "nypd_payroll"             
+[21] "perp_race"                 "predictions"              
+[23] "rf_model"                  "shapefile_path"           
+[25] "test_data"                 "test_pred"                
+[27] "train_data"                "train_indices"            
+[29] "vic_race"                 </code></pre>
 </div>
 </div>
 </section>
