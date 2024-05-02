@@ -77,7 +77,7 @@ combined_df |>
   group_by(OFNS_DESC) |>
   summarise(Count = n(), .groups = 'drop') |>
   filter(Count >= 50) |>
-  ggplot(aes(x = reorder(OFNS_DESC, -Count), y = Count, fill = OFNS_DESC)) +
+  ggplot(aes(x = reorder(OFNS_DESC, Count), y = Count, fill = OFNS_DESC)) +
   geom_bar(stat = "identity", position = "dodge") +
   coord_flip() +
   theme_minimal() +

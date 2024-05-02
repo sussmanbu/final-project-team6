@@ -39,7 +39,7 @@ average_salary_by_borough <- nypd_payroll %>%
 
 Our team decided to use this dataset to understand regional differences in shooting crime rates and the boroughs in which they occur, reflecting the complex dynamics in urban socioeconomic and racial landscapes. The dataset provides a detailed view of the patterns and context in which crime occurs, allowing for more targeted prevention approaches. By analyzing perpetrator and victim demographics as well as specific characteristics of crime locations, the project identifies potential trends and potential hotspots of criminal activity. This in-depth analysis helps develop specialized interventions that are more likely to be effective in specific communities, ultimately helping to reduce crime and enhance public safety.
 
-The variables that intrigue us the most include:
+The most informative variables for the analysis include:
 
 - Perpetrator Race
 - Perpetrator Age Group
@@ -49,17 +49,13 @@ The variables that intrigue us the most include:
 - Murder Rate
 - Offense Description
 
-**In our quest for deeper insights, we seek answers to the following questions:**
+**In search of deeper insights, the analysis seeks answers to the following questions:**
 
-What are the predominant racial demographics among perpetrators and victims?
-
-Which crime location classifications witness the highest frequency of criminal activity?
-
-Are there discernible patterns in murder rates across NYC boroughs?
-
-How do these variables collectively contribute to predicting the borough in which a crime occurs?
-
-With these questions in mind, we embark on a journey through exploratory data analysis and statistical modeling to uncover meaningful insights into crime dynamics within NYC.
+- What are the predominant racial demographics among perpetrators and victims?
+- Which crime location classifications witness the highest frequency of criminal activity?
+- Are there discernible patterns in murder rates across NYC boroughs?
+- How do these variables collectively contribute to predicting the borough in which a crime occurs?
+- With these questions in mind, we embark on a journey through exploratory data analysis and statistical modeling to uncover meaningful insights into crime dynamics within NYC.
 
 ## Section 1.1: Perpetrator Information
 <!-- ### Section 1.1.1: Perpetrator Race -->
@@ -71,12 +67,12 @@ perp_race <- combined_df |>
   count(PERP_RACE) |>
   arrange(desc(n))
 
-ggplot(perp_race, aes(x = reorder(PERP_RACE, n), y = n, fill = PERP_RACE)) + 
-  geom_bar(stat = "identity") +
+ggplot(perp_race, aes(x = reorder(PERP_RACE, -n), y = n, fill = PERP_RACE)) + 
+  geom_bar(stat = "identity", width = 0.7) +
   theme_minimal() +
   labs(title = "Perpetrator Race Distribution", x = "Perpetrator Race", y = "Count", 
        fill = "Perpetrator Race") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+  theme(legend.position = "none")
 ```
 
 <!-- ### Section 1.1.2: Relationship between Borough and Perpetrator Age -->
@@ -107,11 +103,11 @@ vic_race <- combined_df |>
   count(VIC_RACE) |>
   arrange(desc(n))
 
-ggplot(vic_race, aes(x = reorder(VIC_RACE, n), y = n, fill = VIC_RACE)) + 
-  geom_bar(stat = "identity") +
+ggplot(vic_race, aes(x = reorder(VIC_RACE, -n), y = n, fill = VIC_RACE)) + 
+  geom_bar(stat = "identity", width = 0.7) +
   theme_minimal() +
   labs(title = "Victim Race Distribution", x = "Victim Race", y = "Count", fill = "Victim Race") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")
 ```
 
 <!-- ### Section 1.2.2: Victim Age Group -->
@@ -142,11 +138,11 @@ loc_counts <- data |>
   count(LOC_CLASSFCTN_DESC) |>
   arrange(desc(n))
 
-ggplot(loc_counts, aes(x = reorder(LOC_CLASSFCTN_DESC, n), y = n, fill = LOC_CLASSFCTN_DESC)) +
+ggplot(loc_counts, aes(x = reorder(LOC_CLASSFCTN_DESC, -n), y = n, fill = LOC_CLASSFCTN_DESC)) +
   geom_bar(stat = "identity") +
   theme_minimal() +
   labs(title = 'Crime Location Classification Distribution', x = 'Crime Location Classification', y = 'Count', fill = "Location Classification") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")
 ```
 
 ## Section 1.4 Average Salary by NYC Borough 
@@ -158,7 +154,7 @@ It is easy to visualize the disparity of income levels in NYC with these plots. 
 
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 
 shapefile_path <- "tl_2022_36_tract/tl_2022_36_tract.shp"
 complete_data <- st_read(shapefile_path)
@@ -229,47 +225,29 @@ murder_rate <- combined_df %>%
   )
 
 
-ggplot(data = murder_rate, aes(x = BORO, y = murder_rate)) +
-  geom_bar(stat = "identity", fill = "steelblue", width = 0.6) +
+ggplot(data = murder_rate, aes(x = reorder(BORO, -murder_rate), y = murder_rate, fill = BORO)) +
+  geom_bar(stat = "identity", width = 0.6) +
   theme_minimal() +
   labs(title = "Murder Rate by Borough",
        x = "Borough",
-       y = "Murder Rate (%)")
+       y = "Murder Rate (%)") +
+  theme(legend.position = "none")
 ```
 # Section 2: Statistical Models
 
-We want to make a model to see if our thesis and model correlate with eachother. We are predicting the Borough in which a crime takes place based on several predictors which we state below: 
+The analytical model was designed to examine if the thesis and model were related to each other and predict the shooting crimes would occur in which borough based on several predictors: 
 
-For our predictors, we have first converted our characters into factors as statistical models require categorical variables encoded as factors. 
-
-We choose the variables: Perpetrator Sex, Perpetrator Race, Location, Perpetrator age group, Victim Sex, Victim Age group, Victim Race, Offense Description Murder Flag
+For the predictors, they first be converted from characters into factors as statistical models require categorical variables encoded as factors. The independent variables include: Perpetrator Sex, Perpetrator Race, Location, Perpetrator age group, Victim Sex, Victim Age group, Victim Race, Offense Description, and Murder Flag.
 
 These choices were driven by their potential to capture key aspects of crime patterns and dynamics within the city. Demographic characteristics of both perpetrators and victims, along with the type and location of offenses, provide valuable insights into crime commission and victimization patterns. By exploring these variables and their relationships with the borough where the crime occurs, correlations were identified that suggest their relevance as predictors.
 
+## Section 2.1: Multinomial Regression Model
 
-The first model we thought to use was Multinomial Logistic Regression, but this model only gave us an accuracy of **59%** which we were not satsifed with.
+The first model is the Multinomial Logistic Regression since the model needs to account for the fact that the target variable (Borough) has 5 classes. However, the model only gave an accuracy of **56%**, which does not meet the expectation. Because the distribution of shooting crime incidents in each borough from the dataset is uneven, this limitation of the dataset makes the 56% accuracy even more unsatisfactory for the prediction model.
 
-
-```{r , echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 library(nnet)
 library(caret)
-set.seed(123)  # for reproducibility
-index <- createDataPartition(combined_df$BORO, p = 0.80, list = FALSE)
-train_data <- combined_df[index, ]
-test_data <- combined_df[-index, ]
-
-model1 <- multinom(BORO ~ LOC_CLASSFCTN_DESC + PERP_RACE + PERP_AGE_GROUP + VIC_AGE_GROUP + VIC_RACE + OFNS_DESC + STATISTICAL_MURDER_FLAG, data = train_data)
-
-predictions <- predict(model1, test_data)
-
-accuracy <- mean(predictions == test_data$BORO)
-print(paste("Accuracy %:", accuracy*100))
-```
-
-We then attempted to use a Random Forest model. We also only coose features that have atleast 200 to make sure the model has sufficient data to make a prediction.
-
-```{r , echo=FALSE, message=FALSE, warning=FALSE}
-library(randomForest)
 
 modeldata <- combined_df %>%
   mutate(across(where(is.character), as.factor))
@@ -281,6 +259,23 @@ set.seed(123)
 train_indices <- sample(1:nrow(modeldata), 0.8 * nrow(modeldata))  # 80% for training
 train_data <- modeldata[train_indices, ]
 test_data <- modeldata[-train_indices, ]
+
+model1 <- multinom(BORO ~ LOC_CLASSFCTN_DESC + PERP_RACE + PERP_AGE_GROUP + VIC_AGE_GROUP + VIC_RACE + OFNS_DESC + STATISTICAL_MURDER_FLAG, data = train_data)
+
+predictions <- predict(model1, test_data)
+
+accuracy <- mean(predictions == test_data$BORO)
+```
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+print(paste("Accuracy %:", accuracy*100))
+```
+
+## Section 2.2: Random Forest
+
+The second statistical model is the Random Forest model. The same training and testing data were applied to the random forest to ensure that the results of the model were meaningful. The significance of creating this model is to consider that this model can accommodate the constraint of uneven distribution of data in each borough.
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+library(randomForest)
 
 rf_model <- randomForest(BORO ~ PERP_SEX + PERP_RACE + LOC_CLASSFCTN_DESC + PERP_AGE_GROUP + VIC_SEX + VIC_AGE_GROUP + VIC_RACE + OFNS_DESC + STATISTICAL_MURDER_FLAG, 
                          data = train_data, 
@@ -297,17 +292,17 @@ accuracy <- sum(diag(conf_mat)) / sum(conf_mat)
 print(paste("Accuracy %:", accuracy*100))
 ```
 
-The various lines here represent the various predictors and we observe that the error is going down proving to become a better model.
+This plot shows the error rate of the Random Forest model decreases as the number of trees increases. Each line in the plot represents the error for a different type of prediction task. Under this model, those different lines represent the error rate for various classes within the target variable (Borough).
 
-We got an accuracy of almost **84%** which is much better. However, due to the data having most of the offenses in a small subset of the boroughs we believe that the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.
+Random forest gives an accuracy of almost **84%** which is much better. However, due to the data having most of the offenses in a small subset of the boroughs, the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.
 
-An accuray of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.4 above
+An accuracy of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.4 above.
 
 # Section 3: Limitations and Constraints in Geographic and Variable Diversity 
 
 In analyzing data specific to New York City, it's crucial to recognize the limitations this imposes when attempting to generalize findings to other regions or populations. The data's geographical constraint to NYC means the insights derived are most valid within this specific context. This is not inherently a bias but rather a limitation on the scope of the conclusions. The variables, behaviors, and trends observed in the NYC dataset may not be representative of other areas due to differences in demographics, legal systems, cultural norms, and crime patterns. Therefore, while this dataset provides valuable insights into crime dynamics within NYC, extrapolating these findings to a broader context without additional data from other regions would lead to inaccurate conclusions and potentially misleading policy recommendations.
 
-Furthermore, the model used in the analysis relies solely on categorical variables, including location classification, perpetrator race, perpetrator age group, victim age group, victim race, and offense description. This reliance on categorical data limits the analytical depth and complexity that could be achieved with a mix of categorical and continuous variables. For instance, continuous variables could provide nuanced insights into the timing of crimes, distances between crime locations, or economic factors, which might significantly influence crime patterns. Additionally, the model's current structure may not capture interactions between variables or nonlinear relationships, which are often critical in understanding complex social phenomena like crime. Incorporating more diverse data types and expanding the model to include interaction terms or polynomial components could enhance its predictive power and provide a more comprehensive understanding of the factors influencing crime in NYC.
+Furthermore, the model used in the analysis relies solely on categorical variables, including location classification, perpetrator race, perpetrator age group, victim age group, victim race, offense description, and murder flags. This reliance on categorical data limits the analytical depth and complexity that could be achieved with a combination of categorical and continuous variables. For instance, continuous variables could provide detailed insights into the timing of crimes, distances between crime locations, or economic factors, which might significantly influence crime patterns. Additionally, the model's current structure may not capture interactions between variables or nonlinear relationships, which are often critical in understanding complex social phenomena like crime. Incorporating more diverse data types and expanding the model to include interaction terms or polynomial components could enhance its predictive power and provide a more comprehensive understanding of the factors influencing crime in NYC.
 
 
 This comes from the file `analysis.qmd`.
@@ -322,18 +317,6 @@ If you want you can link back to your blog posts or create separate pages with m
 The style of this paper should aim to be that of an academic paper. 
 I don't expect this to be of publication quality but you should keep that aim in mind.
 Avoid using "we" too frequently, for example "We also found that ...". Describe your methodology and your findings but don't describe your whole process.
-
-### Example of loading data
-
-The code below shows an example of loading the loan refusal data set (which you should delete at some point).
-
-```{r}
-library(tidyverse)
-print(getwd())
-data <- read_csv(here::here("dataset/loan_refusal_clean.csv"))
-load(here::here("dataset/loan_refusal.RData"))
-print(ls())
-```
 
 ## Note on Attribution
 
