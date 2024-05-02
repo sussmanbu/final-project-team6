@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -156,10 +122,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#section-1.4-average-salary-by-nyc-borough" id="toc-section-1.4-average-salary-by-nyc-borough" class="nav-link" data-scroll-target="#section-1.4-average-salary-by-nyc-borough">Section 1.4 Average Salary by NYC Borough</a></li>
   <li><a href="#section-1.5-murder-rate" id="toc-section-1.5-murder-rate" class="nav-link" data-scroll-target="#section-1.5-murder-rate">Section 1.5: Murder Rate</a></li>
   </ul></li>
-  <li><a href="#section-2-statistical-models" id="toc-section-2-statistical-models" class="nav-link" data-scroll-target="#section-2-statistical-models">Section 2: Statistical Models</a></li>
+  <li><a href="#section-2-statistical-models" id="toc-section-2-statistical-models" class="nav-link" data-scroll-target="#section-2-statistical-models">Section 2: Statistical Models</a>
+  <ul class="collapse">
+  <li><a href="#section-2.1-multinomial-regression-model" id="toc-section-2.1-multinomial-regression-model" class="nav-link" data-scroll-target="#section-2.1-multinomial-regression-model">Section 2.1: Multinomial Regression Model</a></li>
+  <li><a href="#section-2.2-random-forest" id="toc-section-2.2-random-forest" class="nav-link" data-scroll-target="#section-2.2-random-forest">Section 2.2: Random Forest</a></li>
+  </ul></li>
   <li><a href="#section-3-limitations-and-constraints-in-geographic-and-variable-diversity" id="toc-section-3-limitations-and-constraints-in-geographic-and-variable-diversity" class="nav-link" data-scroll-target="#section-3-limitations-and-constraints-in-geographic-and-variable-diversity">Section 3: Limitations and Constraints in Geographic and Variable Diversity</a>
   <ul class="collapse">
-  <li><a href="#example-of-loading-data" id="toc-example-of-loading-data" class="nav-link" data-scroll-target="#example-of-loading-data">Example of loading data</a></li>
   <li><a href="#note-on-attribution" id="toc-note-on-attribution" class="nav-link" data-scroll-target="#note-on-attribution">Note on Attribution</a></li>
   <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
   </ul></li>
@@ -195,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="section-1-deep-dive-analysis-and-motivation" class="level1">
 <h1>Section 1: Deep-Dive Analysis and Motivation</h1>
 <p>Our team decided to use this dataset to understand regional differences in shooting crime rates and the boroughs in which they occur, reflecting the complex dynamics in urban socioeconomic and racial landscapes. The dataset provides a detailed view of the patterns and context in which crime occurs, allowing for more targeted prevention approaches. By analyzing perpetrator and victim demographics as well as specific characteristics of crime locations, the project identifies potential trends and potential hotspots of criminal activity. This in-depth analysis helps develop specialized interventions that are more likely to be effective in specific communities, ultimately helping to reduce crime and enhance public safety.</p>
-<p>The variables that intrigue us the most include:</p>
+<p>The most informative variables for the analysis include:</p>
 <ul>
 <li>Perpetrator Race</li>
 <li>Perpetrator Age Group</li>
@@ -205,12 +174,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Murder Rate</li>
 <li>Offense Description</li>
 </ul>
-<p><strong>In our quest for deeper insights, we seek answers to the following questions:</strong></p>
-<p>What are the predominant racial demographics among perpetrators and victims?</p>
-<p>Which crime location classifications witness the highest frequency of criminal activity?</p>
-<p>Are there discernible patterns in murder rates across NYC boroughs?</p>
-<p>How do these variables collectively contribute to predicting the borough in which a crime occurs?</p>
-<p>With these questions in mind, we embark on a journey through exploratory data analysis and statistical modeling to uncover meaningful insights into crime dynamics within NYC.</p>
+<p><strong>In search of deeper insights, the analysis seeks answers to the following questions:</strong></p>
+<ul>
+<li>What are the predominant racial demographics among perpetrators and victims?</li>
+<li>Which crime location classifications witness the highest frequency of criminal activity?</li>
+<li>Are there discernible patterns in murder rates across NYC boroughs?</li>
+<li>How do these variables collectively contribute to predicting the borough in which a crime occurs?</li>
+<li>With these questions in mind, we embark on a journey through exploratory data analysis and statistical modeling to uncover meaningful insights into crime dynamics within NYC.</li>
+</ul>
 <section id="section-1.1-perpetrator-information" class="level2">
 <h2 class="anchored" data-anchor-id="section-1.1-perpetrator-information">Section 1.1: Perpetrator Information</h2>
 <!-- ### Section 1.1.1: Perpetrator Race -->
@@ -275,16 +246,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>These plots explore the average salary distribution across the five boroughs of New York City (NYC). The first plot illustrates the average salary by work location borough, providing a comparative view of salary levels among the Bronx, Brooklyn, Manhattan, Queens, and other areas. Using a bar chart, the plot visualizes the mean salary for each borough, allowing for easy comparison of salary magnitudes. The second plot extends this analysis spatially by mapping the average salary by NYC borough onto a geographic representation of the city. Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods.</p>
 <p>It is easy to visualize the disparity of income levels in NYC with these plots. We can see the vast disparity between the Borough Brooklyn and Manhattan.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Reading layer `tl_2022_36_tract' from data source 
-  `/Users/wangshiyu/Desktop/MA415 A1+A3/final-project-team6/tl_2022_36_tract/tl_2022_36_tract.shp' 
-  using driver `ESRI Shapefile'
-Simple feature collection with 5411 features and 12 fields
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: -79.76259 ymin: 40.47658 xmax: -71.77749 ymax: 45.01586
-Geodetic CRS:  NAD83</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -302,97 +263,45 @@ Geodetic CRS:  NAD83</code></pre>
 </section>
 <section id="section-2-statistical-models" class="level1">
 <h1>Section 2: Statistical Models</h1>
-<p>We want to make a model to see if our thesis and model correlate with eachother. We are predicting the Borough in which a crime takes place based on several predictors which we state below:</p>
-<p>For our predictors, we have first converted our characters into factors as statistical models require categorical variables encoded as factors.</p>
-<p>We choose the variables: Perpetrator Sex, Perpetrator Race, Location, Perpetrator age group, Victim Sex, Victim Age group, Victim Race, Offense Description Murder Flag</p>
+<p>The analytical model was designed to examine if the thesis and model were related to each other and predict the shooting crimes would occur in which borough based on several predictors:</p>
+<p>For the predictors, they first be converted from characters into factors as statistical models require categorical variables encoded as factors. The independent variables include: Perpetrator Sex, Perpetrator Race, Location, Perpetrator age group, Victim Sex, Victim Age group, Victim Race, Offense Description, and Murder Flag.</p>
 <p>These choices were driven by their potential to capture key aspects of crime patterns and dynamics within the city. Demographic characteristics of both perpetrators and victims, along with the type and location of offenses, provide valuable insights into crime commission and victimization patterns. By exploring these variables and their relationships with the borough where the crime occurs, correlations were identified that suggest their relevance as predictors.</p>
-<p>The first model we thought to use was Multinomial Logistic Regression, but this model only gave us an accuracy of <strong>59%</strong> which we were not satsifed with.</p>
+<section id="section-2.1-multinomial-regression-model" class="level2">
+<h2 class="anchored" data-anchor-id="section-2.1-multinomial-regression-model">Section 2.1: Multinomial Regression Model</h2>
+<p>The first model is the Multinomial Logistic Regression since the model needs to account for the fact that the target variable (Borough) has 5 classes. However, the model only gave an accuracy of <strong>56%</strong>, which does not meet the expectation. Because the distribution of shooting crime incidents in each borough from the dataset is uneven, this limitation of the dataset makes the 56% accuracy even more unsatisfactory for the prediction model.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># weights:  345 (272 variable)
-initial  value 4731.747463 
-iter  10 value 3503.178937
-iter  20 value 3139.207783
-iter  30 value 2953.000193
-iter  40 value 2920.501733
-iter  50 value 2898.352874
-iter  60 value 2885.566650
-iter  70 value 2881.773075
-iter  80 value 2880.241604
-iter  90 value 2879.331694
-iter 100 value 2878.781392
-final  value 2878.781392 
-stopped after 100 iterations</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Accuracy %: 59.2896174863388"</code></pre>
+<pre><code>[1] "Accuracy %: 56.4334085778781"</code></pre>
 </div>
 </div>
-<p>We then attempted to use a Random Forest model. We also only coose features that have atleast 200 to make sure the model has sufficient data to make a prediction.</p>
+</section>
+<section id="section-2.2-random-forest" class="level2">
+<h2 class="anchored" data-anchor-id="section-2.2-random-forest">Section 2.2: Random Forest</h2>
+<p>The second statistical model is the Random Forest model. The same training and testing data were applied to the random forest to ensure that the results of the model were meaningful. The significance of creating this model is to consider that this model can accommodate the constraint of uneven distribution of data in each borough.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Accuracy %: 83.9729119638826"</code></pre>
+<pre><code>[1] "Accuracy %: 83.2957110609481"</code></pre>
 </div>
 </div>
-<p>The various lines here represent the various predictors and we observe that the error is going down proving to become a better model.</p>
-<p>We got an accuracy of almost <strong>84%</strong> which is much better. However, due to the data having most of the offenses in a small subset of the boroughs we believe that the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.</p>
-<p>An accuray of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.4 above</p>
+<p>This plot shows the error rate of the Random Forest model decreases as the number of trees increases. Each line in the plot represents the error for a different type of prediction task. Under this model, those different lines represent the error rate for various classes within the target variable (Borough).</p>
+<p>Random forest gives an accuracy of almost <strong>84%</strong> which is much better. However, due to the data having most of the offenses in a small subset of the boroughs, the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.</p>
+<p>An accuracy of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.4 above.</p>
+</section>
 </section>
 <section id="section-3-limitations-and-constraints-in-geographic-and-variable-diversity" class="level1">
 <h1>Section 3: Limitations and Constraints in Geographic and Variable Diversity</h1>
 <p>In analyzing data specific to New York City, it’s crucial to recognize the limitations this imposes when attempting to generalize findings to other regions or populations. The data’s geographical constraint to NYC means the insights derived are most valid within this specific context. This is not inherently a bias but rather a limitation on the scope of the conclusions. The variables, behaviors, and trends observed in the NYC dataset may not be representative of other areas due to differences in demographics, legal systems, cultural norms, and crime patterns. Therefore, while this dataset provides valuable insights into crime dynamics within NYC, extrapolating these findings to a broader context without additional data from other regions would lead to inaccurate conclusions and potentially misleading policy recommendations.</p>
-<p>Furthermore, the model used in the analysis relies solely on categorical variables, including location classification, perpetrator race, perpetrator age group, victim age group, victim race, and offense description. This reliance on categorical data limits the analytical depth and complexity that could be achieved with a mix of categorical and continuous variables. For instance, continuous variables could provide nuanced insights into the timing of crimes, distances between crime locations, or economic factors, which might significantly influence crime patterns. Additionally, the model’s current structure may not capture interactions between variables or nonlinear relationships, which are often critical in understanding complex social phenomena like crime. Incorporating more diverse data types and expanding the model to include interaction terms or polynomial components could enhance its predictive power and provide a more comprehensive understanding of the factors influencing crime in NYC.</p>
+<p>Furthermore, the model used in the analysis relies solely on categorical variables, including location classification, perpetrator race, perpetrator age group, victim age group, victim race, offense description, and murder flags. This reliance on categorical data limits the analytical depth and complexity that could be achieved with a combination of categorical and continuous variables. For instance, continuous variables could provide detailed insights into the timing of crimes, distances between crime locations, or economic factors, which might significantly influence crime patterns. Additionally, the model’s current structure may not capture interactions between variables or nonlinear relationships, which are often critical in understanding complex social phenomena like crime. Incorporating more diverse data types and expanding the model to include interaction terms or polynomial components could enhance its predictive power and provide a more comprehensive understanding of the factors influencing crime in NYC.</p>
 <p>This comes from the file <code>analysis.qmd</code>.</p>
 <p>We describe here our detailed data analysis. This page will provide an overview of what questions you addressed, illustrations of relevant aspects of the data with tables and figures, and a statistical model that attempts to answer part of the question. You’ll also reflect on next steps and further analysis.</p>
 <p>The audience for this page is someone like your class mates, so you can expect that they have some level of statistical and quantitative sophistication and understand ideas like linear and logistic regression, coefficients, confidence intervals, overfitting, etc.</p>
 <p>While the exact number of figures and tables will vary and depend on your analysis, you should target around 5 to 6. An overly long analysis could lead to losing points. If you want you can link back to your blog posts or create separate pages with more details.</p>
 <p>The style of this paper should aim to be that of an academic paper. I don’t expect this to be of publication quality but you should keep that aim in mind. Avoid using “we” too frequently, for example “We also found that …”. Describe your methodology and your findings but don’t describe your whole process.</p>
-<section id="example-of-loading-data" class="level3">
-<h3 class="anchored" data-anchor-id="example-of-loading-data">Example of loading data</h3>
-<p>The code below shows an example of loading the loan refusal data set (which you should delete at some point).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">getwd</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "/Users/wangshiyu/Desktop/MA415 A1+A3/final-project-team6"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal_clean.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 20 Columns: 5
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (1): bank
-dbl (4): min, white, himin, hiwhite
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/loan_refusal.RData"</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "accuracy"                  "average_salary_by_borough"
- [3] "average_salary_by_fips"    "borough_to_fips"          
- [5] "combined_df"               "complete_data"            
- [7] "conf_mat"                  "data"                     
- [9] "freq"                      "has_annotations"          
-[11] "index"                     "loan_data_clean"          
-[13] "loc_counts"                "model1"                   
-[15] "modeldata"                 "murder_rate"              
-[17] "nyc_tracts"                "nyc_tracts_salary"        
-[19] "NYPD_arrest_data"          "nypd_payroll"             
-[21] "perp_race"                 "predictions"              
-[23] "rf_model"                  "shapefile_path"           
-[25] "test_data"                 "test_pred"                
-[27] "train_data"                "train_indices"            
-[29] "vic_race"                 </code></pre>
-</div>
-</div>
-</section>
 <section id="note-on-attribution" class="level2">
 <h2 class="anchored" data-anchor-id="note-on-attribution">Note on Attribution</h2>
 <p>In general, you should try to provide links to relevant resources, especially those that helped you. You don’t have to link to every StackOverflow post you used but if there are explainers on aspects of the data or specific models that you found helpful, try to link to those. Also, try to link to other sources that might support (or refute) your analysis. These can just be regular hyperlinks. You don’t need a formal citation.</p>
