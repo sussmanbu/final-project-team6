@@ -17,6 +17,7 @@ library(readr)
 library(dplyr)
 library(lubridate)
 library(sf)
+library(viridis)
 
 # Read the dataset
 data <- readRDS("dataset/nypd_shooting_clean.rds")
@@ -60,19 +61,23 @@ The most informative variables for the analysis include:
 ## Section 1.1: Perpetrator Information
 <!-- ### Section 1.1.1: Perpetrator Race -->
 
-The data indicates that individuals identified as Black constitute the largest group of perpetrators, followed by a significantly smaller number of White Hispanics, and even fewer Whites and Black Hispanics. Asian/Pacific Islanders have the smallest count among the identified races. It could be inferred that understanding the racial distribution of perpetrators can be an important factor when analyzing crime data by borough, especially considering the demographic composition of each borough. The importance of analyzing perpetrator race lies in its potential to highlight areas where targeted social and law enforcement interventions may be needed.
+Given the proportional distribution of perpetrator race by borough, it is clear that the proportions of each race appear to vary across boroughs, suggesting differences in the racial distribution of perpetrators across New York City. Digging into each borough, the majority racial group among perpetrators is Black, followed by significant proportions of White Hispanics. Asian/Pacific Islander groups make up a relatively small share of perpetrators in each borough. Analysis across offender ethnicity and boroughs helps to understand crime-related demographic patterns in different urban areas, which is critical for targeted social and policing policies.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-perp_race <- combined_df |>
-  count(PERP_RACE) |>
-  arrange(desc(n))
+boro_race1 <- combined_df |>
+  count(BORO, PERP_RACE) |>
+  group_by(BORO) |>
+  mutate(percentage = n / sum(n) * 100)
 
-ggplot(perp_race, aes(x = reorder(PERP_RACE, -n), y = n, fill = PERP_RACE)) + 
-  geom_bar(stat = "identity", width = 0.7) +
+ggplot(boro_race1, aes(x = BORO, y = percentage, fill = PERP_RACE)) + 
+  geom_bar(stat = "identity", position = "fill") +
   theme_minimal() +
-  labs(title = "Perpetrator Race Distribution", x = "Perpetrator Race", y = "Count", 
+  labs(title = "Proportional Distribution of Perpetrator Race by Borough",
+       x = "Borough",
+       y = "Percentage",
        fill = "Perpetrator Race") +
-  theme(legend.position = "none")
+  scale_y_continuous(labels = scales::percent_format())
+  #theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 <!-- ### Section 1.1.2: Relationship between Borough and Perpetrator Age -->
@@ -96,18 +101,22 @@ ggplot(perp_race, aes(x = reorder(PERP_RACE, -n), y = n, fill = PERP_RACE)) +
 ## Section 1.2: Victim Information
 <!-- ### Section 1.2.1: Victim Race -->
 
-It is noticeable that Black individuals constitute the largest group among the recorded victim races, with a notably high count. White Hispanics and Whites follow, with the former having a slightly higher count than the latter. The count for Asian/Pacific Islander and Black Hispanic victims is lower, and there is also a category for "Unknown," indicating instances where the victim's race was not recorded or identified. The distribution of victim race can be a crucial factor in understanding and predicting crime in different boroughs (BOROs) of New York City, as it might reflect underlying patterns of victimization related to social, economic, and possibly racial dynamics within these areas.
+Based on the proportional distribution of victim race by borough, it is evident that the proportions of each race appear to vary across boroughs, suggesting differences in the racial distribution of victims across New York City. The racial distribution of victims is more dispersed compared to the racial distribution of perpetrators across boroughs. The victim race can be a crucial factor in understanding and predicting crime in different boroughs of New York City, as it might reflect underlying patterns of victimization related to social, economic, and possibly racial dynamics within these areas.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-vic_race <- combined_df |>
-  count(VIC_RACE) |>
-  arrange(desc(n))
+boro_race2 <- combined_df |>
+  count(BORO, VIC_RACE) |>
+  group_by(BORO) |>
+  mutate(percentage = n / sum(n) * 100)
 
-ggplot(vic_race, aes(x = reorder(VIC_RACE, -n), y = n, fill = VIC_RACE)) + 
-  geom_bar(stat = "identity", width = 0.7) +
+ggplot(boro_race2, aes(x = BORO, y = percentage, fill = VIC_RACE)) + 
+  geom_bar(stat = "identity", position = "fill") +
   theme_minimal() +
-  labs(title = "Victim Race Distribution", x = "Victim Race", y = "Count", fill = "Victim Race") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")
+  labs(title = "Proportional Distribution of Victim Race by Borough",
+       x = "Borough",
+       y = "Percentage",
+       fill = "Victim Race") +
+  scale_y_continuous(labels = scales::percent_format())
 ```
 
 <!-- ### Section 1.2.2: Victim Age Group -->
@@ -147,12 +156,7 @@ ggplot(loc_counts, aes(x = reorder(LOC_CLASSFCTN_DESC, -n), y = n, fill = LOC_CL
 
 ## Section 1.4 Average Salary by NYC Borough 
 
-These plots explore the average salary distribution across the five boroughs of New York City (NYC). The first plot illustrates the average salary by work location borough, providing a comparative view of salary levels among the Bronx, Brooklyn, Manhattan, Queens, and other areas. Using a bar chart, the plot visualizes the mean salary for each borough, allowing for easy comparison of salary magnitudes. The second plot extends this analysis spatially by mapping the average salary by NYC borough onto a geographic representation of the city. Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods.
-
-It is easy to visualize the disparity of income levels in NYC with these plots. We can see the vast disparity between the Borough Brooklyn and Manhattan.
-
-
-
+The map explore the average salary distribution across the five boroughs of New York City (NYC). Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods. It is easy to visualize the disparity of income levels in NYC, such as the vast disparity between the Borough Brooklyn and Manhattan.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 
@@ -171,9 +175,8 @@ nypd_payroll <- nypd_payroll %>%
 average_salary_by_borough <- nypd_payroll %>%
   group_by(work_boro) %>%
   summarise(AverageSalary = mean(base_salary, na.rm = TRUE)) %>%
-  ungroup()  # Ensure that we remove the grouping structure
+  ungroup()
 
-# # Now plot the average salary by borough using ggplot2
 # ggplot(average_salary_by_borough, aes(x = work_boro, y = AverageSalary, fill = work_boro)) +
 #   geom_col(position = "dodge") +
 #   theme_minimal() +
@@ -209,7 +212,6 @@ ggplot(nyc_tracts_salary) +
   theme_minimal() +
   theme(legend.position = "right")
 ```
-
 
 ## Section 1.5: Murder Rate
 
@@ -267,6 +269,8 @@ predictions <- predict(model1, test_data)
 accuracy <- mean(predictions == test_data$BORO)
 ```
 ```{r , echo=FALSE, message=FALSE, warning=FALSE}
+confusionMatrix(as.factor(predictions), as.factor(test_data$BORO))
+
 print(paste("Accuracy %:", accuracy*100))
 ```
 
