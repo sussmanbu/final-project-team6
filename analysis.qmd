@@ -1,5 +1,6 @@
 ---
 title: Analysis
+author: "Team 6"
 description: Here we provide a detailed analysis using more sophisticated statistics techniques.
 toc: true
 draft: false
@@ -52,7 +53,7 @@ The most informative variables for the analysis include:
 **In search of deeper insights, the analysis seeks answers to the following questions:**
 
 - What are the predominant racial demographics among perpetrators and victims?
-- Which crime location classifications witness the highest frequency of criminal activity?
+<!-- - Which crime location classifications witness the highest frequency of criminal activity? -->
 - Are there discernible patterns in murder rates across NYC boroughs?
 - How do these variables collectively contribute to predicting the borough in which a crime occurs?
 - With these questions in mind, we embark on a journey through exploratory data analysis and statistical modeling to uncover meaningful insights into crime dynamics within NYC.
@@ -136,24 +137,24 @@ ggplot(boro_race2, aes(x = BORO, y = percentage, fill = VIC_RACE)) +
 <!--        fill = "Victim Age Group") -->
 <!-- ``` -->
 
-## Section 1.3: Crime Location Classification
+<!-- ## Section 1.3: Crime Location Classification -->
 
-This bar chart displays the distribution of crime location classifications. The majority of crimes are classified under "Street", indicating that this is the most common location for crime in the dataset, with a significantly higher count compared to other categories. "Dwelling" and "Housing" also appear to be relatively common crime locations, with "Housing" showing a notably higher count than "Dwelling". The chart provides a clear visual summary of where crimes tend to occur, which could be used by law enforcement and city planners to allocate resources more effectively.
+<!-- This bar chart displays the distribution of crime location classifications. The majority of crimes are classified under "Street", indicating that this is the most common location for crime in the dataset, with a significantly higher count compared to other categories. "Dwelling" and "Housing" also appear to be relatively common crime locations, with "Housing" showing a notably higher count than "Dwelling". The chart provides a clear visual summary of where crimes tend to occur, which could be used by law enforcement and city planners to allocate resources more effectively. -->
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Perpetrator and Victim Demographics: Age Group Distribution
-loc_counts <- data |>
-  count(LOC_CLASSFCTN_DESC) |>
-  arrange(desc(n))
+<!-- # ```{r, echo=FALSE, message=FALSE, warning=FALSE} -->
+<!-- # # Perpetrator and Victim Demographics: Age Group Distribution -->
+<!-- # loc_counts <- data |> -->
+<!-- #   count(LOC_CLASSFCTN_DESC) |> -->
+<!-- #   arrange(desc(n)) -->
+<!-- #  -->
+<!-- # ggplot(loc_counts, aes(x = reorder(LOC_CLASSFCTN_DESC, -n), y = n, fill = LOC_CLASSFCTN_DESC)) + -->
+<!-- #   geom_bar(stat = "identity") + -->
+<!-- #   theme_minimal() + -->
+<!-- #   labs(title = 'Crime Location Classification Distribution', x = 'Crime Location Classification', y = 'Count', fill = "Location Classification") + -->
+<!-- #   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none") -->
+<!-- # ``` -->
 
-ggplot(loc_counts, aes(x = reorder(LOC_CLASSFCTN_DESC, -n), y = n, fill = LOC_CLASSFCTN_DESC)) +
-  geom_bar(stat = "identity") +
-  theme_minimal() +
-  labs(title = 'Crime Location Classification Distribution', x = 'Crime Location Classification', y = 'Count', fill = "Location Classification") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")
-```
-
-## Section 1.4 Average Salary by NYC Borough 
+## Section 1.3: Average Salary by NYC Borough 
 
 The map explore the average salary distribution across the five boroughs of New York City (NYC). Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods. It is easy to visualize the disparity of income levels in NYC, such as the vast disparity between the Borough Brooklyn and Manhattan.
 
@@ -212,7 +213,7 @@ ggplot(nyc_tracts_salary) +
   theme(legend.position = "right")
 ```
 
-## Section 1.5: Murder Rate
+## Section 1.4: Murder Rate
 
 The bar chart illustrates the murder rates as percentages for each borough. It's noticeable that the Bronx and Staten Island exhibit the highest murder rates. The murder rate is a significant indicator because it reflects the frequency of violent crimes within a community. Understanding the murder rate is vital for predicting where shooting crime incidents are more likely to occur, which in turn is essential for prioritizing law enforcement resources, improving public safety measures, and implementing preventative programs. High murder rates in certain boroughs might suggest the need for increased police presence and other interventions aimed at violence reduction. Conversely, boroughs with lower rates can provide which policies or social structures may be contributing to a safer environment. Understanding these patterns are critical steps towards effective crime prevention and ensuring the safety and well-being of the residents.
 

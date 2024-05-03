@@ -1,5 +1,6 @@
 ---
 title: Data
+author: "Team 6"
 description: We describe the sources of our data and the cleaning process.
 toc: true
 draft: false

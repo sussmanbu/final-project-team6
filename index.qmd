@@ -1,5 +1,6 @@
 ---
 title: "MA [46]15 Final Project"
+author: "Team 6"
 listing:
   contents: "posts/*/*.qmd"
   sort: "date desc"
@@ -14,4 +15,3 @@ title-block-banner: true
 ![](images/nyc copy.jpeg)
 
 # Team 6 Boston University
-
