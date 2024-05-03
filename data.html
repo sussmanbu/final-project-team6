@@ -156,7 +156,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#nypd-arrest-data-combined-data" id="toc-nypd-arrest-data-combined-data" class="nav-link" data-scroll-target="#nypd-arrest-data-combined-data">NYPD Arrest Data (Combined Data)</a></li>
   <li><a href="#nyc-payroll-data" id="toc-nyc-payroll-data" class="nav-link" data-scroll-target="#nyc-payroll-data">NYC Payroll Data</a></li>
   </ul></li>
-  <li><a href="#summary-of-the-dataset-structure-and-some-key-statistics" id="toc-summary-of-the-dataset-structure-and-some-key-statistics" class="nav-link" data-scroll-target="#summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</a></li>
   <li><a href="#data-loading-and-cleaning" id="toc-data-loading-and-cleaning" class="nav-link" data-scroll-target="#data-loading-and-cleaning">Data Loading and Cleaning</a>
   <ul class="collapse">
   <li><a href="#cleaning-process" id="toc-cleaning-process" class="nav-link" data-scroll-target="#cleaning-process">Cleaning Process</a></li>
@@ -165,6 +164,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#other-dataset-used-in-the-project-analysis" id="toc-other-dataset-used-in-the-project-analysis" class="nav-link" data-scroll-target="#other-dataset-used-in-the-project-analysis">Other Dataset Used in the Project Analysis</a></li>
   </ul></li>
+  <li><a href="#summary-of-the-dataset-structure-and-key-statistics" id="toc-summary-of-the-dataset-structure-and-key-statistics" class="nav-link" data-scroll-target="#summary-of-the-dataset-structure-and-key-statistics">Summary of the Dataset Structure and Key Statistics</a></li>
+  <li><a href="#additional-r-packages" id="toc-additional-r-packages" class="nav-link" data-scroll-target="#additional-r-packages">Additional R Packages</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -203,26 +204,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="nypd-shooting-incident-data">NYPD Shooting Incident Data</h3>
 <p>This dataset encompasses a detailed account of each shooting incident in NYC from 2006 up until the end of the last calendar year. Compiled and meticulously reviewed quarterly by the Office of Management Analysis and Planning, it is then made accessible on the NYPD website. Every entry in this dataset chronicles a specific shooting event, detailing the incident’s circumstances, location, and timing. Additionally, it provides demographics regarding suspects and victims.</p>
 <p>The data set primarily focuses on shooting incidents within New York, so it inherently limits the possibility of generalizing our findings to other locations. The age is categorized by ranges, such as 18-24, 25-44, and 45-64, which may reduce the precision of our analysis. Without a more detailed record of the shooting incidents, we do not know the number of perpetrators and victims. The lack of a detailed understanding of the level of severity of the incidents may cause bias in our analysis.</p>
-<p>We are able to download the dataset from the original source. Link to the data: <a href="https://catalog.data.gov/dataset/nypd-shooting-incident-data-historic">NYPD Police Shootings</a></p>
+<p>Link to the data: <a href="https://catalog.data.gov/dataset/nypd-shooting-incident-data-historic">NYPD Police Shootings</a></p>
 </section>
 <section id="nypd-arrest-data-combined-data" class="level3">
 <h3 class="anchored" data-anchor-id="nypd-arrest-data-combined-data">NYPD Arrest Data (Combined Data)</h3>
-<p>We combined the two datasets based on Latitude and Longitude to explore potential relationships between shooting incidents across each borough in NYC. This dataset includes the offense type and the policy description for each shooting incident. By merging these datasets, we can analyze comprehensive details surrounding each incident, including the types of offenses and the corresponding police actions. This approach not only enhances the depth of the data but also supports a more robust statistical analysis to better understand the dynamics of crime and law enforcement responses in New York City.</p>
+<p>Exploring potential relationships between shooting incidents across each borough in NYC, this dataset provides the offense types and the policy description for each shooting incident. By merging these datasets, we can analyze comprehensive details surrounding each incident, including the types of offenses and the corresponding police actions. This approach not only enhances the depth of the data but also supports a more robust statistical analysis to better understand the dynamics of crime and law enforcement responses in New York City.</p>
+<p>Link to the data: <a href="https://catalog.data.gov/dataset/nypd-arrest-data-year-to-date">NYPD Arrest Data</a></p>
 </section>
 <section id="nyc-payroll-data" class="level3">
 <h3 class="anchored" data-anchor-id="nyc-payroll-data">NYC Payroll Data</h3>
-<p>This dataset gives the information of the average basic salary for each borough in NYC. Incorporating the dataset detailing the average basic salary for each borough in NYC into our analysis offers a valuable dimension to understanding the socio-economic context of shooting incidents. By examining the relationship between economic factors and crime rates across different boroughs, we can explore whether disparities in income levels correlate with variations in shooting incidents. This combined approach allows us to investigate not just the geographic distribution of crime, but also how economic conditions might influence criminal activities.</p>
+<p>This dataset gives the information of the average basic salary for each borough in NYC. Incorporating the dataset detailing the average base salary for each borough in NYC into our analysis offers a valuable dimension to understanding the socio-economic context of shooting incidents. By examining the relationship between economic factors and crime rates across different boroughs, we can explore whether disparities in income levels correlate with variations in shooting incidents. This combined approach allows us to investigate not just the geographic distribution of crime, but also how economic conditions might influence criminal activities.</p>
+<p>Link to the data: <a href="https://catalog.data.gov/dataset/citywide-payroll-data-fiscal-year">Payroll Data 2022</a></p>
 </section>
-</section>
-<section id="summary-of-the-dataset-structure-and-some-key-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="summary-of-the-dataset-structure-and-some-key-statistics">Summary of the Dataset structure and some key statistics</h2>
-<p>We will concentrate our analysis on examining potential differences among NYC boroughs in shooting crime incidents, focusing specifically on the interplay between the perpetrator’s and victim’s information, including their race, age, sex, in conjunction with offense types and other possible crucial factors.</p>
-<ul>
-<li><p><strong>Location Data</strong>: There are multiple columns related to the location of the incidents, such as BORO, PRECINCT, X_COORD_CD, Y_COORD_CD, Latitude, and Longitude.</p></li>
-<li><p><strong>Incident Details</strong>: Includes details like OFNS_DESC, LOC_CLASSFCTN_DESC (Location Classification Description), and LOCATION_DESC.</p></li>
-<li><p><strong>Perpetrator and Victim Information</strong>: Information on the perpetrator (PERP_AGE_GROUP, PERP_SEX, PERP_RACE) and victim (VIC_AGE_GROUP, VIC_SEX, VIC_RACE) is available.</p></li>
-<li><p><strong>Statistical Flags</strong>: Includes a flag for statistical murders (STATISTICAL_MURDER_FLAG)</p></li>
-</ul>
 </section>
 <section id="data-loading-and-cleaning" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading-and-cleaning">Data Loading and Cleaning</h2>
@@ -245,26 +238,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="cleaning-process" class="level3">
 <h3 class="anchored" data-anchor-id="cleaning-process">Cleaning Process</h3>
 <ul>
-<li>We removed the OCCUR_TIME and LOC_OF_OCCUR_DESC as we did not find them useful for our analysis.</li>
-<li>We changed ‘OCCUR_DATE’ to DateTime format.</li>
-<li>We also removed columns where we did not have the perpetrator’s race or the victim’s race.</li>
+<li>Removed the OCCUR_TIME and LOC_OF_OCCUR_DESC as we did not find them useful for our analysis.</li>
+<li>Changed ‘OCCUR_DATE’ to DateTime format.</li>
+<li>Removed observations with missing perpetrator race or victim race.</li>
 </ul>
 </section>
 </section>
 <section id="combining-datasets" class="level2">
 <h2 class="anchored" data-anchor-id="combining-datasets">Combining Datasets</h2>
+<p>The NYPD_Arrest_data dataset can be combined with the NYPD_Shooting_incident dataset as we plan to analyze if there is a relationship between location-based shooting incidents and arrests. The two datasets are combined by using location and crime information (X_COORD_CD, Y_COORD_CD, Latitude, Longitude and JURISDICTION_CODE). PERP_RACE is also used in combination to ensure that two data sets correspond.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>NYPD_arrest_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_arrest.rds"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(NYPD_clean_data, NYPD_arrest_data, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"X_COORD_CD"</span>, <span class="st">"Y_COORD_CD"</span>,<span class="st">"Latitude"</span>,<span class="st">"Longitude"</span>,<span class="st">"PERP_SEX"</span>,<span class="st">"JURISDICTION_CODE"</span>,<span class="st">"PERP_RACE"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="other-dataset-used-in-the-project-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="other-dataset-used-in-the-project-analysis">Other Dataset Used in the Project Analysis</h3>
+<p>New York City wage data were also considered useful in examining the correlation of gun crime data with wage information. This data was used to create a map showing the relationship between crime rates and average salaries.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nypd_payroll <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"dataset/nypd_payroll.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
-
 </section>
+</section>
+<section id="summary-of-the-dataset-structure-and-key-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-the-dataset-structure-and-key-statistics">Summary of the Dataset Structure and Key Statistics</h2>
+<p>We will concentrate our analysis on examining potential differences among NYC boroughs in shooting crime incidents, focusing specifically on the interplay between the perpetrator’s and victim’s information, including their race, age, sex, in conjunction with offense types and other possible crucial factors.</p>
+<ul>
+<li><p><strong>Location Data</strong>: There are multiple columns related to the location of the incidents, such as BORO, PRECINCT, X_COORD_CD, Y_COORD_CD, Latitude, and Longitude.</p></li>
+<li><p><strong>Incident Details</strong>: Includes details like OFNS_DESC, LOC_CLASSFCTN_DESC (Location Classification Description), and LOCATION_DESC.</p></li>
+<li><p><strong>Perpetrator and Victim Information</strong>: Information on the perpetrator (PERP_AGE_GROUP, PERP_SEX, PERP_RACE) and victim (VIC_AGE_GROUP, VIC_SEX, VIC_RACE) is available.</p></li>
+<li><p><strong>Statistical Flags</strong>: Includes a flag for statistical murders (STATISTICAL_MURDER_FLAG)</p></li>
+</ul>
+<p><strong>Here are the visual summarization of the two most relevant variables:</strong></p>
+<p>Understanding the racial distribution of perpetrators can be an important factor when analyzing crime data by borough, especially considering the demographic composition of each borough.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Giving the distribution of shooting crime incidents by Borough can help determine which statistical model to use.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="additional-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="additional-r-packages">Additional R Packages</h2>
+<p>Overall, the following new R packages were used in the making of this project:</p>
+<ul>
+<li>randomForest: Conduct Random Forest Model.</li>
+<li>caret: Construct Multinomial Logistic Regression Model.</li>
+</ul>
+
+
 </section>
 </section>
 

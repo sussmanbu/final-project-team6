@@ -127,11 +127,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#section-2.1-multinomial-regression-model" id="toc-section-2.1-multinomial-regression-model" class="nav-link" data-scroll-target="#section-2.1-multinomial-regression-model">Section 2.1: Multinomial Regression Model</a></li>
   <li><a href="#section-2.2-random-forest" id="toc-section-2.2-random-forest" class="nav-link" data-scroll-target="#section-2.2-random-forest">Section 2.2: Random Forest</a></li>
   </ul></li>
-  <li><a href="#section-3-limitations-and-constraints-in-geographic-and-variable-diversity" id="toc-section-3-limitations-and-constraints-in-geographic-and-variable-diversity" class="nav-link" data-scroll-target="#section-3-limitations-and-constraints-in-geographic-and-variable-diversity">Section 3: Limitations and Constraints in Geographic and Variable Diversity</a>
-  <ul class="collapse">
-  <li><a href="#note-on-attribution" id="toc-note-on-attribution" class="nav-link" data-scroll-target="#note-on-attribution">Note on Attribution</a></li>
-  <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
-  </ul></li>
+  <li><a href="#section-3-limitations-and-constraints-in-geographic-and-variable-diversity" id="toc-section-3-limitations-and-constraints-in-geographic-and-variable-diversity" class="nav-link" data-scroll-target="#section-3-limitations-and-constraints-in-geographic-and-variable-diversity">Section 3: Limitations and Constraints in Geographic and Variable Diversity</a></li>
   </ul>
 </nav>
     </div>
@@ -185,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="section-1.1-perpetrator-information" class="level2">
 <h2 class="anchored" data-anchor-id="section-1.1-perpetrator-information">Section 1.1: Perpetrator Information</h2>
 <!-- ### Section 1.1.1: Perpetrator Race -->
-<p>The data indicates that individuals identified as Black constitute the largest group of perpetrators, followed by a significantly smaller number of White Hispanics, and even fewer Whites and Black Hispanics. Asian/Pacific Islanders have the smallest count among the identified races. It could be inferred that understanding the racial distribution of perpetrators can be an important factor when analyzing crime data by borough, especially considering the demographic composition of each borough. The importance of analyzing perpetrator race lies in its potential to highlight areas where targeted social and law enforcement interventions may be needed.</p>
+<p>Given the proportional distribution of perpetrator race by borough, it is clear that the proportions of each race appear to vary across boroughs, suggesting differences in the racial distribution of perpetrators across New York City. Digging into each borough, the majority racial group among perpetrators is Black, followed by significant proportions of White Hispanics. Asian/Pacific Islander groups make up a relatively small share of perpetrators in each borough. Analysis across offender ethnicity and boroughs helps to understand crime-related demographic patterns in different urban areas, which is critical for targeted social and policing policies.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
@@ -210,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="section-1.2-victim-information" class="level2">
 <h2 class="anchored" data-anchor-id="section-1.2-victim-information">Section 1.2: Victim Information</h2>
 <!-- ### Section 1.2.1: Victim Race -->
-<p>It is noticeable that Black individuals constitute the largest group among the recorded victim races, with a notably high count. White Hispanics and Whites follow, with the former having a slightly higher count than the latter. The count for Asian/Pacific Islander and Black Hispanic victims is lower, and there is also a category for “Unknown,” indicating instances where the victim’s race was not recorded or identified. The distribution of victim race can be a crucial factor in understanding and predicting crime in different boroughs (BOROs) of New York City, as it might reflect underlying patterns of victimization related to social, economic, and possibly racial dynamics within these areas.</p>
+<p>Based on the proportional distribution of victim race by borough, it is evident that the proportions of each race appear to vary across boroughs, suggesting differences in the racial distribution of victims across New York City. The racial distribution of victims is more dispersed compared to the racial distribution of perpetrators across boroughs. The victim race can be a crucial factor in understanding and predicting crime in different boroughs of New York City, as it might reflect underlying patterns of victimization related to social, economic, and possibly racial dynamics within these areas.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
@@ -243,8 +239,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="section-1.4-average-salary-by-nyc-borough" class="level2">
 <h2 class="anchored" data-anchor-id="section-1.4-average-salary-by-nyc-borough">Section 1.4 Average Salary by NYC Borough</h2>
-<p>These plots explore the average salary distribution across the five boroughs of New York City (NYC). The first plot illustrates the average salary by work location borough, providing a comparative view of salary levels among the Bronx, Brooklyn, Manhattan, Queens, and other areas. Using a bar chart, the plot visualizes the mean salary for each borough, allowing for easy comparison of salary magnitudes. The second plot extends this analysis spatially by mapping the average salary by NYC borough onto a geographic representation of the city. Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods.</p>
-<p>It is easy to visualize the disparity of income levels in NYC with these plots. We can see the vast disparity between the Borough Brooklyn and Manhattan.</p>
+<p>The map explore the average salary distribution across the five boroughs of New York City (NYC). Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods. It is easy to visualize the disparity of income levels in NYC, such as the vast disparity between the Borough Brooklyn and Manhattan.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
@@ -270,6 +265,49 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="section-2.1-multinomial-regression-model">Section 2.1: Multinomial Regression Model</h2>
 <p>The first model is the Multinomial Logistic Regression since the model needs to account for the fact that the target variable (Borough) has 5 classes. However, the model only gave an accuracy of <strong>56%</strong>, which does not meet the expectation. Because the distribution of shooting crime incidents in each borough from the dataset is uneven, this limitation of the dataset makes the 56% accuracy even more unsatisfactory for the prediction model.</p>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+               Reference
+Prediction      BRONX BROOKLYN MANHATTAN QUEENS STATEN ISLAND
+  BRONX            79       24        23      4             1
+  BROOKLYN         18       75        38     10             1
+  MANHATTAN        10       34        80     17             3
+  QUEENS            6        3         1     13             0
+  STATEN ISLAND     0        0         0      0             3
+
+Overall Statistics
+                                          
+               Accuracy : 0.5643          
+                 95% CI : (0.5167, 0.6111)
+    No Information Rate : 0.3205          
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+                                          
+                  Kappa : 0.3921          
+                                          
+ Mcnemar's Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: BRONX Class: BROOKLYN Class: MANHATTAN
+Sensitivity                0.6991          0.5515           0.5634
+Specificity                0.8424          0.7818           0.7874
+Pos Pred Value             0.6031          0.5282           0.5556
+Neg Pred Value             0.8910          0.7973           0.7926
+Prevalence                 0.2551          0.3070           0.3205
+Detection Rate             0.1783          0.1693           0.1806
+Detection Prevalence       0.2957          0.3205           0.3251
+Balanced Accuracy          0.7708          0.6666           0.6754
+                     Class: QUEENS Class: STATEN ISLAND
+Sensitivity                0.29545             0.375000
+Specificity                0.97494             1.000000
+Pos Pred Value             0.56522             1.000000
+Neg Pred Value             0.92619             0.988636
+Prevalence                 0.09932             0.018059
+Detection Rate             0.02935             0.006772
+Detection Prevalence       0.05192             0.006772
+Balanced Accuracy          0.63520             0.687500</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Accuracy %: 56.4334085778781"</code></pre>
 </div>
@@ -297,61 +335,8 @@ ul.task-list li input[type="checkbox"] {
 <h1>Section 3: Limitations and Constraints in Geographic and Variable Diversity</h1>
 <p>In analyzing data specific to New York City, it’s crucial to recognize the limitations this imposes when attempting to generalize findings to other regions or populations. The data’s geographical constraint to NYC means the insights derived are most valid within this specific context. This is not inherently a bias but rather a limitation on the scope of the conclusions. The variables, behaviors, and trends observed in the NYC dataset may not be representative of other areas due to differences in demographics, legal systems, cultural norms, and crime patterns. Therefore, while this dataset provides valuable insights into crime dynamics within NYC, extrapolating these findings to a broader context without additional data from other regions would lead to inaccurate conclusions and potentially misleading policy recommendations.</p>
 <p>Furthermore, the model used in the analysis relies solely on categorical variables, including location classification, perpetrator race, perpetrator age group, victim age group, victim race, offense description, and murder flags. This reliance on categorical data limits the analytical depth and complexity that could be achieved with a combination of categorical and continuous variables. For instance, continuous variables could provide detailed insights into the timing of crimes, distances between crime locations, or economic factors, which might significantly influence crime patterns. Additionally, the model’s current structure may not capture interactions between variables or nonlinear relationships, which are often critical in understanding complex social phenomena like crime. Incorporating more diverse data types and expanding the model to include interaction terms or polynomial components could enhance its predictive power and provide a more comprehensive understanding of the factors influencing crime in NYC.</p>
-<p>This comes from the file <code>analysis.qmd</code>.</p>
-<p>We describe here our detailed data analysis. This page will provide an overview of what questions you addressed, illustrations of relevant aspects of the data with tables and figures, and a statistical model that attempts to answer part of the question. You’ll also reflect on next steps and further analysis.</p>
-<p>The audience for this page is someone like your class mates, so you can expect that they have some level of statistical and quantitative sophistication and understand ideas like linear and logistic regression, coefficients, confidence intervals, overfitting, etc.</p>
-<p>While the exact number of figures and tables will vary and depend on your analysis, you should target around 5 to 6. An overly long analysis could lead to losing points. If you want you can link back to your blog posts or create separate pages with more details.</p>
-<p>The style of this paper should aim to be that of an academic paper. I don’t expect this to be of publication quality but you should keep that aim in mind. Avoid using “we” too frequently, for example “We also found that …”. Describe your methodology and your findings but don’t describe your whole process.</p>
-<section id="note-on-attribution" class="level2">
-<h2 class="anchored" data-anchor-id="note-on-attribution">Note on Attribution</h2>
-<p>In general, you should try to provide links to relevant resources, especially those that helped you. You don’t have to link to every StackOverflow post you used but if there are explainers on aspects of the data or specific models that you found helpful, try to link to those. Also, try to link to other sources that might support (or refute) your analysis. These can just be regular hyperlinks. You don’t need a formal citation.</p>
-<p>If you are directly quoting from a source, please make that clear. You can show quotes using <code>&gt;</code> like this</p>
-<pre><code>&gt; To be or not to be.</code></pre>
-<blockquote class="blockquote">
-<p>To be or not to be.</p>
-</blockquote>
-<hr>
-</section>
-<section id="rubric-on-this-page" class="level2">
-<h2 class="anchored" data-anchor-id="rubric-on-this-page">Rubric: On this page</h2>
-<p>You will</p>
-<ul>
-<li>Introduce what motivates your Data Analysis (DA)
-<ul>
-<li>Which variables and relationships are you most interested in?</li>
-<li>What questions are you interested in answering?</li>
-<li>Provide context for the rest of the page. This will include figures/tables that illustrate aspects of the data of your question.</li>
-</ul></li>
-<li>Modeling and Inference
-<ul>
-<li>The page will include some kind of formal statistical model. This could be a linear regression, logistic regression, or another modeling framework.</li>
-<li>Explain the ideas and techniques you used to choose the predictors for your model. (Think about including interaction terms and other transformations of your variables.)</li>
-<li>Describe the results of your modelling and make sure to give a sense of the uncertainty in your estimates and conclusions.</li>
-</ul></li>
-<li>Explain the flaws and limitations of your analysis
-<ul>
-<li>Are there some assumptions that you needed to make that might not hold? Is there other data that would help to answer your questions?</li>
-</ul></li>
-<li>Clarity Figures
-<ul>
-<li>Are your figures/tables/results easy to read, informative, without problems like overplotting, hard-to-read labels, etc?</li>
-<li>Each figure should provide a key insight. Too many figures or other data summaries can detract from this. (While not a hard limit, around 5 total figures is probably a good target.)</li>
-<li>Default <code>lm</code> output and plots are typically not acceptable.</li>
-</ul></li>
-<li>Clarity of Explanations
-<ul>
-<li>How well do you explain each figure/result?</li>
-<li>Do you provide interpretations that suggest further analysis or explanations for observed phenomenon?</li>
-</ul></li>
-<li>Organization and cleanliness.
-<ul>
-<li>Make sure to remove excessive warnings, hide most or all code, organize with sections or multiple pages, use bullets, etc.</li>
-<li>This page should be self-contained, i.e.&nbsp;provide a description of the relevant data.</li>
-</ul></li>
-</ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
