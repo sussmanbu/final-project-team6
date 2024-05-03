@@ -11,13 +11,12 @@ draft: false
 # Load necessary libraries
 library(tidyverse)
 library(ggplot2)
-library(ggcorrplot) 
-library(GGally) 
+#library(ggcorrplot) 
+#library(GGally) 
 library(readr)
 library(dplyr)
 library(lubridate)
 library(sf)
-library(viridis)
 
 # Read the dataset
 data <- readRDS("dataset/nypd_shooting_clean.rds")
@@ -268,11 +267,20 @@ predictions <- predict(model1, test_data)
 
 accuracy <- mean(predictions == test_data$BORO)
 ```
-```{r , echo=FALSE, message=FALSE, warning=FALSE}
-confusionMatrix(as.factor(predictions), as.factor(test_data$BORO))
+```{r , echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+library(knitr)
 
+conf_matrix <- confusionMatrix(as.factor(predictions), as.factor(test_data$BORO))
+
+kable(conf_matrix$table, caption = "Confusion Matrix")
+```
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+kable(conf_matrix$table, caption = "Confusion Matrix")
 print(paste("Accuracy %:", accuracy*100))
 ```
+
+
 
 ## Section 2.2: Random Forest
 
@@ -298,7 +306,7 @@ print(paste("Accuracy %:", accuracy*100))
 
 This plot shows the error rate of the Random Forest model decreases as the number of trees increases. Each line in the plot represents the error for a different type of prediction task. Under this model, those different lines represent the error rate for various classes within the target variable (Borough).
 
-Random forest gives an accuracy of almost **84%** which is much better. However, due to the data having most of the offenses in a small subset of the boroughs, the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.
+Random forest gives an accuracy of almost **83%** which is much better. However, due to the data having most of the offenses in a small subset of the boroughs, the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.
 
 An accuracy of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.4 above.
 

@@ -94,8 +94,8 @@ We will concentrate our analysis on examining potential differences among NYC bo
 # Load necessary libraries
 library(tidyverse)
 library(ggplot2)
-library(ggcorrplot) 
-library(GGally) 
+# library(ggcorrplot) 
+# library(GGally) 
 library(readr)
 library(dplyr)
 library(lubridate)
@@ -150,4 +150,5 @@ Overall, the following new R packages were used in the making of this project:
 
 - randomForest: Conduct Random Forest Model.
 - caret: Construct Multinomial Logistic Regression Model.
-
+- nnet: Used for statistical model.
+- knitr: Used to produce table in analysis.
