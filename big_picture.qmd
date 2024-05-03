@@ -122,15 +122,3 @@ final_combined_plot2 <- ggplot() +
   theme(legend.position = "right")
 print(final_combined_plot2)
 ```
-
-
-### Rest of the Site
-
-Finally, here are important things to keep in mind for the rest of the site. 
-
-The main title of your page is informative.
-Each post has an author/description/informative title.
-All lab required posts are present.
-Each page (including the home page) has a nice featured image associated with it.
-Your about page is up to date and clean.
-You have removed the generic posts from the initial site template.
