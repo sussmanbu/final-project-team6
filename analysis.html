@@ -265,48 +265,62 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="section-2.1-multinomial-regression-model">Section 2.1: Multinomial Regression Model</h2>
 <p>The first model is the Multinomial Logistic Regression since the model needs to account for the fact that the target variable (Borough) has 5 classes. However, the model only gave an accuracy of <strong>56%</strong>, which does not meet the expectation. Because the distribution of shooting crime incidents in each borough from the dataset is uneven, this limitation of the dataset makes the 56% accuracy even more unsatisfactory for the prediction model.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Confusion Matrix and Statistics
-
-               Reference
-Prediction      BRONX BROOKLYN MANHATTAN QUEENS STATEN ISLAND
-  BRONX            79       24        23      4             1
-  BROOKLYN         18       75        38     10             1
-  MANHATTAN        10       34        80     17             3
-  QUEENS            6        3         1     13             0
-  STATEN ISLAND     0        0         0      0             3
-
-Overall Statistics
-                                          
-               Accuracy : 0.5643          
-                 95% CI : (0.5167, 0.6111)
-    No Information Rate : 0.3205          
-    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
-                                          
-                  Kappa : 0.3921          
-                                          
- Mcnemar's Test P-Value : NA              
-
-Statistics by Class:
-
-                     Class: BRONX Class: BROOKLYN Class: MANHATTAN
-Sensitivity                0.6991          0.5515           0.5634
-Specificity                0.8424          0.7818           0.7874
-Pos Pred Value             0.6031          0.5282           0.5556
-Neg Pred Value             0.8910          0.7973           0.7926
-Prevalence                 0.2551          0.3070           0.3205
-Detection Rate             0.1783          0.1693           0.1806
-Detection Prevalence       0.2957          0.3205           0.3251
-Balanced Accuracy          0.7708          0.6666           0.6754
-                     Class: QUEENS Class: STATEN ISLAND
-Sensitivity                0.29545             0.375000
-Specificity                0.97494             1.000000
-Pos Pred Value             0.56522             1.000000
-Neg Pred Value             0.92619             0.988636
-Prevalence                 0.09932             0.018059
-Detection Rate             0.02935             0.006772
-Detection Prevalence       0.05192             0.006772
-Balanced Accuracy          0.63520             0.687500</code></pre>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Confusion Matrix</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">BRONX</th>
+<th style="text-align: right;">BROOKLYN</th>
+<th style="text-align: right;">MANHATTAN</th>
+<th style="text-align: right;">QUEENS</th>
+<th style="text-align: right;">STATEN ISLAND</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">BRONX</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BROOKLYN</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MANHATTAN</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">QUEENS</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STATEN ISLAND</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Accuracy %: 56.4334085778781"</code></pre>
@@ -318,7 +332,7 @@ Balanced Accuracy          0.63520             0.687500</code></pre>
 <p>The second statistical model is the Random Forest model. The same training and testing data were applied to the random forest to ensure that the results of the model were meaningful. The significance of creating this model is to consider that this model can accommodate the constraint of uneven distribution of data in each borough.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -327,7 +341,7 @@ Balanced Accuracy          0.63520             0.687500</code></pre>
 </div>
 </div>
 <p>This plot shows the error rate of the Random Forest model decreases as the number of trees increases. Each line in the plot represents the error for a different type of prediction task. Under this model, those different lines represent the error rate for various classes within the target variable (Borough).</p>
-<p>Random forest gives an accuracy of almost <strong>84%</strong> which is much better. However, due to the data having most of the offenses in a small subset of the boroughs, the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.</p>
+<p>Random forest gives an accuracy of almost <strong>83%</strong> which is much better. However, due to the data having most of the offenses in a small subset of the boroughs, the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.</p>
 <p>An accuracy of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.4 above.</p>
 </section>
 </section>
