@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Team 6">
 <meta name="description" content="Here we provide a detailed analysis using more sophisticated statistics techniques.">
 
 <title>MA [46]15 Final Project Team 6 - Analysis</title>
@@ -118,9 +119,8 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#section-1.1-perpetrator-information" id="toc-section-1.1-perpetrator-information" class="nav-link" data-scroll-target="#section-1.1-perpetrator-information">Section 1.1: Perpetrator Information</a></li>
   <li><a href="#section-1.2-victim-information" id="toc-section-1.2-victim-information" class="nav-link" data-scroll-target="#section-1.2-victim-information">Section 1.2: Victim Information</a></li>
-  <li><a href="#section-1.3-crime-location-classification" id="toc-section-1.3-crime-location-classification" class="nav-link" data-scroll-target="#section-1.3-crime-location-classification">Section 1.3: Crime Location Classification</a></li>
-  <li><a href="#section-1.4-average-salary-by-nyc-borough" id="toc-section-1.4-average-salary-by-nyc-borough" class="nav-link" data-scroll-target="#section-1.4-average-salary-by-nyc-borough">Section 1.4 Average Salary by NYC Borough</a></li>
-  <li><a href="#section-1.5-murder-rate" id="toc-section-1.5-murder-rate" class="nav-link" data-scroll-target="#section-1.5-murder-rate">Section 1.5: Murder Rate</a></li>
+  <li><a href="#section-1.3-average-salary-by-nyc-borough" id="toc-section-1.3-average-salary-by-nyc-borough" class="nav-link" data-scroll-target="#section-1.3-average-salary-by-nyc-borough">Section 1.3: Average Salary by NYC Borough</a></li>
+  <li><a href="#section-1.4-murder-rate" id="toc-section-1.4-murder-rate" class="nav-link" data-scroll-target="#section-1.4-murder-rate">Section 1.4: Murder Rate</a></li>
   </ul></li>
   <li><a href="#section-2-statistical-models" id="toc-section-2-statistical-models" class="nav-link" data-scroll-target="#section-2-statistical-models">Section 2: Statistical Models</a>
   <ul class="collapse">
@@ -148,6 +148,12 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Team 6 </p>
+          </div>
+  </div>
     
   
     
@@ -172,8 +178,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p><strong>In search of deeper insights, the analysis seeks answers to the following questions:</strong></p>
 <ul>
-<li>What are the predominant racial demographics among perpetrators and victims?</li>
-<li>Which crime location classifications witness the highest frequency of criminal activity?</li>
+<li>What are the predominant racial demographics among perpetrators and victims? <!-- - Which crime location classifications witness the highest frequency of criminal activity? --></li>
 <li>Are there discernible patterns in murder rates across NYC boroughs?</li>
 <li>How do these variables collectively contribute to predicting the borough in which a crime occurs?</li>
 <li>With these questions in mind, we embark on a journey through exploratory data analysis and statistical modeling to uncover meaningful insights into crime dynamics within NYC.</li>
@@ -227,31 +232,36 @@ ul.task-list li input[type="checkbox"] {
 <!--        y = "Count", -->
 <!--        fill = "Victim Age Group") -->
 <!-- ``` -->
+<!-- ## Section 1.3: Crime Location Classification -->
+<!-- This bar chart displays the distribution of crime location classifications. The majority of crimes are classified under "Street", indicating that this is the most common location for crime in the dataset, with a significantly higher count compared to other categories. "Dwelling" and "Housing" also appear to be relatively common crime locations, with "Housing" showing a notably higher count than "Dwelling". The chart provides a clear visual summary of where crimes tend to occur, which could be used by law enforcement and city planners to allocate resources more effectively. -->
+<!-- # ```{r, echo=FALSE, message=FALSE, warning=FALSE} -->
+<!-- # # Perpetrator and Victim Demographics: Age Group Distribution -->
+<!-- # loc_counts <- data |> -->
+<!-- #   count(LOC_CLASSFCTN_DESC) |> -->
+<!-- #   arrange(desc(n)) -->
+<!-- #  -->
+<!-- # ggplot(loc_counts, aes(x = reorder(LOC_CLASSFCTN_DESC, -n), y = n, fill = LOC_CLASSFCTN_DESC)) + -->
+<!-- #   geom_bar(stat = "identity") + -->
+<!-- #   theme_minimal() + -->
+<!-- #   labs(title = 'Crime Location Classification Distribution', x = 'Crime Location Classification', y = 'Count', fill = "Location Classification") + -->
+<!-- #   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none") -->
+<!-- # ``` -->
 </section>
-<section id="section-1.3-crime-location-classification" class="level2">
-<h2 class="anchored" data-anchor-id="section-1.3-crime-location-classification">Section 1.3: Crime Location Classification</h2>
-<p>This bar chart displays the distribution of crime location classifications. The majority of crimes are classified under “Street”, indicating that this is the most common location for crime in the dataset, with a significantly higher count compared to other categories. “Dwelling” and “Housing” also appear to be relatively common crime locations, with “Housing” showing a notably higher count than “Dwelling”. The chart provides a clear visual summary of where crimes tend to occur, which could be used by law enforcement and city planners to allocate resources more effectively.</p>
+<section id="section-1.3-average-salary-by-nyc-borough" class="level2">
+<h2 class="anchored" data-anchor-id="section-1.3-average-salary-by-nyc-borough">Section 1.3: Average Salary by NYC Borough</h2>
+<p>The map explore the average salary distribution across the five boroughs of New York City (NYC). Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods. It is easy to visualize the disparity of income levels in NYC, such as the vast disparity between the Borough Brooklyn and Manhattan.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="section-1.4-average-salary-by-nyc-borough" class="level2">
-<h2 class="anchored" data-anchor-id="section-1.4-average-salary-by-nyc-borough">Section 1.4 Average Salary by NYC Borough</h2>
-<p>The map explore the average salary distribution across the five boroughs of New York City (NYC). Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods. It is easy to visualize the disparity of income levels in NYC, such as the vast disparity between the Borough Brooklyn and Manhattan.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="section-1.5-murder-rate" class="level2">
-<h2 class="anchored" data-anchor-id="section-1.5-murder-rate">Section 1.5: Murder Rate</h2>
+<section id="section-1.4-murder-rate" class="level2">
+<h2 class="anchored" data-anchor-id="section-1.4-murder-rate">Section 1.4: Murder Rate</h2>
 <p>The bar chart illustrates the murder rates as percentages for each borough. It’s noticeable that the Bronx and Staten Island exhibit the highest murder rates. The murder rate is a significant indicator because it reflects the frequency of violent crimes within a community. Understanding the murder rate is vital for predicting where shooting crime incidents are more likely to occur, which in turn is essential for prioritizing law enforcement resources, improving public safety measures, and implementing preventative programs. High murder rates in certain boroughs might suggest the need for increased police presence and other interventions aimed at violence reduction. Conversely, boroughs with lower rates can provide which policies or social structures may be contributing to a safer environment. Understanding these patterns are critical steps towards effective crime prevention and ensuring the safety and well-being of the residents.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -332,7 +342,7 @@ ul.task-list li input[type="checkbox"] {
 <p>The second statistical model is the Random Forest model. The same training and testing data were applied to the random forest to ensure that the results of the model were meaningful. The significance of creating this model is to consider that this model can accommodate the constraint of uneven distribution of data in each borough.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">

@@ -49,25 +49,18 @@
     "text": "Section 1.2: Victim Information\n\nBased on the proportional distribution of victim race by borough, it is evident that the proportions of each race appear to vary across boroughs, suggesting differences in the racial distribution of victims across New York City. The racial distribution of victims is more dispersed compared to the racial distribution of perpetrators across boroughs. The victim race can be a crucial factor in understanding and predicting crime in different boroughs of New York City, as it might reflect underlying patterns of victimization related to social, economic, and possibly racial dynamics within these areas."
   },
   {
-    "objectID": "analysis.html#section-1.3-crime-location-classification",
-    "href": "analysis.html#section-1.3-crime-location-classification",
+    "objectID": "analysis.html#section-1.3-average-salary-by-nyc-borough",
+    "href": "analysis.html#section-1.3-average-salary-by-nyc-borough",
     "title": "Analysis",
-    "section": "Section 1.3: Crime Location Classification",
-    "text": "Section 1.3: Crime Location Classification\nThis bar chart displays the distribution of crime location classifications. The majority of crimes are classified under “Street”, indicating that this is the most common location for crime in the dataset, with a significantly higher count compared to other categories. “Dwelling” and “Housing” also appear to be relatively common crime locations, with “Housing” showing a notably higher count than “Dwelling”. The chart provides a clear visual summary of where crimes tend to occur, which could be used by law enforcement and city planners to allocate resources more effectively."
+    "section": "Section 1.3: Average Salary by NYC Borough",
+    "text": "Section 1.3: Average Salary by NYC Borough\nThe map explore the average salary distribution across the five boroughs of New York City (NYC). Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods. It is easy to visualize the disparity of income levels in NYC, such as the vast disparity between the Borough Brooklyn and Manhattan."
   },
   {
-    "objectID": "analysis.html#section-1.4-average-salary-by-nyc-borough",
-    "href": "analysis.html#section-1.4-average-salary-by-nyc-borough",
+    "objectID": "analysis.html#section-1.4-murder-rate",
+    "href": "analysis.html#section-1.4-murder-rate",
     "title": "Analysis",
-    "section": "Section 1.4 Average Salary by NYC Borough",
-    "text": "Section 1.4 Average Salary by NYC Borough\nThe map explore the average salary distribution across the five boroughs of New York City (NYC). Utilizing a map, the plot highlights spatial variations in average salary levels across different boroughs, with color intensity indicating salary magnitudes. This spatial perspective offers valuable insights into geographic disparities in salary distribution within NYC, providing a comprehensive understanding of economic dynamics across its diverse neighborhoods. It is easy to visualize the disparity of income levels in NYC, such as the vast disparity between the Borough Brooklyn and Manhattan."
-  },
-  {
-    "objectID": "analysis.html#section-1.5-murder-rate",
-    "href": "analysis.html#section-1.5-murder-rate",
-    "title": "Analysis",
-    "section": "Section 1.5: Murder Rate",
-    "text": "Section 1.5: Murder Rate\nThe bar chart illustrates the murder rates as percentages for each borough. It’s noticeable that the Bronx and Staten Island exhibit the highest murder rates. The murder rate is a significant indicator because it reflects the frequency of violent crimes within a community. Understanding the murder rate is vital for predicting where shooting crime incidents are more likely to occur, which in turn is essential for prioritizing law enforcement resources, improving public safety measures, and implementing preventative programs. High murder rates in certain boroughs might suggest the need for increased police presence and other interventions aimed at violence reduction. Conversely, boroughs with lower rates can provide which policies or social structures may be contributing to a safer environment. Understanding these patterns are critical steps towards effective crime prevention and ensuring the safety and well-being of the residents."
+    "section": "Section 1.4: Murder Rate",
+    "text": "Section 1.4: Murder Rate\nThe bar chart illustrates the murder rates as percentages for each borough. It’s noticeable that the Bronx and Staten Island exhibit the highest murder rates. The murder rate is a significant indicator because it reflects the frequency of violent crimes within a community. Understanding the murder rate is vital for predicting where shooting crime incidents are more likely to occur, which in turn is essential for prioritizing law enforcement resources, improving public safety measures, and implementing preventative programs. High murder rates in certain boroughs might suggest the need for increased police presence and other interventions aimed at violence reduction. Conversely, boroughs with lower rates can provide which policies or social structures may be contributing to a safer environment. Understanding these patterns are critical steps towards effective crime prevention and ensuring the safety and well-being of the residents."
   },
   {
     "objectID": "analysis.html#section-2.1-multinomial-regression-model",
