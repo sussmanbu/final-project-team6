@@ -245,7 +245,7 @@ These choices were driven by their potential to capture key aspects of crime pat
 
 ## Section 2.1: Multinomial Regression Model
 
-The first model is the Multinomial Logistic Regression since the model needs to account for the fact that the target variable (Borough) has 5 classes. However, the model only gave an accuracy of **56%**, which does not meet the expectation. Because the distribution of shooting crime incidents in each borough from the dataset is uneven, this limitation of the dataset makes the 56% accuracy even more unsatisfactory for the prediction model.
+The first model is the Multinomial Logistic Regression since the model needs to account for the fact that the target variable (Borough) has 5 classes. However, the model only gave an accuracy of **56%**, which does not meet the expectation. The confusion matrix is listed below to visualize the performance of this model. Because the distribution of shooting crime incidents in each borough from the dataset is uneven, this limitation of the dataset makes the 56% accuracy even more unsatisfactory for the prediction model as shown in the confusion matrix.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 library(nnet)
@@ -285,7 +285,7 @@ print(paste("Accuracy %:", accuracy*100))
 
 ## Section 2.2: Random Forest
 
-The second statistical model is the Random Forest model. The same training and testing data were applied to the random forest to ensure that the results of the model were meaningful. The significance of creating this model is to consider that this model can accommodate the constraint of uneven distribution of data in each borough.
+The second statistical model is the Random Forest model. The same training and testing data were applied to the random forest to ensure that the results of the model were meaningful. The significance of creating this model is to consider that this model can accommodate the constraint of uneven distribution of data in each borough. However, the Random Forest model is difficult to visualize, which is an inevitable limitation.
 
 ```{r , echo=FALSE, message=FALSE, warning=FALSE}
 library(randomForest)
@@ -307,9 +307,9 @@ print(paste("Accuracy %:", accuracy*100))
 
 This plot shows the error rate of the Random Forest model decreases as the number of trees increases. Each line in the plot represents the error for a different type of prediction task. Under this model, those different lines represent the error rate for various classes within the target variable (Borough).
 
-Random forest gives an accuracy of **83%** which is much better. However, due to the data having most of the offenses in a small subset of the boroughs, the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.
+Random forest gives an accuracy of **83%** which is much better. However, due to the data having most of the crimes in a small subset of the boroughs, the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions. Under this model, the three variables with the highest importance are Offense Type, Victim Race, and Crime location classification.
 
-An accuracy of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.4 above.
+An accuracy of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.3 above.
 
 # Section 3: Limitations and Constraints in Geographic and Variable Diversity 
 
