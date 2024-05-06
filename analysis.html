@@ -273,7 +273,7 @@ ul.task-list li input[type="checkbox"] {
 <p>These choices were driven by their potential to capture key aspects of crime patterns and dynamics within the city. Demographic characteristics of both perpetrators and victims, along with the type and location of offenses, provide valuable insights into crime commission and victimization patterns. By exploring these variables and their relationships with the borough where the crime occurs, correlations were identified that suggest their relevance as predictors.</p>
 <section id="section-2.1-multinomial-regression-model" class="level2">
 <h2 class="anchored" data-anchor-id="section-2.1-multinomial-regression-model">Section 2.1: Multinomial Regression Model</h2>
-<p>The first model is the Multinomial Logistic Regression since the model needs to account for the fact that the target variable (Borough) has 5 classes. However, the model only gave an accuracy of <strong>56%</strong>, which does not meet the expectation. Because the distribution of shooting crime incidents in each borough from the dataset is uneven, this limitation of the dataset makes the 56% accuracy even more unsatisfactory for the prediction model.</p>
+<p>The first model is the Multinomial Logistic Regression since the model needs to account for the fact that the target variable (Borough) has 5 classes. However, the model only gave an accuracy of <strong>56%</strong>, which does not meet the expectation. The confusion matrix is listed below to visualize the performance of this model. Because the distribution of shooting crime incidents in each borough from the dataset is uneven, this limitation of the dataset makes the 56% accuracy even more unsatisfactory for the prediction model as shown in the confusion matrix.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -339,7 +339,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="section-2.2-random-forest" class="level2">
 <h2 class="anchored" data-anchor-id="section-2.2-random-forest">Section 2.2: Random Forest</h2>
-<p>The second statistical model is the Random Forest model. The same training and testing data were applied to the random forest to ensure that the results of the model were meaningful. The significance of creating this model is to consider that this model can accommodate the constraint of uneven distribution of data in each borough.</p>
+<p>The second statistical model is the Random Forest model. The same training and testing data were applied to the random forest to ensure that the results of the model were meaningful. The significance of creating this model is to consider that this model can accommodate the constraint of uneven distribution of data in each borough. However, the Random Forest model is difficult to visualize, which is an inevitable limitation.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
@@ -351,8 +351,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>This plot shows the error rate of the Random Forest model decreases as the number of trees increases. Each line in the plot represents the error for a different type of prediction task. Under this model, those different lines represent the error rate for various classes within the target variable (Borough).</p>
-<p>Random forest gives an accuracy of <strong>83%</strong> which is much better. However, due to the data having most of the offenses in a small subset of the boroughs, the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions.</p>
-<p>An accuracy of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.4 above.</p>
+<p>Random forest gives an accuracy of <strong>83%</strong> which is much better. However, due to the data having most of the crimes in a small subset of the boroughs, the model is biased and does not have sufficient data for the other boroughs like Staten Island to predict it. It is also impossible to predict exactly because of the many variables that need to be considered for completely accurate predictions. Under this model, the three variables with the highest importance are Offense Type, Victim Race, and Crime location classification.</p>
+<p>An accuracy of 84% is still good however to show that these variables do in fact impact which Borough the crime takes place in and these Boroughs have income levels correlated with them as we can see in Section 1.3 above.</p>
 </section>
 </section>
 <section id="section-3-limitations-and-constraints-in-geographic-and-variable-diversity" class="level1">
