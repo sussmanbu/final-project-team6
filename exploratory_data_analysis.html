@@ -2414,12 +2414,95 @@ Detection Prevalence       0.06011             0.015027
 Balanced Accuracy          0.60938             0.672191</code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>modeldata2 <span class="ot">&lt;-</span> combined_df <span class="sc">|&gt;</span></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">|&gt;</span></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(OFNS_DESC <span class="sc">%in%</span> <span class="fu">names</span>(<span class="fu">which</span>(<span class="fu">table</span>(OFNS_DESC) <span class="sc">&gt;=</span> <span class="dv">200</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(BORO <span class="sc">!=</span> <span class="st">"STATEN ISLAND"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">BORO =</span> <span class="fu">factor</span>(BORO, <span class="at">levels =</span> <span class="fu">unique</span>(BORO)))</span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a>train_indices2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(modeldata2), <span class="fl">0.8</span> <span class="sc">*</span> <span class="fu">nrow</span>(modeldata2)) </span>
+<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a>train_data2 <span class="ot">&lt;-</span> modeldata2[train_indices2, ]</span>
+<span id="cb95-11"><a href="#cb95-11" aria-hidden="true" tabindex="-1"></a>test_data2 <span class="ot">&lt;-</span> modeldata2[<span class="sc">-</span>train_indices2, ]</span>
+<span id="cb95-12"><a href="#cb95-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-13"><a href="#cb95-13" aria-hidden="true" tabindex="-1"></a>test_data2<span class="sc">$</span>BORO <span class="ot">&lt;-</span> <span class="fu">factor</span>(test_data2<span class="sc">$</span>BORO, <span class="at">levels =</span> <span class="fu">levels</span>(train_data2<span class="sc">$</span>BORO))</span>
+<span id="cb95-14"><a href="#cb95-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-15"><a href="#cb95-15" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">multinom</span>(BORO <span class="sc">~</span> LOC_CLASSFCTN_DESC <span class="sc">+</span> PERP_RACE <span class="sc">+</span> PERP_AGE_GROUP <span class="sc">+</span> VIC_AGE_GROUP <span class="sc">+</span> VIC_RACE <span class="sc">+</span> OFNS_DESC <span class="sc">+</span> STATISTICAL_MURDER_FLAG, <span class="at">data =</span> train_data2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># weights:  276 (204 variable)
+initial  value 2388.585184 
+iter  10 value 1821.619702
+iter  20 value 1712.798882
+iter  30 value 1692.470862
+iter  40 value 1684.195370
+iter  50 value 1681.413284
+iter  60 value 1680.538400
+iter  70 value 1680.245774
+iter  80 value 1680.196504
+final  value 1680.196092 
+converged</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>predictions2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2, test_data2)</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>accuracy2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(predictions2 <span class="sc">==</span> test_data2<span class="sc">$</span>BORO)</span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Accuracy %:"</span>, accuracy2<span class="sc">*</span><span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Accuracy %: 63.3410672853828"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>conf_matrix2 <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(predictions2), <span class="fu">as.factor</span>(test_data2<span class="sc">$</span>BORO))</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(conf_matrix2<span class="sc">$</span>table, <span class="at">caption =</span> <span class="st">"Confusion Matrix2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Confusion Matrix2</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">MANHATTAN</th>
+<th style="text-align: right;">BROOKLYN</th>
+<th style="text-align: right;">QUEENS</th>
+<th style="text-align: right;">BRONX</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">MANHATTAN</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BROOKLYN</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">QUEENS</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BRONX</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">83</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <section id="section-1.5-offense-descriptions" class="level2">
 <h2 class="anchored" data-anchor-id="section-1.5-offense-descriptions">Section 1.5: Offense Descriptions</h2>
 <p>The horizontal bar chart presents a breakdown of various types of offenses. The most frequent offense, represented by the longest bar, is “Vehicle and Traffic Laws,” suggesting a high number of incidents related to traffic violations. “Sex Crimes” and “Robbery” follow, indicating significant occurrence rates within the dataset. Offenses like “Rape” and “Petit Larceny” show lower counts but are still notable. Other categories, including “Offenses Involving Fraud,” “Offenses Against Public Administration,” and “Miscellaneous Penal Law,” display moderate counts. This variable could be instrumental for law enforcement prioritization and public awareness initiatives.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+<p><img src="exploratory_data_analysis_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 

@@ -332,17 +332,21 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
+</div>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Accuracy %: 56.4334085778781"</code></pre>
+<pre><code>[1] "Accuracy % (without Staten Island): 63.3410672853828"</code></pre>
 </div>
 </div>
+<p>To potentially improve model performance, the model was reproduced by removing the Staten Island observations. First, Staten Island has very few data points compared to other boroughs, which may result in lack of representation of this category. Such a small sample size may not accurately capture the characteristics of Staten Island, resulting in biased predictions that do not generalize well to new data. By excluding Staten Island, the model can focus more on relationships and patterns in larger data sets from other boroughs, potentially improving the model’s overall predictive accuracy and robustness. After filtered the data, the model gave an accuracy of <strong>63%</strong>, which is slightly better than before. However, since the purpose of the model is to better help the NYPD prevent such incidents and allocate resources by predicting the occurrence of shooting crime incidents, a higher accuracy rate is needed to maximize the performance of the model.</p>
 </section>
 <section id="section-2.2-random-forest" class="level2">
 <h2 class="anchored" data-anchor-id="section-2.2-random-forest">Section 2.2: Random Forest</h2>
-<p>The second statistical model is the Random Forest model. The same training and testing data were applied to the random forest to ensure that the results of the model were meaningful. The significance of creating this model is to consider that this model can accommodate the constraint of uneven distribution of data in each borough. However, the Random Forest model is difficult to visualize, which is an inevitable limitation.</p>
+<p>The second statistical model is the Random Forest model. Using a random forest model to predict data for all boroughs, including Staten Island, has advantages due to its inherent robustness and flexibility. This model can reduce the impact of noise in any single subset of data. Additionally, Random Forest can handle imbalanced data and maintain accuracy, such as Staten Island, allowing for a comprehensive and inclusive predictive analysis in this diverse and uneven dataset.</p>
+<p>The same training and testing data were applied to the random forest to ensure that the results of the model were meaningful. The significance of creating this model is to consider that this model can accommodate the constraint of uneven distribution of data in each borough. However, the Random Forest model is difficult to visualize, which is an inevitable limitation.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
