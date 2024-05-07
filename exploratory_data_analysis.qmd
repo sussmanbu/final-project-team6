@@ -471,6 +471,31 @@ library(caret)
 confusionMatrix(confusion_matrix)
 ```
 
+```{r}
+library(knitr)
+modeldata2 <- combined_df |>
+  mutate(across(where(is.character), as.factor)) |>
+  filter(OFNS_DESC %in% names(which(table(OFNS_DESC) >= 200))) |>
+  filter(BORO != "STATEN ISLAND") |>
+  mutate(BORO = factor(BORO, levels = unique(BORO)))
+
+set.seed(123)
+train_indices2 <- sample(1:nrow(modeldata2), 0.8 * nrow(modeldata2)) 
+train_data2 <- modeldata2[train_indices2, ]
+test_data2 <- modeldata2[-train_indices2, ]
+
+test_data2$BORO <- factor(test_data2$BORO, levels = levels(train_data2$BORO))
+
+model2 <- multinom(BORO ~ LOC_CLASSFCTN_DESC + PERP_RACE + PERP_AGE_GROUP + VIC_AGE_GROUP + VIC_RACE + OFNS_DESC + STATISTICAL_MURDER_FLAG, data = train_data2)
+
+predictions2 <- predict(model2, test_data2)
+accuracy2 <- mean(predictions2 == test_data2$BORO)
+print(paste("Accuracy %:", accuracy2*100))
+conf_matrix2 <- confusionMatrix(as.factor(predictions2), as.factor(test_data2$BORO))
+kable(conf_matrix2$table, caption = "Confusion Matrix2")
+```
+
+
 ## Section 1.5: Offense Descriptions
 
 The horizontal bar chart presents a breakdown of various types of offenses. The most frequent offense, represented by the longest bar, is "Vehicle and Traffic Laws," suggesting a high number of incidents related to traffic violations. "Sex Crimes" and "Robbery" follow, indicating significant occurrence rates within the dataset. Offenses like "Rape" and "Petit Larceny" show lower counts but are still notable. Other categories, including "Offenses Involving Fraud," "Offenses Against Public Administration," and "Miscellaneous Penal Law," display moderate counts. This variable could be instrumental for law enforcement prioritization and public awareness initiatives.
